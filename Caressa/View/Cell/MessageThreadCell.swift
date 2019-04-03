@@ -37,7 +37,7 @@ class MessageThreadCell: UITableViewCell {
             lblContent.isHidden = !vAudio.isHidden
             lblReply.isHidden = !vAudio.isHidden
             btnStop.isHidden = true
-            audioDuration.text = "" //.isHidden = true
+            audioDuration.text = ""
             
             if !vAudio.isHidden {
                 url = URL(string: lastMessage.content.details)

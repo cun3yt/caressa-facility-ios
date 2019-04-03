@@ -21,6 +21,7 @@ class MessageCell: UITableViewCell {
     @IBOutlet weak var btnAudio: UIButton!
     @IBOutlet weak var lblAudioDuration: UILabel!
     @IBOutlet weak var btnStopAudio: UIButton!
+    @IBOutlet weak var deviceStatus: UIView!
     
     private var url: URL?
     private var player: AVPlayer?
@@ -32,9 +33,22 @@ class MessageCell: UITableViewCell {
             lblTitle.text = "\(x.firstName) \(x.lastName)"
             ImageManager.shared.downloadImage(suffix: x.profilePicture, view: ivImage)
             
+            contentView.alpha = 1.0
+            if let devStat = x.deviceStatus {
+                if devStat.isOnline {
+                    deviceStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+                } else {
+                    deviceStatus.backgroundColor = #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
+                }
+            } else {
+                contentView.alpha = 0.4
+            }
+            
+            
         case .string(let x)?:
             lblTitle.text = x
             ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.photoGalleryURL, view: ivImage)
+            
         case .none:
             break
         }

@@ -26,6 +26,19 @@
                             <constraint firstAttribute="width" constant="60" id="ZRm-vw-8Yp"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJo-F6-D6U">
+                        <rect key="frame" x="54" y="8" width="14" height="14"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="bll-wj-ECK"/>
+                            <constraint firstAttribute="width" constant="14" id="wgw-q9-akj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="7"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ryy-TC-x3Z">
                         <rect key="frame" x="8" y="62" width="60" height="11"/>
                         <fontDescription key="fontDescription" type="system" pointSize="9"/>
@@ -113,6 +126,7 @@
                     <constraint firstItem="Ryy-TC-x3Z" firstAttribute="top" secondItem="WAG-6D-xE6" secondAttribute="bottom" constant="3" id="7sS-Jk-3c4"/>
                     <constraint firstItem="dr1-ME-jMk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="DH0-Q4-0oz"/>
                     <constraint firstAttribute="trailing" secondItem="WgF-ck-TrE" secondAttribute="trailing" constant="8" id="GYu-gC-3cK"/>
+                    <constraint firstItem="FJo-F6-D6U" firstAttribute="top" secondItem="WAG-6D-xE6" secondAttribute="top" id="KNR-sF-3DR"/>
                     <constraint firstAttribute="trailing" secondItem="dr1-ME-jMk" secondAttribute="trailing" constant="8" id="NdW-Rt-SnA"/>
                     <constraint firstItem="WgF-ck-TrE" firstAttribute="top" secondItem="NTX-9s-OZY" secondAttribute="bottom" constant="3" id="OKy-SO-h45"/>
                     <constraint firstItem="WAG-6D-xE6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="SBM-eW-9dm"/>
@@ -130,6 +144,7 @@
                     <constraint firstItem="Ryy-TC-x3Z" firstAttribute="trailing" secondItem="WAG-6D-xE6" secondAttribute="trailing" id="xML-tb-3GB"/>
                     <constraint firstItem="WAG-6D-xE6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="xP3-wc-dfS"/>
                     <constraint firstItem="o8K-6P-5Jc" firstAttribute="leading" secondItem="WAG-6D-xE6" secondAttribute="trailing" constant="8" id="yV1-Pz-71p"/>
+                    <constraint firstItem="FJo-F6-D6U" firstAttribute="trailing" secondItem="WAG-6D-xE6" secondAttribute="trailing" id="z5H-fY-Qnp"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -137,6 +152,7 @@
                 <outlet property="audioView" destination="o8K-6P-5Jc" id="cEZ-nS-MOz"/>
                 <outlet property="btnAudio" destination="1c0-DR-6lM" id="aq6-ub-fgH"/>
                 <outlet property="btnStopAudio" destination="eIL-kX-RPP" id="OFY-SO-Qit"/>
+                <outlet property="deviceStatus" destination="FJo-F6-D6U" id="27t-eI-UvU"/>
                 <outlet property="ivImage" destination="WAG-6D-xE6" id="7dQ-9K-6W5"/>
                 <outlet property="lblAudioDuration" destination="GeT-IE-Bfl" id="5qO-WQ-szH"/>
                 <outlet property="lblBody" destination="NTX-9s-OZY" id="oQA-z1-pud"/>
