@@ -27,6 +27,8 @@
 		BD55311C2247911D0062F894 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311A2247911D0062F894 /* MessageCell.swift */; };
 		BD55311D2247911D0062F894 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD55311B2247911D0062F894 /* MessageCell.xib */; };
 		BD55311F224794770062F894 /* MessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311E224794770062F894 /* MessageVC.swift */; };
+		BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378B2255FD0000BB133F /* Protocol.swift */; };
+		BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378D2255FD5500BB133F /* AudioPlayer.swift */; };
 		BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1D224570DE00F7D1AB /* AppDelegate.swift */; };
 		BD999F20224570DE00F7D1AB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1F224570DE00F7D1AB /* LoginVC.swift */; };
 		BD999F23224570DE00F7D1AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD999F21224570DE00F7D1AB /* Main.storyboard */; };
@@ -67,6 +69,8 @@
 		BD55311A2247911D0062F894 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		BD55311B2247911D0062F894 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		BD55311E224794770062F894 /* MessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVC.swift; sourceTree = "<group>"; };
+		BD6F378B2255FD0000BB133F /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		BD6F378D2255FD5500BB133F /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		BD999F1A224570DE00F7D1AB /* Caressa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caressa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD999F1D224570DE00F7D1AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD999F1F224570DE00F7D1AB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -147,11 +151,11 @@
 				BD999F1F224570DE00F7D1AB /* LoginVC.swift */,
 				BD55310B22464A900062F894 /* ResidentVC.swift */,
 				BD55311E224794770062F894 /* MessageVC.swift */,
+				BD14E669224F832F001B12BE /* MessageThreadVC.swift */,
 				BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */,
 				BD14E65B224F4BAE001B12BE /* CalendarVC.swift */,
 				BD14E65D224F5879001B12BE /* NewMemberVC.swift */,
 				BD14E65F224F61DD001B12BE /* NewMessageVC.swift */,
-				BD14E669224F832F001B12BE /* MessageThreadVC.swift */,
 				BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */,
 				BDEBA83C224FA642005F3EDE /* SettingsVC.swift */,
 			);
@@ -196,6 +200,8 @@
 				BD999F39224571E400F7D1AB /* SessionManager.swift */,
 				BD999F3A224571E400F7D1AB /* WebService.swift */,
 				BD553114224662030062F894 /* View+Extension.swift */,
+				BD6F378B2255FD0000BB133F /* Protocol.swift */,
+				BD6F378D2255FD5500BB133F /* AudioPlayer.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -276,6 +282,7 @@
 			files = (
 				BD55311F224794770062F894 /* MessageVC.swift in Sources */,
 				BD999F3D224571E400F7D1AB /* ActivityIndicator.swift in Sources */,
+				BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */,
 				BD12354B225296C700FF1638 /* AmazonModel.swift in Sources */,
 				BD14E65C224F4BAE001B12BE /* CalendarVC.swift in Sources */,
 				BD14E668224F6E52001B12BE /* Message.swift in Sources */,
@@ -301,6 +308,7 @@
 				BD14E66A224F832F001B12BE /* MessageThreadVC.swift in Sources */,
 				BD999F3C224571E400F7D1AB /* DateManager.swift in Sources */,
 				BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */,
+				BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */,
 				BD553117224669C20062F894 /* Facility.swift in Sources */,
 				BDEBA83D224FA642005F3EDE /* SettingsVC.swift in Sources */,
 				BD999F43224571E400F7D1AB /* WebService.swift in Sources */,

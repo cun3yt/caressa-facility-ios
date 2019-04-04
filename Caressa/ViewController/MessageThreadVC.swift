@@ -20,19 +20,25 @@ class MessageThreadVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MessageThreadCell", bundle: nil), forCellReuseIdentifier: "cell")
-        ivFacility = WindowManager.setup(vc: self, title: "")
+        ivFacility = WindowManager.setup(vc: self, title: "", deviceStatus: resident.deviceStatus)
         setup()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if AppDelegate.audioPlayer?.timeControlStatus == .playing {
+            AppDelegate.audioPlayer?.pause()
+            AppDelegate.audioPlayer = nil
+        }
     }
     
     func setup() {
         title = nil
         WebAPI.shared.get(APIConst.messageThreads.replacingOccurrences(of: "#rID#", with: "1")) { (response: MessageThread) in
             DispatchQueue.main.async {
-                self.ivFacility = WindowManager.setup(vc: self, title: "\(response.resident.firstName) \(response.resident.lastName)")
-                
+                self.ivFacility = WindowManager.setup(vc: self, title: "\(response.resident.firstName) \(response.resident.lastName)", deviceStatus: response.resident.deviceStatus)
                 ImageManager.shared.downloadImage(url: response.resident.profilePicture, view: self.ivFacility)
-                
-                
             }
             
             WebAPI.shared.get(APIConst.messageThreadsMessage.replacingOccurrences(of: "#rID#", with: "1"), completion: { (messages: MessageHeader) in
@@ -60,17 +66,19 @@ extension MessageThreadVC: UITableViewDataSource {
         return cell
     }
     
-    
 }
 
 extension MessageThreadVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let c = cell as? MessageThreadCell {
+            c.player?.stop()
+        }
+    }
 }
 
 extension MessageThreadVC: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         
     }
-    
-    
 }
+

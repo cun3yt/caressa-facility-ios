@@ -10,8 +10,6 @@ import UIKit
 
 class MessageVC: UIViewController {
 
-    
-    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     private var page: Int = 1
@@ -24,6 +22,15 @@ class MessageVC: UIViewController {
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivFacility = WindowManager.setup(vc: self, title: "Messages")
         setup()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if AppDelegate.audioPlayer?.timeControlStatus == .playing {
+            AppDelegate.audioPlayer?.pause()
+            AppDelegate.audioPlayer = nil
+        }
     }
     
     private func setup() {
@@ -59,14 +66,15 @@ extension MessageVC: UITableViewDelegate {
         switch messages[indexPath.row].resident {
         case .residentClass(let x)? :
             WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: x)
-            
-        case .string?:
-            break
-            
-        case .none:
-            break
+        case .string?: break
+        case .none: break
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let c = cell as? MessageCell {
+            c.player?.stop()
+        }
     }
 }
 

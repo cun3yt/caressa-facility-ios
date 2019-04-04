@@ -12,6 +12,16 @@ struct LoginRequest: Encodable {
     let grant_type: String
     let username: String
     let password: String
+    let client_id: String
+    let client_secret: String
+    
+    init(username: String, password: String) {
+        self.grant_type = "password"
+        self.username = username
+        self.password = password
+        self.client_id = "A6KaFyXMWdEAI63ysTeea2ZtDY4k5vWeVcl6xqns"
+        self.client_secret = "nrhnRiWqcaEsnMBYlaoMzxvRa4lXMqPdOOlyaRC8UJBWnlnVKeKcXmGZpcVp6ggLSjxl6mZNp7cemn9dGmj2szlJ4TtMPtJ6hBd0Q9Bxq4YhnDiQebucGdJRugjzNgOK"
+    }
 }
 
 struct LoginResponse: Codable {

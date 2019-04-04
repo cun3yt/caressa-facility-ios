@@ -13,6 +13,7 @@ class SessionManager: NSObject {
     static let shared: SessionManager = SessionManager()
     
     public var token: String?
+    public var refreshToken: String?
     
     public var facility: FacilityResponse?
     

@@ -28,7 +28,9 @@ class ProfilePageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ivHeaderProfile = WindowManager.setup(vc: self, title: "\(resident.firstName) \(resident.lastName)")
+        ivHeaderProfile = WindowManager.setup(vc: self,
+                                              title: "\(resident.firstName) \(resident.lastName)",
+                                              deviceStatus: resident.deviceStatus)
         setup()
     }
     
@@ -54,24 +56,35 @@ class ProfilePageVC: UIViewController {
         }
         
         let imageData = image.pngData()
-        let param = PresignedRequest(key: "\(resident.firstName)\(UUID().uuidString.prefix(4))",
-            contentType: "image/png",
-            clientMethod: "put_object",
-            requestType: "PUT")
+        let key = "\(resident.firstName)\(UUID().uuidString.prefix(4))"
+        let param = PresignedRequest(key: key,
+                                     contentType: "image/png",
+                                     clientMethod: "put_object",
+                                     requestType: "PUT")
         
         WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: PresignedResponse) in
-            WebAPI.shared.put(response.url, parameter: imageData!, completion: { (success) in
-                DispatchQueue.main.async {
-                    ActivityManager.shared.stopActivity()
-                    
-                    if success {
-                        WindowManager.showMessage(type: .success, message: "Upload successfully!")
-                    } else {
-                        WindowManager.showMessage(type: .success, message: "Upload unsuccessfull.")
-                    }
-                }
-            })
             
+            WebAPI.shared.put(response.url, parameter: imageData!, completion: { (success) in
+                
+                WebAPI.shared.post(APIConst.profilePicSignedUrl.replacingOccurrences(of: "#ID#", with: "\(self.resident.id ?? 100)"),
+                                   parameter: UploadedNewPhoto(key: key),
+                                   completion: { (responsePhoto: NewPhotoResponse) in
+                                    
+                                    DispatchQueue.main.async {
+                                        if responsePhoto.detail == nil {
+                                            
+                                            ImageManager.shared.downloadImage(suffix: responsePhoto.profilePictureURL, view: self.ivProfile)
+                                            ImageManager.shared.downloadImage(url: responsePhoto.thumbnailURL, view: self.ivHeaderProfile)
+                                            
+                                            ActivityManager.shared.stopActivity()
+                                            
+                                            WindowManager.showMessage(type: .success, message: responsePhoto.message!)
+                                        } else {
+                                            WindowManager.showMessage(type: .success, message: responsePhoto.detail!)
+                                        }
+                                    }
+                })
+            })
         }
     }
     

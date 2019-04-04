@@ -67,16 +67,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WgF-ck-TrE">
-                        <rect key="frame" x="76" y="67" width="236" height="20"/>
+                        <rect key="frame" x="76" y="67" width="37" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="fPf-2w-jFL"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8K-6P-5Jc">
-                        <rect key="frame" x="76" y="29" width="236" height="61.5"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o8K-6P-5Jc">
+                        <rect key="frame" x="232" y="29" width="80" height="62"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Lo3-6w-iF3">
                                 <rect key="frame" x="0.0" y="15" width="236" height="32"/>
@@ -89,7 +89,7 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="play"/>
                                         <connections>
-                                            <action selector="btnAudioAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Wl8-6v-r8i"/>
+                                            <action selector="btnPlayAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Wl8-6v-r8i"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIL-kX-RPP">
@@ -100,7 +100,7 @@
                                         </constraints>
                                         <state key="normal" image="stop"/>
                                         <connections>
-                                            <action selector="btnStop:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="as7-22-Bw7"/>
+                                            <action selector="btnStopAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="as7-22-Bw7"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GeT-IE-Bfl">
@@ -119,22 +119,33 @@
                             <constraint firstItem="Lo3-6w-iF3" firstAttribute="leading" secondItem="o8K-6P-5Jc" secondAttribute="leading" id="sVR-aP-Cw6"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLH-H2-ryU">
+                        <rect key="frame" x="121" y="67" width="24" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Dic-OQ-d6T"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.73294243503561651" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Ryy-TC-x3Z" firstAttribute="leading" secondItem="WAG-6D-xE6" secondAttribute="leading" id="0sg-Xp-OdK"/>
                     <constraint firstItem="NTX-9s-OZY" firstAttribute="top" secondItem="dr1-ME-jMk" secondAttribute="bottom" constant="3" id="6Tc-sz-h6N"/>
+                    <constraint firstItem="mLH-H2-ryU" firstAttribute="bottom" secondItem="WgF-ck-TrE" secondAttribute="bottom" id="7mU-QW-fhk"/>
                     <constraint firstItem="Ryy-TC-x3Z" firstAttribute="top" secondItem="WAG-6D-xE6" secondAttribute="bottom" constant="3" id="7sS-Jk-3c4"/>
                     <constraint firstItem="dr1-ME-jMk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="DH0-Q4-0oz"/>
-                    <constraint firstAttribute="trailing" secondItem="WgF-ck-TrE" secondAttribute="trailing" constant="8" id="GYu-gC-3cK"/>
                     <constraint firstItem="FJo-F6-D6U" firstAttribute="top" secondItem="WAG-6D-xE6" secondAttribute="top" id="KNR-sF-3DR"/>
                     <constraint firstAttribute="trailing" secondItem="dr1-ME-jMk" secondAttribute="trailing" constant="8" id="NdW-Rt-SnA"/>
                     <constraint firstItem="WgF-ck-TrE" firstAttribute="top" secondItem="NTX-9s-OZY" secondAttribute="bottom" constant="3" id="OKy-SO-h45"/>
+                    <constraint firstItem="mLH-H2-ryU" firstAttribute="top" secondItem="WgF-ck-TrE" secondAttribute="top" id="PUu-0g-KJR"/>
                     <constraint firstItem="WAG-6D-xE6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="SBM-eW-9dm"/>
                     <constraint firstAttribute="trailing" secondItem="o8K-6P-5Jc" secondAttribute="trailing" constant="8" id="SLm-ae-QbV"/>
                     <constraint firstItem="gvX-aq-Rlf" firstAttribute="trailing" secondItem="Ryy-TC-x3Z" secondAttribute="trailing" id="YOn-in-Dax"/>
                     <constraint firstAttribute="trailing" secondItem="NTX-9s-OZY" secondAttribute="trailing" constant="8" id="Z9t-w0-MjS"/>
                     <constraint firstItem="dr1-ME-jMk" firstAttribute="leading" secondItem="WAG-6D-xE6" secondAttribute="trailing" constant="8" id="d8O-hQ-AWx"/>
                     <constraint firstItem="gvX-aq-Rlf" firstAttribute="leading" secondItem="Ryy-TC-x3Z" secondAttribute="leading" id="e5b-7q-PWR"/>
+                    <constraint firstItem="mLH-H2-ryU" firstAttribute="leading" secondItem="WgF-ck-TrE" secondAttribute="trailing" constant="8" id="hQO-pD-DAp"/>
                     <constraint firstItem="WgF-ck-TrE" firstAttribute="bottom" secondItem="gvX-aq-Rlf" secondAttribute="bottom" id="hxt-M7-JoD"/>
                     <constraint firstItem="NTX-9s-OZY" firstAttribute="leading" secondItem="WAG-6D-xE6" secondAttribute="trailing" constant="8" id="kfT-gF-BZj"/>
                     <constraint firstItem="o8K-6P-5Jc" firstAttribute="top" secondItem="dr1-ME-jMk" secondAttribute="bottom" id="neD-7D-RwX"/>
@@ -156,6 +167,7 @@
                 <outlet property="ivImage" destination="WAG-6D-xE6" id="7dQ-9K-6W5"/>
                 <outlet property="lblAudioDuration" destination="GeT-IE-Bfl" id="5qO-WQ-szH"/>
                 <outlet property="lblBody" destination="NTX-9s-OZY" id="oQA-z1-pud"/>
+                <outlet property="lblRepliedTo" destination="mLH-H2-ryU" id="SY1-pa-0yk"/>
                 <outlet property="lblStatus" destination="WgF-ck-TrE" id="5NV-5e-tFF"/>
                 <outlet property="lblTime" destination="Ryy-TC-x3Z" id="dnV-QU-4jH"/>
                 <outlet property="lblTitle" destination="dr1-ME-jMk" id="yw2-xB-TFr"/>

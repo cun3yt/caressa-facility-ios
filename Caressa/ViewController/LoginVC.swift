@@ -36,9 +36,7 @@ class LoginVC: UIViewController {
                 return
         }
         
-        let param = LoginRequest(grant_type: "password",
-                                 username: user,
-                                 password: pass)
+        let param = LoginRequest(username: user, password: pass)
         WebAPI.shared.post(APIConst.token, parameter: param) { (response: LoginResponse) in
             
             DispatchQueue.main.async {
@@ -61,6 +59,9 @@ class LoginVC: UIViewController {
             }
             
             SessionManager.shared.token = "\(type) \(token)"
+            if let refresh = response.refreshToken {
+                SessionManager.shared.refreshToken = "\(type) \(refresh)"
+            }
             
             WindowManager.pushToTabBarVC()
         }

@@ -25,3 +25,21 @@ struct PresignedRequest: Codable {
 struct PresignedResponse: Codable {
     let url: String
 }
+
+struct UploadedNewPhoto: Codable {
+    let key: String
+}
+
+struct NewPhotoResponse: Codable {
+    let detail: String?
+    let message: String?
+    let profilePictureURL: String?
+    let thumbnailURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case detail
+        case message
+        case profilePictureURL = "profile_picture_url"
+        case thumbnailURL = "thumbnail_url"
+    }
+}

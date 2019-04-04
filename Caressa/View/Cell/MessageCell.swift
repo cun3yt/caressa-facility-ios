@@ -22,10 +22,12 @@ class MessageCell: UITableViewCell {
     @IBOutlet weak var lblAudioDuration: UILabel!
     @IBOutlet weak var btnStopAudio: UIButton!
     @IBOutlet weak var deviceStatus: UIView!
+    @IBOutlet weak var lblRepliedTo: UILabel!
     
     private var url: URL?
-    private var player: AVPlayer?
-    private var timer: Timer?
+    
+    public var player: AudioPlayer?
+    public var audioPlayerDelegate: AudioPlayerDelegate?
     
     func setup(message: MessageResult) {
         switch message.resident {
@@ -55,84 +57,35 @@ class MessageCell: UITableViewCell {
         if let lastMessage = message.lastMessage {
             lblBody.text = lastMessage.content.details
             lblTime.text = DateManager("HH:mm a").string(date: lastMessage.time)
-            lblStatus.text = lastMessage.reply != nil ? "Replied \(DateManager("HH:mm a").string(date: lastMessage.reply!.time)) Yes" : "No Reply Yet"
+            lblStatus.text = lastMessage.reply != nil ? "Replied \(DateManager("HH:mm a").string(date: lastMessage.reply!.time))" : "No Reply Yet"
+            lblRepliedTo.text = lastMessage.reply != nil ? "Yes" : ""
             lblType.text = lastMessage.messageType
             
             audioView.isHidden = lastMessage.content.type != "Audio"
             lblBody.isHidden = !audioView.isHidden
             lblStatus.isHidden = !audioView.isHidden
+            lblRepliedTo.isHidden = !audioView.isHidden
             btnStopAudio.isHidden = true
             lblAudioDuration.text = ""
             
             if !audioView.isHidden {
                 url = URL(string: lastMessage.content.details)
+                player = AudioPlayer(url: url!, play: btnAudio, stop: btnStopAudio, timeLabel: lblAudioDuration)
             }
-        }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            print(error)
         }
     }
 
-    @IBAction func btnAudioAction(_ sender: UIButton) {
-        if player?.timeControlStatus == .playing {
-            player?.pause()
-            btnAudio.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-        } else
-            if player?.timeControlStatus == .paused {
-                player?.play()
-                btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            } else {
-                if let url = url {
-                    
-                    btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-                    lblAudioDuration.isHidden = false
-                    lblAudioDuration.text = "Loading..."
-                    
-                    let item = AVPlayerItem(url: url)
-                    player = AVPlayer(playerItem: item)
-                    player?.automaticallyWaitsToMinimizeStalling = false
-                    
-                    player!.play()
-                    player?.addObserver(self, forKeyPath: "status", options: .init(rawValue: 0), context: nil)
-                }
+    @IBAction func btnPlayAction(_ sender: UIButton) {
+        guard let player = player else { return }
+        if player.isPlaying {
+            player.pause()
+        } else {
+            player.play()
         }
     }
     
-    @IBAction func btnStop(_ sender: UIButton) {
-        if player?.timeControlStatus == .playing {
-            player?.pause()
-            player = nil
-            btnAudio.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-            btnStopAudio.isHidden = true
-            lblAudioDuration.text = ""
-        }
+    @IBAction func btnStopAction(_ sender: UIButton) {
+        player?.stop()
     }
-    
-    @objc func updateTime() {
-        if let player = player?.currentItem {
-            btnStopAudio.isHidden = false
-            let time = DateManager.getDateParts(seconds: player.currentTime().seconds)
-            let duration = DateManager.getDateParts(seconds: player.duration.seconds)
-            self.lblAudioDuration.text = String(format: "%02d:%02d",  time.1, time.2) + " / " + String(format: "%02d:%02d",  duration.1, duration.2)
-        }
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        
-        if keyPath == "status" {
-            if player?.status == .readyToPlay {
-                timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-            } else {
-                
-            }
-        }
-    }
+
 }

@@ -26,7 +26,7 @@ final public class WebAPI: NSObject {
     public func put(_ method: String, parameter: Data, completion: ((Bool) -> Void)? = nil) {
         guard let url = URL(string: method) else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
         urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "PUT"
         urlRequest.httpBody = parameter
@@ -45,7 +45,7 @@ final public class WebAPI: NSObject {
                 ActivityManager.shared.stopActivity()
             }
             
-            guard let data = data, error == nil else {
+            guard let _ = data, error == nil else {
                 completion?(false)
                 return
             }
@@ -57,21 +57,13 @@ final public class WebAPI: NSObject {
     }
     
     private func request<T1: Encodable, T2: Decodable>(type: String, _ method: String, parameter: T1?, completion: ((T2) -> Void)? = nil) {
-        var uri: URL?
-        if type == "PUT" {
-            uri = URL(string: method)
-        } else {
-            uri = URL(string: "\(APIConst.baseURL)\(method)")
-        }
-        guard let url = uri else { return }
         
-        let token = method == APIConst.token ?
-        "Basic QTZLYUZ5WE1XZEVBSTYzeXNUZWVhMlp0RFk0azV2V2VWY2w2eHFuczpucmhuUmlXcWNhRXNuTUJZbGFvTXp4dlJhNGxYTXFQZE9PbHlhUkM4VUpCV25sblZLZUtjWG1HWnBjVnA2Z2dMU2p4bDZtWk5wN2NlbW45ZEdtajJzemxKNFR0TVB0SjZoQmQwUTlCeHE0WWhuRGlRZWJ1Y0dkSlJ1Z2p6TmdPSw==" :
-        SessionManager.shared.token ?? ""
+        guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
         urlRequest.httpMethod = type
         
+        let token = SessionManager.shared.token ?? ""
         if !token.isEmpty {
             urlRequest.addValue(token, forHTTPHeaderField: "Authorization")
         }
@@ -79,9 +71,6 @@ final public class WebAPI: NSObject {
         if method == APIConst.generateSignedURL {
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try! JSONManager().encoder.encode(parameter)
-        } else
-            if type == "PUT" {
-              urlRequest.httpBody = parameter as! Data
         } else
             if let parameter = parameter {
                 urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")

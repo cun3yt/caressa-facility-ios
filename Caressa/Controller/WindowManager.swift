@@ -135,7 +135,7 @@ class WindowManager: NSObject {
         return nil
     }
     
-    public class func setup(vc: UIViewController, title: String) -> UIButton {
+    public class func setup(vc: UIViewController, title: String, deviceStatus: DeviceStatus? = nil) -> UIButton {
         let headerHeight = vc.navigationController!.navigationBar.frame.height - 4
         let headerWidth = vc.navigationController!.navigationBar.frame.width - 100
         let profile = UIButton(frame: CGRect(x: 0, y: 0, width: headerHeight, height: headerHeight))
@@ -143,7 +143,7 @@ class WindowManager: NSObject {
         profile.contentMode = .scaleAspectFit
         profile.clipsToBounds = true
         profile.layer.cornerRadius = headerHeight / 2
-        
+ 
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight))
         titleLabel.text = title
         titleLabel.textColor = .white
@@ -153,6 +153,17 @@ class WindowManager: NSObject {
         let titleView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - profile.frame.width - 20, height: headerHeight))
         titleView.addSubview(profile)
         titleView.addSubview(titleLabel)
+        
+        if let stat = deviceStatus {
+            let status = UIView(frame: CGRect(x: profile.frame.maxX - 8, y: 0, width: 14, height: 14))
+            status.cornerRadius = 7
+            if stat.isOnline {
+                status.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            } else {
+                status.backgroundColor = #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
+            }
+            titleView.addSubview(status)
+        }
         
         vc.navigationItem.titleView = titleView
         
