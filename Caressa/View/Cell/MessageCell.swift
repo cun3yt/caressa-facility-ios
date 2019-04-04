@@ -84,22 +84,25 @@ class MessageCell: UITableViewCell {
     @IBAction func btnAudioAction(_ sender: UIButton) {
         if player?.timeControlStatus == .playing {
             player?.pause()
-            timer = nil
             btnAudio.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-        } else {
-            if let url = url {
-                
+        } else
+            if player?.timeControlStatus == .paused {
+                player?.play()
                 btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-                lblAudioDuration.isHidden = false
-                lblAudioDuration.text = "Loading..."
-                
-                let item = AVPlayerItem(url: url)
-                player = AVPlayer(playerItem: item)
-                player?.automaticallyWaitsToMinimizeStalling = false
-                
-                player!.play()
-                player?.addObserver(self, forKeyPath: "status", options: .init(rawValue: 0), context: nil)
-            }
+            } else {
+                if let url = url {
+                    
+                    btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                    lblAudioDuration.isHidden = false
+                    lblAudioDuration.text = "Loading..."
+                    
+                    let item = AVPlayerItem(url: url)
+                    player = AVPlayer(playerItem: item)
+                    player?.automaticallyWaitsToMinimizeStalling = false
+                    
+                    player!.play()
+                    player?.addObserver(self, forKeyPath: "status", options: .init(rawValue: 0), context: nil)
+                }
         }
     }
     

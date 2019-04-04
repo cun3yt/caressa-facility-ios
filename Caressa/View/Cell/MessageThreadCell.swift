@@ -59,21 +59,25 @@ class MessageThreadCell: UITableViewCell {
     @IBAction func btnAudioAction(_ sender: UIButton) {
         if player?.timeControlStatus == .playing {
             player?.pause()
-            timer = nil
+            //timer = nil
             btnAudio.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-        } else {
-            if let url = url {
-                
-                btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-                audioDuration.text = "Loading..."
-                
-                let item = AVPlayerItem(url: url)
-                player = AVPlayer(playerItem: item)
-                player?.automaticallyWaitsToMinimizeStalling = false
-                
-                player!.play()
-                player?.addObserver(self, forKeyPath: "status", options: .init(rawValue: 0), context: nil)
-            }
+        } else
+            if player?.timeControlStatus == .paused {
+                player?.play()
+                //timer = nil
+                btnAudio.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            } else
+                if let url = url {
+                    
+                    btnAudio.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                    audioDuration.text = "Loading..."
+                    
+                    let item = AVPlayerItem(url: url)
+                    player = AVPlayer(playerItem: item)
+                    player?.automaticallyWaitsToMinimizeStalling = false
+                    
+                    player!.play()
+                    player?.addObserver(self, forKeyPath: "status", options: .init(rawValue: 0), context: nil)
         }
     }
     
