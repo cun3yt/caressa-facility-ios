@@ -13,3 +13,7 @@ protocol AudioPlayerDelegate {
     func paused()
     func stopped()
 }
+
+protocol AudioRecorderDelegate {
+    func stopped()
+}

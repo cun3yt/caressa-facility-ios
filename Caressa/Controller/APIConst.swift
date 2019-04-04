@@ -28,7 +28,7 @@ public class APIConst {
     public static let messages                 = "/api/facility/\(facilityId)/messages/?page="
     
     // MARK: New Message
-    public static let residentsAutoComplete    = "/api/facilities/\(facilityId)/residents/?starts_with=<search-text>"
+    public static let residentsAutoComplete    = "/api/facility/\(facilityId)/residents/?starts_with=%@"
     public static let message                  = "/api/facility/\(facilityId)/message/"
     /// For voice message
     public static let messageSignedUrl         = "/api/facility/\(facilityId)/message-signed-urls/"

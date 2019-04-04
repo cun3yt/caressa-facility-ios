@@ -17,6 +17,8 @@
 		BD14E666224F6D89001B12BE /* MessageThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E665224F6D89001B12BE /* MessageThread.swift */; };
 		BD14E668224F6E52001B12BE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E667224F6E52001B12BE /* Message.swift */; };
 		BD14E66A224F832F001B12BE /* MessageThreadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E669224F832F001B12BE /* MessageThreadVC.swift */; };
+		BD159BC7225685A100701370 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC6225685A100701370 /* SearchVC.swift */; };
+		BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC82256978C00701370 /* AudioRecorder.swift */; };
 		BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */; };
 		BD55310C22464A900062F894 /* ResidentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310B22464A900062F894 /* ResidentVC.swift */; };
 		BD553111224660810062F894 /* ResidentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310F224660810062F894 /* ResidentCell.swift */; };
@@ -59,6 +61,8 @@
 		BD14E665224F6D89001B12BE /* MessageThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageThread.swift; sourceTree = "<group>"; };
 		BD14E667224F6E52001B12BE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BD14E669224F832F001B12BE /* MessageThreadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageThreadVC.swift; sourceTree = "<group>"; };
+		BD159BC6225685A100701370 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		BD159BC82256978C00701370 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningStatusVC.swift; sourceTree = "<group>"; };
 		BD55310B22464A900062F894 /* ResidentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentVC.swift; sourceTree = "<group>"; };
 		BD55310F224660810062F894 /* ResidentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentCell.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				BD14E65F224F61DD001B12BE /* NewMessageVC.swift */,
 				BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */,
 				BDEBA83C224FA642005F3EDE /* SettingsVC.swift */,
+				BD159BC6225685A100701370 /* SearchVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				BD553114224662030062F894 /* View+Extension.swift */,
 				BD6F378B2255FD0000BB133F /* Protocol.swift */,
 				BD6F378D2255FD5500BB133F /* AudioPlayer.swift */,
+				BD159BC82256978C00701370 /* AudioRecorder.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -309,9 +315,11 @@
 				BD999F3C224571E400F7D1AB /* DateManager.swift in Sources */,
 				BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */,
 				BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */,
+				BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */,
 				BD553117224669C20062F894 /* Facility.swift in Sources */,
 				BDEBA83D224FA642005F3EDE /* SettingsVC.swift in Sources */,
 				BD999F43224571E400F7D1AB /* WebService.swift in Sources */,
+				BD159BC7225685A100701370 /* SearchVC.swift in Sources */,
 				BD55311C2247911D0062F894 /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
