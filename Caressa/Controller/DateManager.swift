@@ -11,6 +11,12 @@ import Foundation
 public class DateManager {
     private let formatter: DateFormatter
     
+    static private var calendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        return calendar
+    }()
+    
     init(_ format: String) {
         formatter = DateFormatter()
         formatter.dateFormat = format
@@ -25,8 +31,8 @@ public class DateManager {
     }
     
     static func onlyDate(date: Date) -> Date {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        let oDate = Calendar.current.date(from: components)
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        let oDate = calendar.date(from: components)
         return oDate!
     }
 
@@ -40,19 +46,16 @@ public class DateManager {
     }
     
     static func startOfWeek() -> Date? {
-        let calendar = Calendar.current
         guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
         return calendar.date(byAdding: .day, value: 1, to: sunday)
     }
     
     static func endOfWeek() -> Date? {
-        let calendar = Calendar.current
         guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
         return calendar.date(byAdding: .day, value: 7, to: sunday)
     }
     
     static func dayOfWeek(today: Date) -> Int? {
-        let calendar = Calendar.current
         let weekDay = calendar.component(.weekday, from: today)
         return weekDay
     }
@@ -63,7 +66,7 @@ public class DateManager {
         
         while date <= toDate {
             dates.append(date)
-            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
+            guard let newDate = calendar.date(byAdding: .day, value: 1, to: date) else { break }
             date = newDate
         }
         return dates

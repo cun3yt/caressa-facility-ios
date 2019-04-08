@@ -26,7 +26,7 @@ class CalendarVC: UIViewController {
     
     @IBAction func todayAction() {
         guard let week = DateManager.dayOfWeek(today: Date()) else { return }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: week - 1), at: .top, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: week - 2), at: .top, animated: true)
     }
     
     func setup() {
