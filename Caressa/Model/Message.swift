@@ -118,23 +118,3 @@ enum ResidentUnion: Codable {
     }
 }
 
-//struct ResidentClass: Codable {
-//    let firstName: String
-//    let lastName: String
-//    let roomNo: String
-//    let deviceStatus: DeviceStatus?
-//    let messageThreadURL: String
-//    let profilePicture: String
-//    let mockStatus: Bool
-//
-//    enum CodingKeys: String, CodingKey {
-//        case firstName = "first_name"
-//        case lastName = "last_name"
-//        case roomNo = "room_no"
-//        case deviceStatus = "device_status"
-//        case messageThreadURL = "message_thread_url"
-//        case profilePicture = "profile_picture"
-//        case mockStatus = "mock_status"
-//    }
-//}
-

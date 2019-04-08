@@ -35,13 +35,13 @@ class MessageThreadVC: UIViewController {
     
     func setup() {
         title = nil
-        WebAPI.shared.get(APIConst.messageThreads.replacingOccurrences(of: "#rID#", with: "1")) { (response: MessageThread) in
+        WebAPI.shared.get(String(format: APIConst.messageThreads, resident.id)) { (response: MessageThread) in
             DispatchQueue.main.async {
                 self.ivFacility = WindowManager.setup(vc: self, title: "\(response.resident.firstName) \(response.resident.lastName)", deviceStatus: response.resident.deviceStatus)
                 ImageManager.shared.downloadImage(url: response.resident.profilePicture, view: self.ivFacility)
             }
             
-            WebAPI.shared.get(APIConst.messageThreadsMessage.replacingOccurrences(of: "#rID#", with: "1"), completion: { (messages: MessageHeader) in
+            WebAPI.shared.get(String(format: APIConst.messageThreadsMessage, self.resident.id), completion: { (messages: MessageHeader) in
                 
                 if let results = messages.results {
                     self.messages = results

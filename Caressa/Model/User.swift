@@ -20,7 +20,7 @@ struct User: Codable {
     let birthday: String?
     let moveInData: String?
     let serviceType: String?
-    let morningStatus: String?
+    let morningStatus: MorningStatus?
     let senior: Senior?
     let mockStatus: Bool?
     let roomNo: String?
@@ -65,5 +65,15 @@ struct Caretaker: Codable {
         case lastName = "last_name"
         case phoneNumber = "phone_number"
         case relationship = "relationship"
+    }
+}
+
+struct MorningStatus: Codable {
+    let status: String
+    let label: String
+    
+    enum CodingKeys: String, CodingKey {
+        case status = "status"
+        case label = "label"
     }
 }

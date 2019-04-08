@@ -68,7 +68,7 @@ final public class WebAPI: NSObject {
             urlRequest.addValue(token, forHTTPHeaderField: "Authorization")
         }
         
-        if method == APIConst.generateSignedURL {
+        if method == APIConst.generateSignedURL || method == APIConst.message {
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try! JSONManager().encoder.encode(parameter)
         } else

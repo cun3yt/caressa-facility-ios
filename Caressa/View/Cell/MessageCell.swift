@@ -49,7 +49,7 @@ class MessageCell: UITableViewCell {
             
         case .string(let x)?:
             lblTitle.text = x
-            ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.photoGalleryURL, view: ivImage)
+            ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.profilePicture, view: ivImage)
             
         case .none:
             break

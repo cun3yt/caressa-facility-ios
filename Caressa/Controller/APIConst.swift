@@ -34,12 +34,12 @@ public class APIConst {
     public static let messageSignedUrl         = "/api/facility/\(facilityId)/message-signed-urls/"
     
     // MARK: Message thread
-    public static let messageThreads           = "/api/message-threads/#rID#/"
-    public static let messageThreadsMessage    = "/api/message-threads/#rID#/messages/"
+    public static let messageThreads           = "/api/message-threads/%d/"
+    public static let messageThreadsMessage    = "/api/message-threads/%d/messages/"
     
     // MARK: Profile Page
-    public static let users                    = "/api/users/#ID#/"
-    public static let profilePicSignedUrl      = "/api/users/#ID#/uploaded_new_profile_picture/"
+    public static let users                    = "/api/users/%d/"
+    public static let profilePicSignedUrl      = "/api/users/%d/uploaded_new_profile_picture/"
     
     // MARK: Photo Gallery
     public static let photoGallery             = "/api/photo-galleries/\(facilityId)/"

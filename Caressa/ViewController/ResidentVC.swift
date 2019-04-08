@@ -30,7 +30,7 @@ class ResidentVC: UIViewController {
             SessionManager.shared.facility = response
 
             DispatchQueue.main.async {
-                ImageManager.shared.downloadImage(url: response.photoGalleryURL, view: self.ivFacility)
+                ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
                 self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = String(response.numberOfUnreadNotifications)
             }
         }

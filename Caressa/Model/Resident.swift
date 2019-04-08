@@ -9,7 +9,7 @@
 import Foundation
 
 struct Resident: Codable {
-    let id: Int?
+    let id: Int
     let firstName: String
     let lastName: String
     let roomNo: String

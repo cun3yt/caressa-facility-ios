@@ -12,6 +12,9 @@ class ImageManager: NSObject {
     
     static let shared: ImageManager = ImageManager()
     
+    private lazy var imagePicker = UIImagePickerController()
+    private var onImageSelect: ((UIImage) -> Void)?
+    
     let mediaURL = "" //APIConst.WebBase + "/public/images/proclamation/"
     let imageCache = NSCache<NSString, UIImage>()
     
@@ -112,5 +115,37 @@ class ImageManager: NSObject {
         let imageData = img?.jpegData(compressionQuality: compressionQuality)
         UIGraphicsEndImageContext()
         return UIImage(data: imageData!) ?? UIImage()
+    }
+    
+    func takePhoto(view: UIViewController, completion: ((UIImage) -> Void)? = nil) {
+        
+        let prompt = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        prompt.addAction(UIAlertAction(title: "Camera", style: .default) { (_) in
+            self.takePhoto(from: .camera, view: view, completion: completion)
+        })
+        prompt.addAction(UIAlertAction(title: "Photo Libary", style: .default) { (_) in
+            self.takePhoto(from: .photoLibrary, view: view, completion: completion)
+        })
+        prompt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        view.present(prompt, animated: true)
+    }
+    
+    func takePhoto(from: UIImagePickerController.SourceType, view: UIViewController, completion: ((UIImage) -> Void)? = nil) {
+        if UIImagePickerController.isSourceTypeAvailable(from){
+            imagePicker.delegate = self
+            imagePicker.sourceType = from
+            imagePicker.allowsEditing = false
+            
+            view.present(imagePicker, animated: true)
+            onImageSelect = completion
+        }
+    }
+}
+
+extension ImageManager: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        imagePicker.dismiss(animated: true)
+        onImageSelect?(info[.originalImage] as! UIImage)
     }
 }

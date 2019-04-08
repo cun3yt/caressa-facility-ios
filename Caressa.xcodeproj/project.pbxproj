@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9DAFAB8A9A087D3D29DE7514 /* Pods_Caressa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */; };
 		BD12354922528A4F00FF1638 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12354822528A4F00FF1638 /* User.swift */; };
 		BD12354B225296C700FF1638 /* AmazonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12354A225296C700FF1638 /* AmazonModel.swift */; };
+		BD145CA72257D1A40040BAAC /* SendMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CA62257D1A40040BAAC /* SendMessage.swift */; };
+		BD145CAA2258B19A0040BAAC /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CA82258B19A0040BAAC /* CalendarCell.swift */; };
+		BD145CAB2258B19A0040BAAC /* CalendarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD145CA92258B19A0040BAAC /* CalendarCell.xib */; };
+		BD145CAD2258C5BB0040BAAC /* PhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CAC2258C5BB0040BAAC /* PhotosVC.swift */; };
+		BD145CB02258C61C0040BAAC /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CAE2258C61C0040BAAC /* PhotoCell.swift */; };
+		BD145CB12258C61C0040BAAC /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD145CAF2258C61C0040BAAC /* PhotoCell.xib */; };
+		BD145CB72258D1010040BAAC /* PhotoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CB62258D1010040BAAC /* PhotoHeaderView.swift */; };
+		BD145CB92258EBBF0040BAAC /* PusherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD145CB82258EBBF0040BAAC /* PusherManager.swift */; };
 		BD14E65C224F4BAE001B12BE /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E65B224F4BAE001B12BE /* CalendarVC.swift */; };
 		BD14E65E224F5879001B12BE /* NewMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E65D224F5879001B12BE /* NewMemberVC.swift */; };
 		BD14E660224F61DD001B12BE /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14E65F224F61DD001B12BE /* NewMessageVC.swift */; };
@@ -51,8 +60,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caressa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.release.xcconfig"; sourceTree = "<group>"; };
 		BD12354822528A4F00FF1638 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD12354A225296C700FF1638 /* AmazonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonModel.swift; sourceTree = "<group>"; };
+		BD145CA62257D1A40040BAAC /* SendMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessage.swift; sourceTree = "<group>"; };
+		BD145CA82258B19A0040BAAC /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		BD145CA92258B19A0040BAAC /* CalendarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCell.xib; sourceTree = "<group>"; };
+		BD145CAC2258C5BB0040BAAC /* PhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosVC.swift; sourceTree = "<group>"; };
+		BD145CAE2258C61C0040BAAC /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		BD145CAF2258C61C0040BAAC /* PhotoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
+		BD145CB62258D1010040BAAC /* PhotoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoHeaderView.swift; sourceTree = "<group>"; };
+		BD145CB82258EBBF0040BAAC /* PusherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherManager.swift; sourceTree = "<group>"; };
 		BD14E65B224F4BAE001B12BE /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		BD14E65D224F5879001B12BE /* NewMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMemberVC.swift; sourceTree = "<group>"; };
 		BD14E65F224F61DD001B12BE /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
@@ -94,6 +113,7 @@
 		BD999F472246226500F7D1AB /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
 		BDEBA83C224FA642005F3EDE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,12 +121,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DAFAB8A9A087D3D29DE7514 /* Pods_Caressa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9429D26D7604FD6717C04EBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BD553113224660880062F894 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +145,11 @@
 				BD55311B2247911D0062F894 /* MessageCell.xib */,
 				BD14E661224F6984001B12BE /* MessageThreadCell.swift */,
 				BD14E662224F6984001B12BE /* MessageThreadCell.xib */,
+				BD145CA82258B19A0040BAAC /* CalendarCell.swift */,
+				BD145CA92258B19A0040BAAC /* CalendarCell.xib */,
+				BD145CAE2258C61C0040BAAC /* PhotoCell.swift */,
+				BD145CAF2258C61C0040BAAC /* PhotoCell.xib */,
+				BD145CB62258D1010040BAAC /* PhotoHeaderView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -125,6 +159,8 @@
 			children = (
 				BD999F1C224570DE00F7D1AB /* Caressa */,
 				BD999F1B224570DE00F7D1AB /* Products */,
+				E1E06B96341BF3632605B386 /* Pods */,
+				9429D26D7604FD6717C04EBA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +199,7 @@
 				BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */,
 				BDEBA83C224FA642005F3EDE /* SettingsVC.swift */,
 				BD159BC6225685A100701370 /* SearchVC.swift */,
+				BD145CAC2258C5BB0040BAAC /* PhotosVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -178,6 +215,7 @@
 				BD14E667224F6E52001B12BE /* Message.swift */,
 				BD12354822528A4F00FF1638 /* User.swift */,
 				BD12354A225296C700FF1638 /* AmazonModel.swift */,
+				BD145CA62257D1A40040BAAC /* SendMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,8 +246,18 @@
 				BD6F378B2255FD0000BB133F /* Protocol.swift */,
 				BD6F378D2255FD5500BB133F /* AudioPlayer.swift */,
 				BD159BC82256978C00701370 /* AudioRecorder.swift */,
+				BD145CB82258EBBF0040BAAC /* PusherManager.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		E1E06B96341BF3632605B386 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */,
+				AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,9 +267,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD999F2C224570DF00F7D1AB /* Build configuration list for PBXNativeTarget "Caressa" */;
 			buildPhases = (
+				BB2FDAC3250FDBB856E2FDCB /* [CP] Check Pods Manifest.lock */,
 				BD999F16224570DE00F7D1AB /* Sources */,
 				BD999F17224570DE00F7D1AB /* Frameworks */,
 				BD999F18224570DE00F7D1AB /* Resources */,
+				C31EC498AC8DBB8D5AD783D6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -270,9 +320,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD145CB12258C61C0040BAAC /* PhotoCell.xib in Resources */,
 				BD55311D2247911D0062F894 /* MessageCell.xib in Resources */,
 				BD14E664224F6984001B12BE /* MessageThreadCell.xib in Resources */,
 				BD999F28224570DF00F7D1AB /* LaunchScreen.storyboard in Resources */,
+				BD145CAB2258B19A0040BAAC /* CalendarCell.xib in Resources */,
 				BD999F25224570DF00F7D1AB /* Assets.xcassets in Resources */,
 				BD999F23224570DE00F7D1AB /* Main.storyboard in Resources */,
 				BD553112224660810062F894 /* ResidentCell.xib in Resources */,
@@ -280,6 +332,61 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BB2FDAC3250FDBB856E2FDCB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Caressa-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C31EC498AC8DBB8D5AD783D6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BD999F16224570DE00F7D1AB /* Sources */ = {
@@ -293,18 +400,23 @@
 				BD14E65C224F4BAE001B12BE /* CalendarVC.swift in Sources */,
 				BD14E668224F6E52001B12BE /* Message.swift in Sources */,
 				BD553111224660810062F894 /* ResidentCell.swift in Sources */,
+				BD145CAA2258B19A0040BAAC /* CalendarCell.swift in Sources */,
+				BD145CA72257D1A40040BAAC /* SendMessage.swift in Sources */,
 				BD55310C22464A900062F894 /* ResidentVC.swift in Sources */,
 				BD14E65E224F5879001B12BE /* NewMemberVC.swift in Sources */,
 				BD999F44224571E400F7D1AB /* APIConst.swift in Sources */,
 				BD12354922528A4F00FF1638 /* User.swift in Sources */,
 				BD999F4622457E7F00F7D1AB /* BaseModel.swift in Sources */,
 				BD999F40224571E400F7D1AB /* JSONManager.swift in Sources */,
+				BD145CB92258EBBF0040BAAC /* PusherManager.swift in Sources */,
 				BD999F42224571E400F7D1AB /* SessionManager.swift in Sources */,
 				BD553115224662030062F894 /* View+Extension.swift in Sources */,
 				BD999F3E224571E400F7D1AB /* ImageManager.swift in Sources */,
 				BDEBA83B224F9766005F3EDE /* ProfilePageVC.swift in Sources */,
+				BD145CB02258C61C0040BAAC /* PhotoCell.swift in Sources */,
 				BD14E660224F61DD001B12BE /* NewMessageVC.swift in Sources */,
 				BD999F20224570DE00F7D1AB /* LoginVC.swift in Sources */,
+				BD145CB72258D1010040BAAC /* PhotoHeaderView.swift in Sources */,
 				BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */,
 				BD999F482246226500F7D1AB /* Login.swift in Sources */,
 				BD5531192246B4950062F894 /* Resident.swift in Sources */,
@@ -317,6 +429,7 @@
 				BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */,
 				BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */,
 				BD553117224669C20062F894 /* Facility.swift in Sources */,
+				BD145CAD2258C5BB0040BAAC /* PhotosVC.swift in Sources */,
 				BDEBA83D224FA642005F3EDE /* SettingsVC.swift in Sources */,
 				BD999F43224571E400F7D1AB /* WebService.swift in Sources */,
 				BD159BC7225685A100701370 /* SearchVC.swift in Sources */,
@@ -464,6 +577,7 @@
 		};
 		BD999F2D224570DF00F7D1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -483,6 +597,7 @@
 		};
 		BD999F2E224570DF00F7D1AB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

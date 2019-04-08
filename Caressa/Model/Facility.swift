@@ -15,6 +15,7 @@ struct FacilityResponse: Codable {
     let timezone: String
     let photoGalleryURL: String
     let mockStatus: Bool
+    let profilePicture: String
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
@@ -23,5 +24,6 @@ struct FacilityResponse: Codable {
         case timezone = "timezone"
         case photoGalleryURL = "photo_gallery_url"
         case mockStatus = "mock_status"
+        case profilePicture = "profile_picture"
     }
 }

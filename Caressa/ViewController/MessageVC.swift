@@ -21,6 +21,7 @@ class MessageVC: UIViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivFacility = WindowManager.setup(vc: self, title: "Messages")
+        ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
         setup()
     }
     

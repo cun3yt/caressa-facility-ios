@@ -144,7 +144,8 @@ class WindowManager: NSObject {
         profile.clipsToBounds = true
         profile.layer.cornerRadius = headerHeight / 2
  
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: headerWidth, height: headerHeight))
+        let titleLabel = UILabel(frame: CGRect(x: 6, y: 0, width: headerWidth, height: headerHeight))
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.text = title
         titleLabel.textColor = .white
         

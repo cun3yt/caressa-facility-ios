@@ -25,7 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>I want to access your photos.</string>
+	<string>Please let me access your photo album.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please let me access your camera.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

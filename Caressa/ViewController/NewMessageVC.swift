@@ -29,7 +29,8 @@ class NewMessageVC: UIViewController {
     @IBOutlet weak var lcAudioBtnWidth: NSLayoutConstraint!
     
     private var audioRecorder: AudioRecorder?
-    
+    private var sendAudio: Bool = false
+    private var audioURL: URL?
     private let textViewPlaceholder = "Message..."
     private var to: Resident?
 
@@ -75,20 +76,30 @@ class NewMessageVC: UIViewController {
     
     @IBAction func btnAllAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        if sender.isSelected {
-            vTo.isUserInteractionEnabled = false
-            vTo.alpha = 0.5
-        }
+        vTo.isUserInteractionEnabled = !sender.isSelected
+        vTo.alpha = sender.isSelected ? 0.5 : 1.0
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
+        send()
+    }
+    
+    @IBAction func requestAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
     }
     
     @IBAction func audioAction(_ sender: UIButton) {
-        if audioRecorder?.isRecording ?? false {
-            audioRecorder?.stopRecording(success: true)
+        if sendAudio {
+            sendAudio = false
             sender.setTitle(nil, for: .normal)
             lcAudioBtnWidth.constant = 40
+            if let audio = self.audioURL {
+                uploadAudio(filename: audio)
+            }
+        } else if audioRecorder?.isRecording ?? false {
+            audioURL = audioRecorder?.stopRecording(success: true)
+            sendAudio = true
+            sender.setTitle("Send Audio", for: .normal)
         } else {
             lcAudioBtnWidth.constant = 250
             sender.setTitle("Recording...", for: .normal)
@@ -98,6 +109,52 @@ class NewMessageVC: UIViewController {
         }
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func send(uploaded url: String? = nil) {
+        guard let to = to,
+            let text = txtMessage.text else { return }
+        
+        var messageType = "Message"
+        if btnBroadcast.isSelected { messageType = "Brodcast" }
+        if btnAnnounce.isSelected { messageType = "Announce" }
+        
+        var message = Message(format: .text, content: text, contentAudioFile: nil)
+        if let url = url {
+           message = Message(format: .audio, content: nil, contentAudioFile: url)
+        }
+        
+        let param = SendMessageRequest(to: to.id, messageType: messageType, message: message, requestReply: btnRequest.isSelected)
+        
+        WebAPI.shared.post(APIConst.message, parameter: param) { (response: SendMessageResponse) in
+            
+            if let detail = response.detail {
+                WindowManager.showMessage(type: .error, message: detail)
+            } else {
+                WindowManager.showMessage(type: .success, message: "Message Sent!")
+            }
+            
+        }
+    }
+    
+    func uploadAudio(filename: URL) {
+        guard let data = try? Data(contentsOf: filename) else { return }
+        
+        let key = "\(filename.lastPathComponent)\(UUID().uuidString.prefix(4))"
+        let param = PresignedRequest(key: key,
+                                     contentType: "audio/mpeg",
+                                     clientMethod: "put_object",
+                                     requestType: "PUT")
+        
+        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: PresignedResponse) in
+            
+            WebAPI.shared.put(response.url, parameter: data, completion: { (success) in
+                
+                DispatchQueue.main.async {
+                    self.send(uploaded: response.url)
+                }
+            })
         }
     }
     
@@ -141,8 +198,9 @@ extension NewMessageVC: UITextViewDelegate {
 
 extension NewMessageVC: AudioRecorderDelegate {
     func stopped() {
-        btnAudio.setTitle(nil, for: .normal)
-        lcAudioBtnWidth.constant = 40
+        sendAudio = true
+        btnAudio.setTitle("Send Audio", for: .normal)
+        //lcAudioBtnWidth.constant = 40
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
         }

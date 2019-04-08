@@ -10,7 +10,6 @@ import UIKit
 
 class ProfilePageVC: UIViewController {
 
-    //@IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var ivProfile: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblFamilyName: UILabel!
@@ -39,12 +38,9 @@ class ProfilePageVC: UIViewController {
     }
     
     @IBAction func changeProfileAction(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum
-            imagePicker.allowsEditing = false
-            
-            present(imagePicker, animated: true, completion: nil)
+        
+        ImageManager.shared.takePhoto(view: self) { (image) in
+            self.changeProfilePhoto(image: image)
         }
     }
     
@@ -66,7 +62,7 @@ class ProfilePageVC: UIViewController {
             
             WebAPI.shared.put(response.url, parameter: imageData!, completion: { (success) in
                 
-                WebAPI.shared.post(APIConst.profilePicSignedUrl.replacingOccurrences(of: "#ID#", with: "\(self.resident.id ?? 100)"),
+                WebAPI.shared.post(String(format: APIConst.profilePicSignedUrl, self.resident.id),
                                    parameter: UploadedNewPhoto(key: key),
                                    completion: { (responsePhoto: NewPhotoResponse) in
                                     
@@ -90,7 +86,7 @@ class ProfilePageVC: UIViewController {
     
     func setup() {
         
-        WebAPI.shared.get(APIConst.users.replacingOccurrences(of: "#ID#", with: "\(resident.id ?? 1)")) { (u: User) in
+        WebAPI.shared.get(String(format: APIConst.users, resident.id)) { (u: User) in
             DispatchQueue.main.async {
                 ImageManager.shared.downloadImage(suffix: u.profilePictureURL, view: self.ivProfile)
                 ImageManager.shared.downloadImage(url: u.profilePictureURL, view: self.ivHeaderProfile)
@@ -103,16 +99,9 @@ class ProfilePageVC: UIViewController {
                 self.lblMoveIn.text = u.moveInData
                 self.lblRoom.text = u.roomNo
                 self.lblService.text = u.serviceType
-                self.lblMorningStatus.text = u.morningStatus
+                self.lblMorningStatus.text = u.morningStatus?.label
             }
         }
     }
 
-}
-
-extension ProfilePageVC: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imagePicker.dismiss(animated: true)
-        changeProfilePhoto(image: info[.originalImage] as? UIImage)
-    }
 }

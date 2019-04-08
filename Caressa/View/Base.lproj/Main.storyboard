@@ -316,10 +316,10 @@ Login</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bIM-yL-ggE">
-                                <rect key="frame" x="245" y="28" width="120" height="84"/>
+                                <rect key="frame" x="245" y="28" width="120" height="82"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkK-sm-pvt">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="28"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="27.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -331,7 +331,7 @@ Login</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNm-ll-xPa">
-                                        <rect key="frame" x="0.0" y="28" width="120" height="28"/>
+                                        <rect key="frame" x="0.0" y="27.5" width="120" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -343,7 +343,7 @@ Login</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeB-bJ-1SJ">
-                                        <rect key="frame" x="0.0" y="56" width="120" height="28"/>
+                                        <rect key="frame" x="0.0" y="54.5" width="120" height="27.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -360,7 +360,7 @@ Login</string>
                                 </constraints>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Message..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AOn-vJ-tFO">
-                                <rect key="frame" x="10" y="120" width="355" height="150"/>
+                                <rect key="frame" x="10" y="118" width="355" height="150"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="7sD-DK-e99"/>
@@ -380,7 +380,7 @@ Login</string>
                                 </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bzz-pE-SVL">
-                                <rect key="frame" x="53.5" y="90" width="183.5" height="24"/>
+                                <rect key="frame" x="53.5" y="90" width="183.5" height="22"/>
                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="All Residents" image="uncheck_square">
@@ -391,7 +391,7 @@ Login</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Syq-cn-46x">
-                                <rect key="frame" x="10" y="278" width="355" height="38"/>
+                                <rect key="frame" x="10" y="276" width="355" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="hgz-MS-7P9"/>
                                 </constraints>
@@ -409,6 +409,9 @@ Login</string>
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="requestAction:" destination="bMl-B1-0X4" eventType="touchUpInside" id="JB0-Pm-d6v"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a1e-cU-Fpt">
                                 <rect key="frame" x="0.0" y="587" width="375" height="80"/>
@@ -531,7 +534,7 @@ Login</string>
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="smX-0w-FMQ">
-                                <rect key="frame" x="0.0" y="20" width="336" height="56"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="6bu-pT-dOl" id="auo-py-en4"/>
@@ -617,13 +620,36 @@ Login</string>
                     <view key="view" contentMode="scaleToFill" id="gGv-OF-GQ5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="32" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2hX-GM-zAa">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="iZj-5H-upz" id="XGF-X6-jS6"/>
+                                    <outlet property="delegate" destination="iZj-5H-upz" id="bes-Z3-SYE"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rbr-xW-KLX" firstAttribute="bottom" secondItem="2hX-GM-zAa" secondAttribute="bottom" id="Mn2-D7-eDm"/>
+                            <constraint firstItem="2hX-GM-zAa" firstAttribute="leading" secondItem="rbr-xW-KLX" secondAttribute="leading" id="h4e-dT-GDG"/>
+                            <constraint firstItem="2hX-GM-zAa" firstAttribute="top" secondItem="rbr-xW-KLX" secondAttribute="top" id="k4V-wn-XvE"/>
+                            <constraint firstItem="rbr-xW-KLX" firstAttribute="trailing" secondItem="2hX-GM-zAa" secondAttribute="trailing" id="kkd-8i-XER"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="rbr-xW-KLX"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="calendar" id="P5p-PR-nmk"/>
                     <navigationItem key="navigationItem" title="Calendar" id="a8j-VS-hRj">
-                        <barButtonItem key="rightBarButtonItem" title="Today" id="rM0-DY-BVy"/>
+                        <barButtonItem key="rightBarButtonItem" title="Today" id="rM0-DY-BVy">
+                            <connections>
+                                <action selector="todayAction" destination="iZj-5H-upz" id="nb8-Gg-blR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="2hX-GM-zAa" id="ApC-B4-Jyf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XIK-J2-3Jw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -991,6 +1017,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="lxw-tb-htL">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.27058823529999998" green="0.47843137250000001" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1007,19 +1034,105 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <!--Photos-->
         <scene sceneID="DhW-b5-7Tu">
             <objects>
-                <viewController id="gXl-Bs-0Se" sceneMemberID="viewController">
+                <viewController id="gXl-Bs-0Se" customClass="PhotosVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IVy-Z1-ZQg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UwQ-Gg-OPv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWm-eb-hd4">
+                                    <size key="itemSize" width="86" height="86"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ZpQ-KG-cWE">
+                                        <rect key="frame" x="0.0" y="50" width="86" height="86"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="header" id="3nX-t7-S5n" customClass="PhotoHeaderView" customModule="Caressa" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2Y-4L-2yT">
+                                            <rect key="frame" x="20" y="14.5" width="43.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="centerY" secondItem="3nX-t7-S5n" secondAttribute="centerY" id="2kM-Ct-wxh"/>
+                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="leading" secondItem="3nX-t7-S5n" secondAttribute="leading" constant="20" id="Pmw-Ae-YFS"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="lblTitle" destination="s2Y-4L-2yT" id="xJf-Yn-V0M"/>
+                                    </connections>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="footer" id="z0c-Mn-GNB" customClass="PhotoFooterView" customModule="Caressa" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="136" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fB0-dq-GUX">
+                                            <rect key="frame" x="275" y="8" width="80" height="34"/>
+                                            <state key="normal" title="10 more...">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="fB0-dq-GUX" secondAttribute="trailing" constant="20" id="tYG-bM-9go"/>
+                                        <constraint firstItem="fB0-dq-GUX" firstAttribute="centerY" secondItem="z0c-Mn-GNB" secondAttribute="centerY" id="ypJ-Cl-2Uk"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="btnMore" destination="fB0-dq-GUX" id="DcV-2U-Ibs"/>
+                                    </connections>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="gXl-Bs-0Se" id="ymo-U3-7v3"/>
+                                    <outlet property="delegate" destination="gXl-Bs-0Se" id="lOi-gV-SxD"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QLi-hG-L8a" firstAttribute="bottom" secondItem="UwQ-Gg-OPv" secondAttribute="bottom" id="AAE-fC-mCx"/>
+                            <constraint firstItem="QLi-hG-L8a" firstAttribute="trailing" secondItem="UwQ-Gg-OPv" secondAttribute="trailing" id="KA8-hc-akP"/>
+                            <constraint firstItem="UwQ-Gg-OPv" firstAttribute="top" secondItem="QLi-hG-L8a" secondAttribute="top" id="fSZ-fZ-Kfw"/>
+                            <constraint firstItem="UwQ-Gg-OPv" firstAttribute="leading" secondItem="QLi-hG-L8a" secondAttribute="leading" id="gqI-7K-dGK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="QLi-hG-L8a"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="gallery" id="uDd-xs-4Me"/>
-                    <navigationItem key="navigationItem" title="Photos" id="oxE-tP-nTs"/>
+                    <navigationItem key="navigationItem" title="Photos" id="oxE-tP-nTs">
+                        <rightBarButtonItems>
+                            <barButtonItem image="camera" id="8VM-k2-V9P">
+                                <connections>
+                                    <action selector="btnCameraAction:" destination="gXl-Bs-0Se" id="6GH-hV-QTM"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="photo" id="R2a-DN-rza">
+                                <connections>
+                                    <action selector="btnPhotoAction:" destination="gXl-Bs-0Se" id="0j8-3b-bmn"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="UwQ-Gg-OPv" id="6wl-Ny-5pC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpT-L2-eDr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="71" y="2981"/>
+            <point key="canvasLocation" x="69.599999999999994" y="2980.6596701649178"/>
         </scene>
         <!--Item-->
         <scene sceneID="2hj-KM-pOz">
@@ -1192,6 +1305,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="Logo" width="975" height="234"/>
         <image name="add" width="24" height="24"/>
         <image name="calendar" width="25" height="25"/>
+        <image name="camera" width="32" height="32"/>
         <image name="chat" width="32" height="32"/>
         <image name="gallery" width="32" height="32"/>
         <image name="message" width="25" height="25"/>
@@ -1199,6 +1313,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="new_chat" width="32" height="32"/>
         <image name="people" width="25" height="25"/>
         <image name="phone" width="32" height="32"/>
+        <image name="photo" width="32" height="32"/>
         <image name="radio_checked" width="16" height="16"/>
         <image name="settings" width="32" height="32"/>
         <image name="sort" width="16" height="16"/>

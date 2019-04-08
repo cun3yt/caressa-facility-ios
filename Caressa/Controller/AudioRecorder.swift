@@ -53,13 +53,18 @@ class AudioRecorder: NSObject {
         
     }
     
-    func stopRecording(success: Bool) {
+    @discardableResult func stopRecording(success: Bool) ->  URL? {
         recorder?.stop()
+        var url: URL?
+        if let u = recorder?.url {
+            url = u
+        }
         recorder = nil
         
         delegate?.stopped()
         
         //timer?.invalidate()
+        return url
     }
     
     func directory() -> URL? {
