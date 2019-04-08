@@ -27,7 +27,7 @@ class LoginVC: UIViewController {
     }
     
     
-    @IBAction func loginAction(_ sender: UIButton) {
+    @IBAction func loginAction(_ sender: UIButton?) {
         guard let user = txtEmail.text,
             let pass = txtPassword.text,
             !user.isEmpty, !pass.isEmpty else {
@@ -78,3 +78,15 @@ class LoginVC: UIViewController {
     
 }
 
+extension LoginVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == txtEmail {
+            txtPassword.becomeFirstResponder()
+        } else
+            if textField == txtPassword {
+                txtPassword.resignFirstResponder()
+                loginAction(nil)
+        }
+        return true
+    }
+}

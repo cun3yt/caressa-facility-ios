@@ -40,7 +40,7 @@ class PhotosVC: UIViewController {
     }
     
     @IBAction func btnPhotoAction(_ sender: UIBarButtonItem) {
-        ImageManager.shared.takePhoto(from: .camera, view: self) { (image) in
+        ImageManager.shared.takePhoto(from: .photoLibrary, view: self) { (image) in
             
         }
     }
