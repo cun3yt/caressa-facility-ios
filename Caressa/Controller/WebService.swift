@@ -26,7 +26,7 @@ final public class WebAPI: NSObject {
     public func put(_ method: String, parameter: Data, completion: ((Bool) -> Void)? = nil) {
         guard let url = URL(string: method) else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
         urlRequest.httpMethod = "PUT"
         urlRequest.httpBody = parameter
@@ -68,7 +68,10 @@ final public class WebAPI: NSObject {
             urlRequest.addValue(token, forHTTPHeaderField: "Authorization")
         }
         
-        if method == APIConst.generateSignedURL || method == APIConst.message {
+        if method == APIConst.generateSignedURL ||
+            method == APIConst.message ||
+            method.contains("uploaded_new_profile_picture")
+        {
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try! JSONManager().encoder.encode(parameter)
         } else

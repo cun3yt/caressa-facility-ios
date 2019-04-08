@@ -77,7 +77,12 @@ extension PhotosVC: UICollectionViewDataSource {
 }
 
 extension PhotosVC: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let imageInfo   = GSImageInfo(image: album[indexPath.row], imageMode: .aspectFit)
+        let transitionInfo = GSTransitionInfo(fromView: collectionView.cellForItem(at: indexPath)!)
+        let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+        present(imageViewer, animated: true)
+    }
 }
 
 extension PhotosVC: UICollectionViewDelegateFlowLayout {

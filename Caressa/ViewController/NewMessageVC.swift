@@ -14,6 +14,7 @@ protocol NewMessageVCDelegate {
 
 class NewMessageVC: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ivProfile: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblRoomNo: UILabel!
@@ -38,6 +39,7 @@ class NewMessageVC: UIViewController {
         super.viewDidLoad()
 
         setup()
+        registerForKeyboardNotifications()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -46,12 +48,17 @@ class NewMessageVC: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(false)
+    }
+    
     @IBAction func cancelAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
  
     @IBAction func typeAction(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        sender.isSelected = true
         switch sender {
         case btnMessage:
             if sender.isSelected {
@@ -178,6 +185,32 @@ class NewMessageVC: UIViewController {
         lblName.text = "\(to.firstName) \(to.lastName)"
         lblRoomNo.text = "Room No # \(to.roomNo)"
     }
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardAppear(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardDisappear(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    @objc func onKeyboardAppear(_ notification: NSNotification) {
+        let info = notification.userInfo!
+        let rect: CGRect = info[UIResponder.keyboardFrameBeginUserInfoKey] as! CGRect
+        let kbSize = rect.size
+        
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: kbSize.height, right: 0)
+        scrollView.contentInset = insets
+        scrollView.scrollIndicatorInsets = insets
+        
+    }
+    
+    @objc func onKeyboardDisappear(_ notification: NSNotification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
 }
 
 extension NewMessageVC: NewMessageVCDelegate {
@@ -193,6 +226,20 @@ extension NewMessageVC: UITextViewDelegate {
             textView.text = nil
         }
         return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Message..."
+            textView.textColor = .lightGray
+        }
     }
 }
 

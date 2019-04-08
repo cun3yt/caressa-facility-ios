@@ -9,15 +9,16 @@
 import UIKit
 
 class SettingsVC: UIViewController {
-
+    
+    @IBOutlet weak var ivFacility: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let imageView = UIImageView(image: UIImage(named: "Logo"))
-        imageView.cornerRadius = imageView.frame.height / 2
-        imageView.contentMode = .scaleAspectFit
-        imageView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 40))
-        navigationItem.leftBarButtonItem?.customView = imageView
+        ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture,
+                                          view: WindowManager.setup(vc: self, title: "Settings"))
+        ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.profilePicture,
+                                          view: ivFacility)
     }
     
     @IBAction func logoutAction() {
@@ -25,4 +26,16 @@ class SettingsVC: UIViewController {
         WindowManager.pushToLoginVC()
     }
 
+    @IBAction func changeProfileAction(_ sender: UIButton) {
+        
+        ImageManager.shared.takePhoto(view: self) { (image) in
+            self.changeProfilePhoto(image: image)
+        }
+    }
+    
+    func changeProfilePhoto(image: UIImage?) {
+        //guard let image = image else { return }
+        
+        // to be continue...
+    }
 }

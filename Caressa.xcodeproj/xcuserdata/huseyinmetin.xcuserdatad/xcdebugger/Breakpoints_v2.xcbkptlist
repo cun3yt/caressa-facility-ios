@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Caressa/ViewController/NewMessageVC.swift"
-            timestampString = "576252145.941337"
+            timestampString = "576451062.735725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "send(uploaded:)"
             landmarkType = "7">
          </BreakpointContent>

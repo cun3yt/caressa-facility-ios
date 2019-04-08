@@ -19,7 +19,7 @@ class MorningStatusVC: UIViewController {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "ResidentCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivImage = WindowManager.setup(vc: self, title: "Morning Status")
-        navigationItem.leftItemsSupplementBackButton = false
+        ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivImage)
         setup()
     }
     
@@ -62,6 +62,7 @@ extension MorningStatusVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ResidentCell
         let resident = residents[indexPath.section][indexPath.row]
         cell.setup(resident: resident)
+        cell.navigationController = self.navigationController
         cell.delegate = self
         if let ci = resident.checkInInfo, let by = ci.checkedBy, let tm = ci.checkInTime {
             cell.lblDetail.text = "By: \(by) @ \(DateManager("hh:mm a").string(date: tm))"
