@@ -38,6 +38,9 @@ class NewMessageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let tap = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        self.view.addGestureRecognizer(tap)
+        
         setup()
         registerForKeyboardNotifications()
     }
@@ -46,11 +49,6 @@ class NewMessageVC: UIViewController {
         if let searchVC = segue.destination as? SearchVC {
             searchVC.delegate = self
         }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.view.endEditing(false)
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -191,6 +189,10 @@ class NewMessageVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardDisappear(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
+    @objc func endEditing() {
+        self.view.endEditing(true)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -224,20 +226,14 @@ extension NewMessageVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == textViewPlaceholder {
             textView.text = nil
+            textView.textColor = .black
         }
         return true
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray {
-            textView.text = nil
-            textView.textColor = .black
-        }
-    }
-    
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Message..."
+            textView.text = textViewPlaceholder
             textView.textColor = .lightGray
         }
     }

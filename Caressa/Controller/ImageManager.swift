@@ -84,7 +84,7 @@ class ImageManager: NSObject {
         }
     }
     
-    func resize(_ image: UIImage, width: CGFloat) -> UIImage {
+    func resizeAspect(_ image: UIImage, width: CGFloat) -> UIImage {
         var actualHeight = image.size.height
         var actualWidth = image.size.width
         let maxHeight: CGFloat = width
@@ -117,6 +117,34 @@ class ImageManager: NSObject {
         return UIImage(data: imageData!) ?? UIImage()
     }
     
+    func crop(_ image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
+        let cgimage = image.cgImage!
+        let contextImage: UIImage = UIImage(cgImage: cgimage)
+        let contextSize: CGSize = contextImage.size
+        var posX: CGFloat = 0.0
+        var posY: CGFloat = 0.0
+        var cgwidth: CGFloat = width
+        var cgheight: CGFloat = height
+        
+        if contextSize.width > contextSize.height {
+            posX = ((contextSize.width - contextSize.height) / 2)
+            posY = 0
+            cgwidth = contextSize.height
+            cgheight = contextSize.height
+        } else {
+            posX = 0
+            posY = ((contextSize.height - contextSize.width) / 2)
+            cgwidth = contextSize.width
+            cgheight = contextSize.width
+        }
+        
+        let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
+        let imageRef: CGImage = cgimage.cropping(to: rect)!
+        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+        
+        return image
+    }
+    
     func takePhoto(view: UIViewController, completion: ((UIImage) -> Void)? = nil) {
         
         let prompt = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -141,11 +169,27 @@ class ImageManager: NSObject {
             onImageSelect = completion
         }
     }
+    
+    func fixOrientation(image: UIImage) -> UIImage {
+        if (image.imageOrientation == .up) { return image }
+        
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        image.draw(in: rect)
+        
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return normalizedImage
+    }
 }
 
 extension ImageManager: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imagePicker.dismiss(animated: true)
-        onImageSelect?(info[.originalImage] as! UIImage)
+        let image = fixOrientation(image:  info[.originalImage] as! UIImage )
+        let width = image.size.width
+        let height = image.size.height
+        onImageSelect?( crop(image, width: width, height: height) )
     }
 }
