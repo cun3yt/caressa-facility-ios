@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Caressa Facility</string>
+	<string>Facility App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconName</key>
@@ -24,10 +24,12 @@
 	<string>4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please let me access your photo album.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please let me access your camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please let me access your microphone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please let me access your photo album.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -49,7 +51,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Please let me access your microphone.</string>
 </dict>
 </plist>

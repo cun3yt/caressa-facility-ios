@@ -15,6 +15,7 @@ class SearchVC: UIViewController {
     
     private var residents: [Resident] = []
     private var filteredResidents: [Resident] = []
+    private var filtered: Bool = false
     
     public var delegate: NewMessageVCDelegate?
     
@@ -36,11 +37,7 @@ class SearchVC: UIViewController {
     }
     
     func search(searchText: String) {
-        guard searchText.count >= 1 else {
-            filteredResidents.removeAll()
-            tableView.reloadData()
-            return
-        }
+        filtered = !searchText.isEmpty
         
         filteredResidents = residents.filter({ (r) -> Bool in
             return r.firstName.lowercased().contains(searchText.lowercased()) ||
@@ -59,9 +56,10 @@ extension SearchVC: UISearchBarDelegate {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let retrn = filteredResidents.isEmpty ? residents.count : filteredResidents.count
+        let retrn = filtered ? filteredResidents.count : residents.count
         if retrn == 0 {
             let noresult = UILabel(frame: .zero)
+            noresult.textAlignment = .center
             noresult.text = "No result found"
             tableView.backgroundView = noresult
         } else {
@@ -72,14 +70,14 @@ extension SearchVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ResidentCell
-        cell.setup(resident: filteredResidents.isEmpty ? residents[indexPath.row] : filteredResidents[indexPath.row] )
+        cell.setup(resident: filtered ? filteredResidents[indexPath.row] : residents[indexPath.row] )
         return cell
     }
 }
 
 extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.selectResident(resident: filteredResidents.isEmpty ? residents[indexPath.row] : filteredResidents[indexPath.row])
+        delegate?.selectResident(resident: filtered ? filteredResidents[indexPath.row] : residents[indexPath.row])
         self.navigationController?.popViewController(animated: true)
     }
 }

@@ -107,9 +107,9 @@ class NewMessageVC: UIViewController {
             sender.setTitle("Send Audio", for: .normal)
         } else {
             lcAudioBtnWidth.constant = 250
-            sender.setTitle("Recording...", for: .normal)
+            sender.setTitle("Stop", for: .normal)
             
-            audioRecorder = AudioRecorder(delegate: self)
+            audioRecorder = AudioRecorder(delegate: self, button: sender)
             audioRecorder!.record(fileName: (to?.firstName ?? "NoName") + UUID().uuidString.prefix(4))
         }
         UIView.animate(withDuration: 0.5) {

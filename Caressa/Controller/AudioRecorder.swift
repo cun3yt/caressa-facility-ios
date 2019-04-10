@@ -12,6 +12,9 @@ import AVKit
 class AudioRecorder: NSObject {
     
     private var recorder: AVAudioRecorder!
+    private var audioButton: UIButton!
+    private var timer: Timer?
+    private let duration: Double  = 120//sec
     
     public var isRecording: Bool {
         get {
@@ -21,9 +24,9 @@ class AudioRecorder: NSObject {
     
     public var delegate: AudioRecorderDelegate?
     
-    init(delegate: AudioRecorderDelegate?) {
+    init(delegate: AudioRecorderDelegate?, button: UIButton) {
         super.init()
-        
+        self.audioButton = button
         self.delegate = delegate
     }
     
@@ -39,18 +42,17 @@ class AudioRecorder: NSObject {
                 do {
                     recorder = try AVAudioRecorder(url: fileName, settings: settings)
                     recorder.delegate = self
-                    recorder.record(forDuration: 3)
+                    recorder.record(forDuration: duration)
                     
                     print(fileName)
                     
-                    //timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
+                    timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
                     
                 } catch {
                     stopRecording(success: false)
                 }
             }
         }
-        
     }
     
     @discardableResult func stopRecording(success: Bool) ->  URL? {
@@ -63,8 +65,20 @@ class AudioRecorder: NSObject {
         
         delegate?.stopped()
         
-        //timer?.invalidate()
+        timer?.invalidate()
         return url
+    }
+    
+    @objc func updateTime() {
+        if timer == nil { return }
+        if let rec = recorder {
+            
+            let time = DateManager.getDateParts(seconds: rec.currentTime)
+            let dur = DateManager.getDateParts(seconds: duration)
+            audioButton.setTitle("STOP " + String(format: "%02d:%02d",  time.1, time.2)
+                + " / " +
+                String(format: "%02d:%02d", dur.1, dur.2), for: .normal)
+        }
     }
     
     func directory() -> URL? {
