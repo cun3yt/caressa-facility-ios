@@ -41,6 +41,8 @@
 		BD55311F224794770062F894 /* MessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311E224794770062F894 /* MessageVC.swift */; };
 		BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378B2255FD0000BB133F /* Protocol.swift */; };
 		BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378D2255FD5500BB133F /* AudioPlayer.swift */; };
+		BD948184225FDB9B004345AB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD948183225FDB9B004345AB /* NotificationService.swift */; };
+		BD948188225FDB9B004345AB /* PusherExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD948181225FDB9B004345AB /* PusherExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1D224570DE00F7D1AB /* AppDelegate.swift */; };
 		BD999F20224570DE00F7D1AB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1F224570DE00F7D1AB /* LoginVC.swift */; };
 		BD999F23224570DE00F7D1AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD999F21224570DE00F7D1AB /* Main.storyboard */; };
@@ -59,6 +61,30 @@
 		BDEBA83B224F9766005F3EDE /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */; };
 		BDEBA83D224FA642005F3EDE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEBA83C224FA642005F3EDE /* SettingsVC.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BD948186225FDB9B004345AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD999F12224570DE00F7D1AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD948180225FDB9B004345AB;
+			remoteInfo = PusherExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BD94818C225FDB9B004345AB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BD948188225FDB9B004345AB /* PusherExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caressa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +122,10 @@
 		BD55311E224794770062F894 /* MessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVC.swift; sourceTree = "<group>"; };
 		BD6F378B2255FD0000BB133F /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		BD6F378D2255FD5500BB133F /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		BD94817C225FD34F004345AB /* Caressa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Caressa.entitlements; sourceTree = "<group>"; };
+		BD948181225FDB9B004345AB /* PusherExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PusherExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD948183225FDB9B004345AB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		BD948185225FDB9B004345AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD999F1A224570DE00F7D1AB /* Caressa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caressa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD999F1D224570DE00F7D1AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD999F1F224570DE00F7D1AB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -119,6 +149,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BD94817E225FDB9B004345AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BD999F17224570DE00F7D1AB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,10 +193,20 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		BD948182225FDB9B004345AB /* PusherExtension */ = {
+			isa = PBXGroup;
+			children = (
+				BD948183225FDB9B004345AB /* NotificationService.swift */,
+				BD948185225FDB9B004345AB /* Info.plist */,
+			);
+			path = PusherExtension;
+			sourceTree = "<group>";
+		};
 		BD999F11224570DE00F7D1AB = {
 			isa = PBXGroup;
 			children = (
 				BD999F1C224570DE00F7D1AB /* Caressa */,
+				BD948182225FDB9B004345AB /* PusherExtension */,
 				BD999F1B224570DE00F7D1AB /* Products */,
 				E1E06B96341BF3632605B386 /* Pods */,
 				9429D26D7604FD6717C04EBA /* Frameworks */,
@@ -170,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				BD999F1A224570DE00F7D1AB /* Caressa.app */,
+				BD948181225FDB9B004345AB /* PusherExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +225,7 @@
 		BD999F1C224570DE00F7D1AB /* Caressa */ = {
 			isa = PBXGroup;
 			children = (
+				BD94817C225FD34F004345AB /* Caressa.entitlements */,
 				BD999F2F2245711800F7D1AB /* ViewController */,
 				BD999F312245714000F7D1AB /* View */,
 				BD999F32224571CB00F7D1AB /* Controller */,
@@ -266,6 +315,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BD948180225FDB9B004345AB /* PusherExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD948189225FDB9B004345AB /* Build configuration list for PBXNativeTarget "PusherExtension" */;
+			buildPhases = (
+				BD94817D225FDB9B004345AB /* Sources */,
+				BD94817E225FDB9B004345AB /* Frameworks */,
+				BD94817F225FDB9B004345AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PusherExtension;
+			productName = PusherExtension;
+			productReference = BD948181225FDB9B004345AB /* PusherExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BD999F19224570DE00F7D1AB /* Caressa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD999F2C224570DF00F7D1AB /* Build configuration list for PBXNativeTarget "Caressa" */;
@@ -275,10 +341,12 @@
 				BD999F17224570DE00F7D1AB /* Frameworks */,
 				BD999F18224570DE00F7D1AB /* Resources */,
 				C31EC498AC8DBB8D5AD783D6 /* [CP] Embed Pods Frameworks */,
+				BD94818C225FDB9B004345AB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BD948187225FDB9B004345AB /* PBXTargetDependency */,
 			);
 			name = Caressa;
 			productName = Caressa;
@@ -291,12 +359,23 @@
 		BD999F12224570DE00F7D1AB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Hüseyin Metin";
 				TargetAttributes = {
+					BD948180225FDB9B004345AB = {
+						CreatedOnToolsVersion = 10.2;
+					};
 					BD999F19224570DE00F7D1AB = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -314,11 +393,19 @@
 			projectRoot = "";
 			targets = (
 				BD999F19224570DE00F7D1AB /* Caressa */,
+				BD948180225FDB9B004345AB /* PusherExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BD94817F225FDB9B004345AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BD999F18224570DE00F7D1AB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,7 +455,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/PushNotifications/PushNotifications.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
@@ -378,7 +467,9 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PushNotifications.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
@@ -392,6 +483,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BD94817D225FDB9B004345AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD948184225FDB9B004345AB /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BD999F16224570DE00F7D1AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -443,6 +542,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		BD948187225FDB9B004345AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD948180225FDB9B004345AB /* PusherExtension */;
+			targetProxy = BD948186225FDB9B004345AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		BD999F21224570DE00F7D1AB /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -463,6 +570,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BD94818A225FDB9B004345AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MZYK4XT55;
+				INFOPLIST_FILE = PusherExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caressa.facility.app.PusherExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BD94818B225FDB9B004345AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MZYK4XT55;
+				INFOPLIST_FILE = PusherExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.caressa.facility.app.PusherExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BD999F2A224570DF00F7D1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -583,7 +730,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Caressa/Caressa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MZYK4XT55;
 				INFOPLIST_FILE = Caressa/Info.plist;
@@ -603,7 +752,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Caressa/Caressa.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MZYK4XT55;
 				INFOPLIST_FILE = Caressa/Info.plist;
@@ -622,6 +773,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BD948189225FDB9B004345AB /* Build configuration list for PBXNativeTarget "PusherExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD94818A225FDB9B004345AB /* Debug */,
+				BD94818B225FDB9B004345AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BD999F15224570DE00F7D1AB /* Build configuration list for PBXProject "Caressa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

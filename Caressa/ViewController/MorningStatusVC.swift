@@ -83,8 +83,7 @@ extension MorningStatusVC: UITableViewDataSource {
 extension MorningStatusVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: .zero)
-        let label = UILabel(frame: CGRect(x: 0, y: 3, width: 200, height: 21))
-        label.frame.origin.x = (UIScreen.main.bounds.width / 2) - 100
+        let label = UILabel(frame: .zero)
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 17)
@@ -99,8 +98,14 @@ extension MorningStatusVC: UITableViewDelegate {
             label.text = "Checked"
             view.backgroundColor = #colorLiteral(red: 0.3725490196, green: 0.7803921569, blue: 0.3411764706, alpha: 1)
         }
-        
         view.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraint(NSLayoutConstraint(item: label, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 8))
+        view.addConstraint(NSLayoutConstraint(item: label, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: -8))
+        view.addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: 21))
+
         return view
     }
     

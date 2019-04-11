@@ -7,5 +7,7 @@ target 'Caressa' do
 
   # Pods for Caressa
 pod 'PusherSwift'
+pod 'CropViewController'
+pod 'PushNotifications'
 
 end

@@ -124,7 +124,7 @@ class WindowManager: NSObject {
         }
     }
     
-    private class func getTopView() -> UIViewController? {
+    public class func getTopView() -> UIViewController? {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
