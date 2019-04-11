@@ -33,6 +33,13 @@ class MessageThreadVC: UIViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.async {
+            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
+        }
+    }
+    
     func setup() {
         title = nil
         WebAPI.shared.get(String(format: APIConst.messageThreads, resident.id)) { (response: MessageThread) in

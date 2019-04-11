@@ -36,6 +36,13 @@ class CalendarVC: UIViewController {
         setup()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.async {
+            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
+        }
+    }
+    
     @IBAction func todayAction() {
         guard let week = DateManager.dayOfWeek(today: Date()) else { return }
         tableView.scrollToRow(at: IndexPath(row: 0, section: week - 2), at: .top, animated: true)

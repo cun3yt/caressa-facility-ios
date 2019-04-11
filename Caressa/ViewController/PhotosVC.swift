@@ -33,6 +33,13 @@ class PhotosVC: UIViewController {
         album.append(#imageLiteral(resourceName: "Logo"))
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.async {
+            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
+        }
+    }
+    
     @IBAction func btnCameraAction(_ sender: UIBarButtonItem) {
         ImageManager.shared.takePhoto(from: .camera, view: self) { (image) in
             

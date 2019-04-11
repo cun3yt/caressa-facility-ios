@@ -29,6 +29,8 @@
 		BD159BC7225685A100701370 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC6225685A100701370 /* SearchVC.swift */; };
 		BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC82256978C00701370 /* AudioRecorder.swift */; };
 		BD189387225BEEC2005660B7 /* GSImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD189386225BEEC2005660B7 /* GSImageViewer.swift */; };
+		BD2BE1BC225F66430000C834 /* MessageRead+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1BB225F66430000C834 /* MessageRead+CoreDataClass.swift */; };
+		BD2BE1BD225F66430000C834 /* MessageRead+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1BA225F66430000C834 /* MessageRead+CoreDataProperties.swift */; };
 		BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */; };
 		BD55310C22464A900062F894 /* ResidentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310B22464A900062F894 /* ResidentVC.swift */; };
 		BD553111224660810062F894 /* ResidentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310F224660810062F894 /* ResidentCell.swift */; };
@@ -56,6 +58,8 @@
 		BD999F44224571E400F7D1AB /* APIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F3B224571E400F7D1AB /* APIConst.swift */; };
 		BD999F4622457E7F00F7D1AB /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F4522457E7F00F7D1AB /* BaseModel.swift */; };
 		BD999F482246226500F7D1AB /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F472246226500F7D1AB /* Login.swift */; };
+		BDB2B024225F589D003D9FB5 /* Caressa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BDB2B022225F589D003D9FB5 /* Caressa.xcdatamodeld */; };
+		BDB2B026225F5B80003D9FB5 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB2B025225F5B80003D9FB5 /* DBManager.swift */; };
 		BDEBA83B224F9766005F3EDE /* ProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */; };
 		BDEBA83D224FA642005F3EDE /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEBA83C224FA642005F3EDE /* SettingsVC.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +88,8 @@
 		BD159BC6225685A100701370 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		BD159BC82256978C00701370 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BD189386225BEEC2005660B7 /* GSImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSImageViewer.swift; sourceTree = "<group>"; };
+		BD2BE1BA225F66430000C834 /* MessageRead+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageRead+CoreDataProperties.swift"; path = "/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		BD2BE1BB225F66430000C834 /* MessageRead+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageRead+CoreDataClass.swift"; path = "/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningStatusVC.swift; sourceTree = "<group>"; };
 		BD55310B22464A900062F894 /* ResidentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentVC.swift; sourceTree = "<group>"; };
 		BD55310F224660810062F894 /* ResidentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentCell.swift; sourceTree = "<group>"; };
@@ -113,6 +119,8 @@
 		BD999F3B224571E400F7D1AB /* APIConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConst.swift; sourceTree = "<group>"; };
 		BD999F4522457E7F00F7D1AB /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		BD999F472246226500F7D1AB /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		BDB2B023225F589D003D9FB5 /* Caressa.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Caressa.xcdatamodel; sourceTree = "<group>"; };
+		BDB2B025225F5B80003D9FB5 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		BDEBA83A224F9766005F3EDE /* ProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageVC.swift; sourceTree = "<group>"; };
 		BDEBA83C224FA642005F3EDE /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +190,7 @@
 				BD999F32224571CB00F7D1AB /* Controller */,
 				BD999F302245712700F7D1AB /* Model */,
 				BD999F1D224570DE00F7D1AB /* AppDelegate.swift */,
+				BDB2B022225F589D003D9FB5 /* Caressa.xcdatamodeld */,
 				BD999F29224570DF00F7D1AB /* Info.plist */,
 			);
 			path = Caressa;
@@ -218,6 +227,8 @@
 				BD12354822528A4F00FF1638 /* User.swift */,
 				BD12354A225296C700FF1638 /* AmazonModel.swift */,
 				BD145CA62257D1A40040BAAC /* SendMessage.swift */,
+				BD2BE1BB225F66430000C834 /* MessageRead+CoreDataClass.swift */,
+				BD2BE1BA225F66430000C834 /* MessageRead+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -250,6 +261,7 @@
 				BD159BC82256978C00701370 /* AudioRecorder.swift */,
 				BD145CB82258EBBF0040BAAC /* PusherManager.swift */,
 				BD189386225BEEC2005660B7 /* GSImageViewer.swift */,
+				BDB2B025225F5B80003D9FB5 /* DBManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -367,7 +379,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
@@ -386,7 +398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -401,6 +413,7 @@
 				BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */,
 				BD12354B225296C700FF1638 /* AmazonModel.swift in Sources */,
 				BD14E65C224F4BAE001B12BE /* CalendarVC.swift in Sources */,
+				BD2BE1BD225F66430000C834 /* MessageRead+CoreDataProperties.swift in Sources */,
 				BD14E668224F6E52001B12BE /* Message.swift in Sources */,
 				BD553111224660810062F894 /* ResidentCell.swift in Sources */,
 				BD145CAA2258B19A0040BAAC /* CalendarCell.swift in Sources */,
@@ -412,6 +425,7 @@
 				BD999F4622457E7F00F7D1AB /* BaseModel.swift in Sources */,
 				BD999F40224571E400F7D1AB /* JSONManager.swift in Sources */,
 				BD145CB92258EBBF0040BAAC /* PusherManager.swift in Sources */,
+				BD2BE1BC225F66430000C834 /* MessageRead+CoreDataClass.swift in Sources */,
 				BD999F42224571E400F7D1AB /* SessionManager.swift in Sources */,
 				BD553115224662030062F894 /* View+Extension.swift in Sources */,
 				BD999F3E224571E400F7D1AB /* ImageManager.swift in Sources */,
@@ -422,6 +436,7 @@
 				BD145CB72258D1010040BAAC /* PhotoHeaderView.swift in Sources */,
 				BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */,
 				BD999F482246226500F7D1AB /* Login.swift in Sources */,
+				BDB2B024225F589D003D9FB5 /* Caressa.xcdatamodeld in Sources */,
 				BD5531192246B4950062F894 /* Resident.swift in Sources */,
 				BD14E663224F6984001B12BE /* MessageThreadCell.swift in Sources */,
 				BD14E666224F6D89001B12BE /* MessageThread.swift in Sources */,
@@ -438,6 +453,7 @@
 				BD999F43224571E400F7D1AB /* WebService.swift in Sources */,
 				BD159BC7225685A100701370 /* SearchVC.swift in Sources */,
 				BD55311C2247911D0062F894 /* MessageCell.swift in Sources */,
+				BDB2B026225F5B80003D9FB5 /* DBManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,6 +657,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BDB2B022225F589D003D9FB5 /* Caressa.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BDB2B023225F589D003D9FB5 /* Caressa.xcdatamodel */,
+			);
+			currentVersion = BDB2B023225F589D003D9FB5 /* Caressa.xcdatamodel */;
+			path = Caressa.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BD999F12224570DE00F7D1AB /* Project object */;
 }

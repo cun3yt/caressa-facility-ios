@@ -136,7 +136,7 @@ class WindowManager: NSObject {
     }
     
     public class func setup(vc: UIViewController, title: String, deviceStatus: DeviceStatus? = nil) -> UIButton {
-        let headerHeight = vc.navigationController!.navigationBar.frame.height - 4
+        let headerHeight = vc.navigationController!.navigationBar.frame.height - 14
         let headerWidth = vc.navigationController!.navigationBar.frame.width - 100
         let profile = UIButton(frame: CGRect(x: 0, y: 0, width: headerHeight, height: headerHeight))
         profile.setImage(nil, for: .normal)
@@ -151,7 +151,7 @@ class WindowManager: NSObject {
         
         titleLabel.frame.origin = CGPoint(x: profile.frame.maxX + 6, y: (headerHeight / 2) - (titleLabel.frame.height / 2))
         
-        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - profile.frame.width - 20, height: headerHeight))
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: vc.view.frame.width - profile.frame.width - 20, height: headerHeight))
         titleView.addSubview(profile)
         titleView.addSubview(titleLabel)
         

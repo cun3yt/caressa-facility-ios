@@ -54,6 +54,9 @@ class MessageCell: UITableViewCell {
         case .none:
             break
         }
+        
+        lblTitle.font = message.read != true ? UIFont.boldSystemFont(ofSize: 15) : UIFont.systemFont(ofSize: 14)
+        
         if let lastMessage = message.lastMessage {
             lblBody.text = lastMessage.content.details
             lblTime.text = DateManager("HH:mm a").string(date: lastMessage.time)

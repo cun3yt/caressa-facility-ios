@@ -31,6 +31,7 @@ struct MessageResult: Codable {
     let message: MessageItem?
     let mockStatus: Bool?
     let messageFrom: MessageFrom?
+    var read: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -39,6 +40,7 @@ struct MessageResult: Codable {
         case lastMessage = "last_message"
         case mockStatus = "mock_status"
         case messageFrom = "message_from"
+        case read
     }
 }
 

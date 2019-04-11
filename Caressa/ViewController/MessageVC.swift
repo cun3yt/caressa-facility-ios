@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MessageVC: UIViewController {
 
@@ -16,6 +17,8 @@ class MessageVC: UIViewController {
     private var pageCount: Int = 1
     private var messages: [MessageResult] = []
     private var ivFacility: UIButton!
+    
+    private lazy var readMessages: [MessageRead] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,19 +37,63 @@ class MessageVC: UIViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.async {
+            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
+        }
+    }
+    
     private func setup() {
+        do {
+            readMessages = try DBManager.shared.context.fetch(MessageRead.fetch())
+        } catch {
+            print(error)
+        }
+        
         WebAPI.shared.get(APIConst.messages + String(page)) { (response: MessageHeader) in
             if let results = response.results {
+                
+                for var i in results {
+                    if !self.readMessages.contains(where: {$0.id == i.id}) {
+                        let newMessage = DBManager.shared.manageObject(entity: DBManager.shared.entity(entitiy: "MessageRead")!)
+                        newMessage.setValue(i.id, forKey: "id")
+                        do {
+                            try DBManager.shared.context.save()
+                        } catch {
+                            print(error)
+                        }
+                    } else {
+                        i.read = true
+                    }
+                }
+                
                 self.messages += results
             }
             self.pageCount = (response.count ?? 1) / (response.results?.count ?? 1)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+                    self.readAll()
+                })
             }
         }
     }
 
+    func readAll() {
+        do {
+            let fetch = try DBManager.shared.context.fetch(MessageRead.fetch())
+            for (i,_) in fetch.enumerated() {
+                let newMessage = fetch[i]
+                newMessage.setValue(true, forKey: "id")
+                try DBManager.shared.context.save()
+            }
+        } catch {
+            print(error)
+        }
+        
+    }
 }
 
 extension MessageVC: UITableViewDataSource {

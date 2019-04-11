@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Caressa.xcodeproj">
    </FileRef>
    <FileRef
