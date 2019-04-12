@@ -980,22 +980,42 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0TH-Ez-Bi8">
                                                 <rect key="frame" x="323" y="284" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="NMw-zG-9lo"/>
+                                                    <constraint firstAttribute="width" constant="32" id="w7Z-bd-oJd"/>
+                                                </constraints>
                                                 <state key="normal" image="chat"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaf-7K-T2o">
                                                 <rect key="frame" x="275" y="284" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="KTm-m2-hwg"/>
+                                                    <constraint firstAttribute="width" constant="32" id="fAN-Sg-QHU"/>
+                                                </constraints>
                                                 <state key="normal" image="phone"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-h2-Lv6">
                                                 <rect key="frame" x="323" y="377" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="7Bo-nd-rew"/>
+                                                    <constraint firstAttribute="width" constant="32" id="hJs-AG-qBs"/>
+                                                </constraints>
                                                 <state key="normal" image="chat"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb0-wD-fQY">
                                                 <rect key="frame" x="275" y="377" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="32" id="F88-1o-WWM"/>
+                                                    <constraint firstAttribute="height" constant="32" id="lLy-A5-kmP"/>
+                                                </constraints>
                                                 <state key="normal" image="phone"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ttg-CX-thQ">
-                                                <rect key="frame" x="257.5" y="26" width="24" height="24"/>
+                                                <rect key="frame" x="247.5" y="36" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="24" id="YH2-md-blC"/>
+                                                    <constraint firstAttribute="width" constant="24" id="icu-Md-nlx"/>
+                                                </constraints>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="add"/>
                                                 <connections>
@@ -1019,7 +1039,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                             <constraint firstAttribute="trailing" secondItem="0TH-Ez-Bi8" secondAttribute="trailing" constant="20" id="MuS-6v-pMD"/>
                                             <constraint firstItem="EbL-Ru-ZKK" firstAttribute="leading" secondItem="DbP-Ab-s2e" secondAttribute="leading" id="OLP-rS-RUL"/>
                                             <constraint firstItem="Eml-qw-eeQ" firstAttribute="top" secondItem="VW4-MM-jWP" secondAttribute="bottom" constant="8" symbolic="YES" id="TkK-VM-7Pf"/>
-                                            <constraint firstItem="Ttg-CX-thQ" firstAttribute="top" secondItem="8hw-Sj-vJW" secondAttribute="top" constant="6" id="UNC-ZJ-kR9"/>
+                                            <constraint firstItem="Ttg-CX-thQ" firstAttribute="top" secondItem="8hw-Sj-vJW" secondAttribute="top" constant="16" id="UNC-ZJ-kR9"/>
                                             <constraint firstItem="5z6-F8-oRL" firstAttribute="top" secondItem="4C6-gi-JgS" secondAttribute="bottom" constant="32" id="VuL-WW-iSl"/>
                                             <constraint firstItem="uaf-7K-T2o" firstAttribute="leading" secondItem="zb0-wD-fQY" secondAttribute="leading" id="YHz-wl-3FA"/>
                                             <constraint firstItem="4ac-dq-vQJ" firstAttribute="baseline" secondItem="5cx-fk-f9W" secondAttribute="baseline" id="aHD-31-78A"/>
@@ -1042,7 +1062,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                             <constraint firstItem="0TH-Ez-Bi8" firstAttribute="leading" secondItem="uaf-7K-T2o" secondAttribute="trailing" constant="16" id="qhN-ZB-Bj6"/>
                                             <constraint firstItem="RNd-gs-sxx" firstAttribute="top" secondItem="Eml-qw-eeQ" secondAttribute="bottom" constant="8" symbolic="YES" id="rZx-Z2-Ui6"/>
                                             <constraint firstItem="uaf-7K-T2o" firstAttribute="baseline" secondItem="0TH-Ez-Bi8" secondAttribute="baseline" id="tku-Ei-eOv"/>
-                                            <constraint firstItem="Ttg-CX-thQ" firstAttribute="trailing" secondItem="8hw-Sj-vJW" secondAttribute="trailing" constant="-6" id="uSx-VV-ML2"/>
+                                            <constraint firstItem="Ttg-CX-thQ" firstAttribute="trailing" secondItem="8hw-Sj-vJW" secondAttribute="trailing" constant="-16" id="uSx-VV-ML2"/>
                                             <constraint firstItem="KJb-rB-QIg" firstAttribute="top" secondItem="8hw-Sj-vJW" secondAttribute="bottom" constant="20" id="vto-CV-1nN"/>
                                             <constraint firstItem="ENk-mO-aQF" firstAttribute="leading" secondItem="Eml-qw-eeQ" secondAttribute="trailing" constant="10" id="xGw-Ha-FrQ"/>
                                             <constraint firstItem="EbL-Ru-ZKK" firstAttribute="top" secondItem="5z6-F8-oRL" secondAttribute="bottom" constant="8" symbolic="YES" id="z9o-Q3-0bb"/>
@@ -1072,8 +1092,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                     </view>
                     <navigationItem key="navigationItem" id="dWB-ab-zGr">
                         <rightBarButtonItems>
-                            <barButtonItem image="chat" id="qn7-H2-SOa"/>
-                            <barButtonItem image="phone" id="IoK-yI-Xh8"/>
+                            <barButtonItem image="barChat" width="32" id="qn7-H2-SOa"/>
+                            <barButtonItem image="barPhone" id="IoK-yI-Xh8"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -1416,18 +1436,20 @@ If you think you need a direct access, please out to support@caressa.ai</string>
     <resources>
         <image name="Logo" width="975" height="234"/>
         <image name="add" width="24" height="24"/>
+        <image name="barChat" width="24" height="24"/>
+        <image name="barPhone" width="24" height="24"/>
         <image name="calendar" width="25" height="25"/>
         <image name="camera" width="32" height="32"/>
-        <image name="chat" width="32" height="32"/>
-        <image name="gallery" width="32" height="32"/>
+        <image name="chat" width="60" height="60"/>
+        <image name="gallery" width="25" height="25"/>
         <image name="message" width="25" height="25"/>
         <image name="microphone" width="16" height="16"/>
-        <image name="new_chat" width="32" height="32"/>
+        <image name="new_chat" width="24" height="24"/>
         <image name="people" width="25" height="25"/>
-        <image name="phone" width="32" height="32"/>
+        <image name="phone" width="64" height="64"/>
         <image name="photo" width="32" height="32"/>
         <image name="radio_checked" width="16" height="16"/>
-        <image name="settings" width="32" height="32"/>
+        <image name="settings" width="25" height="25"/>
         <image name="sort" width="16" height="16"/>
         <image name="sunrise" width="24" height="24"/>
         <image name="uncheck_square" width="24" height="24"/>

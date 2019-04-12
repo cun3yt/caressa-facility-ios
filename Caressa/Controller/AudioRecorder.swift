@@ -28,6 +28,13 @@ class AudioRecorder: NSObject {
         super.init()
         self.audioButton = button
         self.delegate = delegate
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print(error)
+        }
     }
     
     func record(fileName: String) {
@@ -42,7 +49,9 @@ class AudioRecorder: NSObject {
                 do {
                     recorder = try AVAudioRecorder(url: fileName, settings: settings)
                     recorder.delegate = self
-                    recorder.record(forDuration: duration)
+                    if recorder.prepareToRecord() {
+                        recorder.record(forDuration: duration)
+                    }
                     
                     print(fileName)
                     

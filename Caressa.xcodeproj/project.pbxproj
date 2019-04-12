@@ -45,6 +45,8 @@
 		BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378D2255FD5500BB133F /* AudioPlayer.swift */; };
 		BD948184225FDB9B004345AB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD948183225FDB9B004345AB /* NotificationService.swift */; };
 		BD948188225FDB9B004345AB /* PusherExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD948181225FDB9B004345AB /* PusherExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BD96CAF22260855400F4A379 /* MessageRead+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD96CAF02260855400F4A379 /* MessageRead+CoreDataClass.swift */; };
+		BD96CAF32260855400F4A379 /* MessageRead+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD96CAF12260855400F4A379 /* MessageRead+CoreDataProperties.swift */; };
 		BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1D224570DE00F7D1AB /* AppDelegate.swift */; };
 		BD999F20224570DE00F7D1AB /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD999F1F224570DE00F7D1AB /* LoginVC.swift */; };
 		BD999F23224570DE00F7D1AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD999F21224570DE00F7D1AB /* Main.storyboard */; };
@@ -132,6 +134,8 @@
 		BD948181225FDB9B004345AB /* PusherExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PusherExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD948183225FDB9B004345AB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		BD948185225FDB9B004345AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD96CAF02260855400F4A379 /* MessageRead+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageRead+CoreDataClass.swift"; path = "/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		BD96CAF12260855400F4A379 /* MessageRead+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MessageRead+CoreDataProperties.swift"; path = "/Users/huseyinmetin/Projects/caressa-facility-ios/Caressa/Model/MessageRead+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		BD999F1A224570DE00F7D1AB /* Caressa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caressa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD999F1D224570DE00F7D1AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD999F1F224570DE00F7D1AB /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				BD12354822528A4F00FF1638 /* User.swift */,
 				BD12354A225296C700FF1638 /* AmazonModel.swift */,
 				BD145CA62257D1A40040BAAC /* SendMessage.swift */,
+				BD96CAF02260855400F4A379 /* MessageRead+CoreDataClass.swift */,
+				BD96CAF12260855400F4A379 /* MessageRead+CoreDataProperties.swift */,
 				BD2BE1BB225F66430000C834 /* MessageRead+CoreDataClass.swift */,
 				BD2BE1BA225F66430000C834 /* MessageRead+CoreDataProperties.swift */,
 			);
@@ -466,7 +472,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PushNotifications/PushNotifications.framework",
@@ -534,6 +540,7 @@
 				BD999F20224570DE00F7D1AB /* LoginVC.swift in Sources */,
 				BD145CB72258D1010040BAAC /* PhotoHeaderView.swift in Sources */,
 				BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */,
+				BD96CAF32260855400F4A379 /* MessageRead+CoreDataProperties.swift in Sources */,
 				BD999F482246226500F7D1AB /* Login.swift in Sources */,
 				BDB2B024225F589D003D9FB5 /* Caressa.xcdatamodeld in Sources */,
 				BD5531192246B4950062F894 /* Resident.swift in Sources */,
@@ -545,6 +552,7 @@
 				BD999F3C224571E400F7D1AB /* DateManager.swift in Sources */,
 				BD999F1E224570DE00F7D1AB /* AppDelegate.swift in Sources */,
 				BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */,
+				BD96CAF22260855400F4A379 /* MessageRead+CoreDataClass.swift in Sources */,
 				BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */,
 				BD553117224669C20062F894 /* Facility.swift in Sources */,
 				BD145CAD2258C5BB0040BAAC /* PhotosVC.swift in Sources */,

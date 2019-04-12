@@ -136,7 +136,7 @@ class WindowManager: NSObject {
     }
     
     public class func setup(vc: UIViewController, title: String, deviceStatus: DeviceStatus? = nil) -> UIButton {
-        let headerHeight = vc.navigationController!.navigationBar.frame.height - 14
+        let headerHeight: CGFloat = 30.0 //vc.navigationController!.navigationBar.frame.height - 14
         let headerWidth = vc.navigationController!.navigationBar.frame.width - 100
         let profile = UIButton(frame: CGRect(x: 0, y: 0, width: headerHeight, height: headerHeight))
         profile.setImage(nil, for: .normal)
