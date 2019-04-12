@@ -79,22 +79,36 @@ extension CalendarVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: .zero)
         label.backgroundColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .heavy)
         label.text = "    " + DateManager("EEEE, MMMM dd, yyyy").string(date: dateList[section])
         
-        if DateManager.onlyDate(date: dateList[section]) == DateManager.onlyDate(date: Date()) {
+        let date = DateManager.onlyDate(date: dateList[section])
+        if date == DateManager.onlyDate(date: Date()) {
             label.textColor = .red
+        } else 
+            if date < Date() {
+                label.textColor = .lightGray
+            } else {
+                label.textColor = .black
         }
         return label
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let splitter = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 24))
-        splitter.backgroundColor = .white
-        let line = UIView(frame: CGRect(x: 16, y: 12, width: UIScreen.main.bounds.width - 32, height: 2))
-        line.backgroundColor = .lightGray
-        splitter.addSubview(line)
-        return splitter
+        let headerView = UIView(frame: .zero)
+        let splitter = UIView(frame: .zero)
+        
+        headerView.backgroundColor = .white
+        splitter.backgroundColor = .lightGray
+        headerView.addSubview(splitter)
+        
+        splitter.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addConstraint(NSLayoutConstraint(item: splitter, attribute: .leading, relatedBy: .equal, toItem: headerView, attribute: .leading, multiplier: 1.0, constant: 8))
+        headerView.addConstraint(NSLayoutConstraint(item: splitter, attribute: .trailing, relatedBy: .equal, toItem: headerView, attribute: .trailing, multiplier: 1.0, constant: -8))
+        headerView.addConstraint(NSLayoutConstraint(item: splitter, attribute: .centerY, relatedBy: .equal, toItem: headerView, attribute: .centerY, multiplier: 1.0, constant: 0))
+        headerView.addConstraint(NSLayoutConstraint(item: splitter, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: 2))
+
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

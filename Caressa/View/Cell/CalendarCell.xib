@@ -20,20 +20,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29p-gu-gaV">
-                        <rect key="frame" x="16" y="8" width="67" height="17"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <rect key="frame" x="16" y="8" width="80" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="6wn-X0-mfX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poker Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="g67-K3-UTk">
-                        <rect key="frame" x="103" y="8" width="105" height="17"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <rect key="frame" x="116" y="8" width="98.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library on the head of street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="COi-SV-moN">
-                        <rect key="frame" x="218" y="8" width="105" height="17"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <rect key="frame" x="224.5" y="8" width="98.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

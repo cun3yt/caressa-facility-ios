@@ -15,6 +15,8 @@ class ResidentVC: UIViewController {
     private var residents: [Resident] = []
     private var ivFacility: UIButton!
     
+    private var pusher = PusherManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "ResidentCell", bundle: nil), forCellReuseIdentifier: "SeniorCell")
@@ -33,6 +35,8 @@ class ResidentVC: UIViewController {
     }
     
     func setup() {
+        
+        
         WebAPI.shared.get(APIConst.facility) { (response: FacilityResponse) in
             SessionManager.shared.facility = response
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CropViewController
 
 class ImageManager: NSObject {
     
@@ -145,6 +146,8 @@ class ImageManager: NSObject {
         return image
     }
     
+    
+    
     func takePhoto(view: UIViewController, completion: ((UIImage) -> Void)? = nil) {
         
         let prompt = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -186,10 +189,21 @@ class ImageManager: NSObject {
 
 extension ImageManager: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imagePicker.dismiss(animated: true)
         let image = fixOrientation(image:  info[.originalImage] as! UIImage )
-        let width = image.size.width
-        let height = image.size.height
-        onImageSelect?( crop(image, width: width, height: height) )
+        let cropVC = CropViewController(image: image)
+        cropVC.aspectRatioPreset = .presetSquare
+        cropVC.aspectRatioLockEnabled = true
+        cropVC.aspectRatioPickerButtonHidden = true
+        cropVC.delegate = self
+        imagePicker.dismiss(animated: true, completion: {
+            WindowManager.getTopView()?.present(cropVC, animated: true)
+        })
+    }
+}
+
+extension ImageManager: CropViewControllerDelegate {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: true)
+        onImageSelect?(image)
     }
 }
