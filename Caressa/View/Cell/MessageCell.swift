@@ -35,7 +35,7 @@ class MessageCell: UITableViewCell {
             lblTitle.text = "\(x.firstName) \(x.lastName)"
             ImageManager.shared.downloadImage(suffix: x.profilePicture, view: ivImage)
             
-            contentView.alpha = 1.0
+            //contentView.alpha = 1.0
             if let devStat = x.deviceStatus {
                 if devStat.isOnline {
                     deviceStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
@@ -43,7 +43,7 @@ class MessageCell: UITableViewCell {
                     deviceStatus.backgroundColor = #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
                 }
             } else {
-                contentView.alpha = 0.4
+                //contentView.alpha = 0.4
             }
             
             
@@ -54,8 +54,6 @@ class MessageCell: UITableViewCell {
         case .none:
             break
         }
-        
-        lblTitle.font = message.read != true ? UIFont.boldSystemFont(ofSize: 15) : UIFont.systemFont(ofSize: 14)
         
         if let lastMessage = message.lastMessage {
             lblBody.text = lastMessage.content.details
@@ -75,6 +73,10 @@ class MessageCell: UITableViewCell {
                 url = URL(string: lastMessage.content.details)
                 player = AudioPlayer(url: url!, play: btnAudio, stop: btnStopAudio, timeLabel: lblAudioDuration)
             }
+        }
+        
+        if message.read == true {
+            contentView.alpha = 0.5
         }
     }
 

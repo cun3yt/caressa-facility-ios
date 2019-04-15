@@ -42,7 +42,9 @@ class ResidentVC: UIViewController {
 
             DispatchQueue.main.async {
                 ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
-                self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = String(response.numberOfUnreadNotifications)
+
+                let cnt = DBManager.shared.getUnreadMessageCount()
+                self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil // String(response.numberOfUnreadNotifications)
             }
         }
         

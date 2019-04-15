@@ -28,6 +28,12 @@ class MessageVC: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -35,6 +41,8 @@ class MessageVC: UIViewController {
             AppDelegate.audioPlayer?.pause()
             AppDelegate.audioPlayer = nil
         }
+        
+         readAll()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -46,26 +54,35 @@ class MessageVC: UIViewController {
     
     private func setup() {
         do {
-            readMessages = try DBManager.shared.context.fetch(MessageRead.fetch())
+            readMessages = try DBManager.shared.context.fetch(MessageRead.fetchRequest())
         } catch {
             print(error)
         }
         
         WebAPI.shared.get(APIConst.messages + String(page)) { (response: MessageHeader) in
-            if let results = response.results {
+            if var results = response.results {
                 
-                for var i in results {
-                    if !self.readMessages.contains(where: {$0.id == i.id}) {
-                        let newMessage = DBManager.shared.manageObject(entity: DBManager.shared.entity(entitiy: "MessageRead")!)
-                        newMessage.setValue(i.id, forKey: "id")
-                        do {
-                            try DBManager.shared.context.save()
-                        } catch {
-                            print(error)
+                do {
+                    for (i,e) in results.enumerated() {
+                        if !self.readMessages.contains(where: {$0.id == e.id}) {
+                            if let newMessage = DBManager.shared.manageObject(entity: DBManager.shared.entity(entitiy: "MessageRead")!) as? MessageRead {
+                                newMessage.id = Int32(e.id)
+                                newMessage.read = false
+                                results[i].read = false
+                                try DBManager.shared.context.save()
+                            }
+                        } else {
+                            let fetchReq: NSFetchRequest<NSFetchRequestResult> = MessageRead.fetchRequest()
+                            fetchReq.predicate = NSPredicate(format: "id = %d", e.id)
+                            if let founded = try DBManager.shared.context.fetch(fetchReq).first as? MessageRead {
+                                founded.read = true
+                                results[i].read = true
+                                try DBManager.shared.context.save()
+                            }
                         }
-                    } else {
-                        i.read = true
                     }
+                } catch {
+                    print(error.localizedDescription)
                 }
                 
                 self.messages += results
@@ -73,26 +90,28 @@ class MessageVC: UIViewController {
             self.pageCount = (response.count ?? 1) / (response.results?.count ?? 1)
             
             DispatchQueue.main.async {
+                let cnt = self.messages.filter({$0.read != true}).count
+                self.tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
                 self.tableView.reloadData()
-                DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
-                    self.readAll()
-                })
             }
         }
     }
 
     func readAll() {
         do {
-            let fetch = try DBManager.shared.context.fetch(MessageRead.fetch())
+            let fetch = try DBManager.shared.context.fetch(MessageRead.fetchRequest())
             for (i,_) in fetch.enumerated() {
-                let newMessage = fetch[i]
-                newMessage.setValue(true, forKey: "id")
+                let newMessage = fetch[i] as! MessageRead
+                newMessage.read = true
                 try DBManager.shared.context.save()
             }
         } catch {
             print(error)
         }
-        
+        DispatchQueue.main.async {
+            let cnt = self.messages.filter({$0.read != true}).count
+            self.tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
+        }
     }
 }
 

@@ -118,19 +118,27 @@ class NewMessageVC: UIViewController {
     }
     
     func send(uploaded url: String? = nil) {
-        guard let to = to,
-            let text = txtMessage.text else { return }
-        
-        var messageType = "Message"
-        if btnBroadcast.isSelected { messageType = "Brodcast" }
-        if btnAnnounce.isSelected { messageType = "Announce" }
-        
-        var message = Message(format: .text, content: text, contentAudioFile: nil)
-        if let url = url {
-           message = Message(format: .audio, content: nil, contentAudioFile: url)
+        var receiver: String = ""
+        if btnAllResidents.isSelected {
+            receiver = "all-residents"
+        } else {
+            if let to = to {
+                receiver = "\(to.id)"
+            }
         }
         
-        let param = SendMessageRequest(to: to.id, messageType: messageType, message: message, requestReply: btnRequest.isSelected)
+        guard let text = txtMessage.text, !receiver.isEmpty else { return }
+        
+        var messageType = "Message"
+        if btnBroadcast.isSelected { messageType = "Broadcast" }
+        if btnAnnounce.isSelected { messageType = "Announcement" }
+        
+        var message = Message(format: .text, content: text)
+        if let key = url?.split(separator: "/").last {
+           message = Message(format: .audio, content: String(key))
+        }
+        
+        let param = SendMessageRequest(to: receiver, messageType: messageType, message: message, requestReply: btnRequest.isSelected)
         
         WebAPI.shared.post(APIConst.message, parameter: param) { (response: SendMessageResponse) in
             

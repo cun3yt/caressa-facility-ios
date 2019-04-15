@@ -9,7 +9,7 @@
 import Foundation
 
 struct SendMessageRequest: Codable {
-    let to: Int
+    let to: String
     let messageType: String
     let message: Message
     let requestReply: Bool
@@ -41,12 +41,12 @@ struct SendMessageResponse: Codable {
 struct Message: Codable {
     let format: enmContent
     let content: String?
-    let contentAudioFile: String?
+    //let contentAudioFile: String?
     
     enum CodingKeys: String, CodingKey {
         case format = "format"
         case content = "content"
-        case contentAudioFile = "content_audio_file"
+        //case contentAudioFile = "content_audio_file"
     }
 }
 

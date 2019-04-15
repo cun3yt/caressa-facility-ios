@@ -8,12 +8,13 @@
 
 import UIKit
 
+
 class PhotosVC: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var ivFacility: UIButton!
-    private var album: [UIImage] = []
+    private var album: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,15 +23,15 @@ class PhotosVC: UIViewController {
         ivFacility = WindowManager.setup(vc: self, title: "Photos")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
         
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
-        album.append(#imageLiteral(resourceName: "Logo"))
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
+        album.append(SessionManager.shared.facility!.profilePicture)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -64,7 +65,8 @@ extension PhotosVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        cell.setup(image: album[indexPath.row])
+        //cell.setup(image: album[indexPath.row])
+        ImageManager.shared.downloadImage(suffix: album[indexPath.row], view: cell.ivImage)
         return cell
     }
     
@@ -85,16 +87,18 @@ extension PhotosVC: UICollectionViewDataSource {
 
 extension PhotosVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let imageInfo   = GSImageInfo(image: album[indexPath.row], imageMode: .aspectFit)
-        let transitionInfo = GSTransitionInfo(fromView: collectionView.cellForItem(at: indexPath)!)
-        let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
-        present(imageViewer, animated: true)
+        //let imageInfo   = GSImageInfo(image: album[indexPath.row], imageMode: .aspectFit)
+        //let transitionInfo = GSTransitionInfo(fromView: collectionView.cellForItem(at: indexPath)!)
+        //let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+        let imageSlider = ZoomableImageSlider(images: album, currentIndex: indexPath.row, placeHolderImage: nil)
+        present(imageSlider, animated: true)
     }
 }
 
 extension PhotosVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (UIScreen.main.bounds.width / 2) - 20
-        return CGSize(width: width, height: width)
+        //let width = (UIScreen.main.bounds.width / 4) - 20
+        //return CGSize(width: width, height: width)
+        return CGSize(width: 100, height: 100)
     }
 }

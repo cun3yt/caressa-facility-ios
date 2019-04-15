@@ -84,6 +84,15 @@ final public class WebAPI: NSObject {
                 urlRequest.httpBody = data
         }
         
+        #if DEBUG
+        print(urlRequest.allHTTPHeaderFields ?? "")
+        if let body = urlRequest.httpBody {
+            print("")
+            print("")
+            print("\(method) request: \(String(data: body, encoding: .utf8) ?? "no httpBody")")
+        }
+        #endif
+        
         DispatchQueue.main.async {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             if !self.disableActivity {
@@ -100,6 +109,12 @@ final public class WebAPI: NSObject {
             
             guard let data = data, error == nil else { return }
             
+            #if DEBUG
+            print("")
+            print("")
+            print("\(method) response: \(String(data: data, encoding: .utf8) ?? "no data")")
+            #endif
+            
             do {
                 if method == APIConst.generateSignedURL {
                     var res = String(data: data, encoding: .utf8)!
@@ -115,21 +130,6 @@ final public class WebAPI: NSObject {
                 
                 completion?(responseModel)
             } catch {
-                #if DEBUG
-                print(urlRequest.allHTTPHeaderFields ?? "")
-                if let body = urlRequest.httpBody {
-                    print("")
-                    print("")
-                    print("\(method) request: \(String(data: body, encoding: .utf8) ?? "no httpBody")")
-                }
-                #endif
-                
-                #if DEBUG
-                print("")
-                print("")
-                print("\(method) response: \(String(data: data, encoding: .utf8) ?? "no data")")
-                #endif
-                
                 WindowManager.showMessage(type: .error, message: error.localizedDescription)
                 print(String(data: data, encoding: .utf8) ?? "", error)
                 return

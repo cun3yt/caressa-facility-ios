@@ -20,6 +20,7 @@ public class APIConst {
     // MARK: Senior List
     public static let facility                 = "/api/facility/\(facilityId)/"
     public static let residents                = "/api/facility/\(facilityId)/residents/"
+    //public static let morningCheckIn           = "/api/residents/\(facilityId)/checked/today/"
     public static let morningCheckIn           = "/api/facility/\(facilityId)/residents/?view=morning-check-in"
     //[POST, DELETE]
     public static let residentCheck            = "/api/resident/\(facilityId)/checked/"

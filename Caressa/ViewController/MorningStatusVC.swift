@@ -12,7 +12,7 @@ class MorningStatusVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private var residents: [[Resident]] = []
+    private var morningChecks: MorningCheckInResponse!
     private var ivImage: UIButton!
     
     override func viewDidLoad() {
@@ -35,22 +35,11 @@ class MorningStatusVC: UIViewController {
     }
     
     func setup() {
-        WebAPI.shared.get("\(APIConst.residents)?status=notified") { (response: [Resident]) in
-            self.residents.insert(response, at: 0)
+        WebAPI.shared.get(APIConst.morningCheckIn) { (response: MorningCheckInResponse) in
+            self.morningChecks = response
             
-            WebAPI.shared.get("\(APIConst.residents)?status=pending") { (response: [Resident]) in
-                self.residents.insert(response, at: 1)
-                 WebAPI.shared.get("\(APIConst.residents)?status=staff-checked") { (response: [Resident]) in
-                    self.residents.insert(response, at: 2)
-                    
-                    WebAPI.shared.get("\(APIConst.residents)?status=self-checked") { (response: [Resident]) in
-                        self.residents[2] += response
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
@@ -58,20 +47,33 @@ class MorningStatusVC: UIViewController {
 
 extension MorningStatusVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return residents.count
+        return morningChecks == nil ? 0 : 4 //residents.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return residents[section].count
+        switch section {
+        case 0: return morningChecks.notified.residents.count
+        case 1: return morningChecks.pending.residents.count
+        case 2: return morningChecks.selfChecked.residents.count
+        case 3: return morningChecks.staffChecked.residents.count
+        default: return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ResidentCell
-        let resident = residents[indexPath.section][indexPath.row]
+        var resident: Resident!
+        switch indexPath.section {
+        case 0: resident = morningChecks.notified.residents[indexPath.row]
+        case 1: resident = morningChecks.pending.residents[indexPath.row]
+        case 2: resident = morningChecks.selfChecked.residents[indexPath.row]
+        case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
+        default: break
+        }
         cell.setup(resident: resident)
         cell.navigationController = self.navigationController
         cell.delegate = self
-        if let ci = resident.checkInInfo, let by = ci.checkedBy, let tm = ci.checkInTime {
+        if let ci = resident.checkIn, let by = ci.checkedBy, let tm = ci.checkInTime {
             cell.lblDetail.text = "By: \(by) @ \(DateManager("hh:mm a").string(date: tm))"
             cell.lblDetail.isHidden = false
             if by.contains("Staff") {
@@ -96,14 +98,18 @@ extension MorningStatusVC: UITableViewDelegate {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         switch section {
         case 0:
-            label.text = "Notified"
+            label.text = morningChecks.notified.label
             view.backgroundColor = .red
         case 1:
-            label.text = "Pending"
+            label.text = morningChecks.pending.label
             view.backgroundColor = #colorLiteral(red: 0.8005672089, green: 0.7860765286, blue: 0.543114721, alpha: 1)
-        default:
-            label.text = "Checked"
+        case 2:
+            label.text = morningChecks.selfChecked.label
             view.backgroundColor = #colorLiteral(red: 0.3725490196, green: 0.7803921569, blue: 0.3411764706, alpha: 1)
+        case 3:
+            label.text = morningChecks.staffChecked.label
+            view.backgroundColor = #colorLiteral(red: 0.3725490196, green: 0.7803921569, blue: 0.3411764706, alpha: 1)
+        default: break
         }
         view.addSubview(label)
         
@@ -116,25 +122,36 @@ extension MorningStatusVC: UITableViewDelegate {
         return view
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 2: return 75
-        default: return 68
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        switch indexPath.section {
+//        case 2: return 75
+//        default: return 68
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        WindowManager.pushToProfileVC(navController: self.navigationController!, resident: residents[indexPath.section][indexPath.row])
+        var resident: Resident!
+        switch indexPath.section {
+        case 0: resident = morningChecks.notified.residents[indexPath.row]
+        case 1: resident = morningChecks.pending.residents[indexPath.row]
+        case 2: resident = morningChecks.selfChecked.residents[indexPath.row]
+        case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
+        default: break
+        }
+        WindowManager.pushToProfileVC(navController: self.navigationController!, resident: resident)
     }
 }
 
 extension MorningStatusVC: ResidentCellDelegate {
-    func touchCheckButon(_ isSelected: Bool) {
-        if isSelected {
-            print("selected")
-        } else {
-            print("not selected")
+    func touchCheckButon(_ isSelected: Bool, resident: Resident) {
+        guard let url = resident.checkIn?.url else { return }
+        let req = MorningCheckInRequest()
+        WebAPI.shared.post(url, parameter: req) { (response: MorningCheckToday) in
+            if !response.success {
+                WindowManager.showMessage(type: .error, message: "Failed")
+            }
+            self.setup()
         }
     }
     

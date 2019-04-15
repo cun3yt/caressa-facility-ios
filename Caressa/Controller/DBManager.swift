@@ -32,4 +32,16 @@ class DBManager: NSObject {
         return NSManagedObject(entity: entity, insertInto: context)
     }
     
+    func getUnreadMessageCount() -> Int {
+        do {
+            let fetchReq: NSFetchRequest<NSFetchRequestResult> = MessageRead.fetchRequest()
+            fetchReq.predicate = NSPredicate(format: "read = %d", 0)
+            if let results = try DBManager.shared.context.fetch(fetchReq) as? [MessageRead] {
+                return results.count
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        return 0
+    }
 }

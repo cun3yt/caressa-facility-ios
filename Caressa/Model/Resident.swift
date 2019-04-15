@@ -14,10 +14,10 @@ struct Resident: Codable {
     let lastName: String
     let roomNo: String
     let deviceStatus: DeviceStatus?
-    let messageThreadURL: String
+    let messageThreadURL: MessageUnion?
     let profilePicture: String?
     let mockStatus: Bool
-    let checkInInfo: CheckInInfo?
+    let checkIn: CheckInURL?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -28,7 +28,7 @@ struct Resident: Codable {
         case messageThreadURL = "message_thread_url"
         case profilePicture = "profile_picture"
         case mockStatus = "mock_status"
-        case checkInInfo = "check_in_info"
+        case checkIn = "check_in"
     }
 }
 
@@ -53,5 +53,49 @@ struct CheckInInfo: Codable {
     enum CodingKeys: String, CodingKey {
         case checkedBy = "checked_by"
         case checkInTime = "check_in_time"
+    }
+}
+
+struct MessageThreadURL: Codable {
+    let url: String
+}
+
+struct CheckInURL: Codable {
+    let url: String
+    let checkedBy: String?
+    let checkInTime: Date?
+    
+    enum CodingKeys: String, CodingKey {
+        case url
+        case checkedBy = "checked_by"
+        case checkInTime = "check_in_time"
+    }
+}
+
+enum MessageUnion: Codable {
+    case Class(MessageThreadURL)
+    case string(String)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
+            return
+        }
+        if let x = try? container.decode(MessageThreadURL.self) {
+            self = .Class(x)
+            return
+        }
+        throw DecodingError.typeMismatch(ResidentUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for MessageUnion"))
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .Class(let x):
+            try container.encode(x)
+        case .string(let x):
+            try container.encode(x)
+        }
     }
 }

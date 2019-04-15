@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ResidentCellDelegate {
-    func touchCheckButon(_ isSelected: Bool)
+    func touchCheckButon(_ isSelected: Bool, resident: Resident)
 }
 
 class ResidentCell: UITableViewCell  {
@@ -31,11 +31,7 @@ class ResidentCell: UITableViewCell  {
         self.resident = resident
         self.contentView.alpha = 1.0
         if let devStat = resident.deviceStatus {
-            if devStat.isOnline {
-                vStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-            } else {
-                vStatus.backgroundColor = #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
-            }
+            vStatus.backgroundColor = devStat.isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
         } else {
             self.contentView.alpha = 0.4
         }
@@ -44,8 +40,8 @@ class ResidentCell: UITableViewCell  {
         lblRoom.text = "Room # \(resident.roomNo)"
         ImageManager.shared.downloadImage(suffix: resident.profilePicture, view: ivThumb)
         
-        btnCheck.isHidden = resident.checkInInfo == nil
-        if let ci = resident.checkInInfo {
+        btnCheck.isHidden = resident.checkIn == nil
+        if let ci = resident.checkIn {
             btnCheck.isHidden = ci.checkedBy == "self"
             btnCheck.isSelected = !(ci.checkedBy ?? "").isEmpty
         }
@@ -66,7 +62,7 @@ class ResidentCell: UITableViewCell  {
     
     @IBAction func checkAction(_ sender: UIButton) {
         btnCheck.isSelected = !btnCheck.isSelected
-        delegate?.touchCheckButon(sender.isSelected)
+        delegate?.touchCheckButon(sender.isSelected, resident: self.resident)
     }
     
     @IBAction func btnMessageAction(_ sender: Any) {

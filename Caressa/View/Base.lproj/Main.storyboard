@@ -475,14 +475,13 @@ Login</string>
                                                             <action selector="sendAction:" destination="bMl-B1-0X4" eventType="touchUpInside" id="bKg-fN-zyi"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSz-M1-UaX">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSz-M1-UaX">
                                                         <rect key="frame" x="315" y="1" width="40" height="40"/>
                                                         <color key="backgroundColor" red="0.0" green="0.86274509803921573" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="QSh-h0-7Xz"/>
                                                             <constraint firstAttribute="width" constant="40" id="iSG-YX-k07"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" image="microphone"/>
                                                         <userDefinedRuntimeAttributes>
@@ -827,7 +826,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="66" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -1245,10 +1244,10 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="20b-33-8Xg">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.27058823529999998" green="0.47843137250000001" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <offsetWrapper key="textShadowOffset" horizontal="-200" vertical="0.0"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -1357,7 +1356,11 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                         <viewLayoutGuide key="safeArea" id="VLa-t2-x7e"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="settings" id="kC8-hV-3iN"/>
-                    <navigationItem key="navigationItem" title="Settings" id="hLx-a1-obw"/>
+                    <navigationItem key="navigationItem" title="Settings" id="hLx-a1-obw">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="RNE-Tc-pAr">
+                            <color key="tintColor" red="0.27058823529999998" green="0.47843137250000001" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ivFacility" destination="xJJ-bh-gzh" id="aFb-Ih-Bu4"/>
                     </connections>
