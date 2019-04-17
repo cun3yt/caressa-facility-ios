@@ -28,12 +28,6 @@ class MessageVC: UIViewController {
         setup()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        tableView.reloadData()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -47,9 +41,13 @@ class MessageVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
-        }
+        WindowManager.repaintBarTitle(vc: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        WindowManager.repaintBarTitle(vc: self)
+        tableView.reloadData()
     }
     
     private func setup() {
@@ -67,8 +65,8 @@ class MessageVC: UIViewController {
                         if !self.readMessages.contains(where: {$0.id == e.id}) {
                             if let newMessage = DBManager.shared.manageObject(entity: DBManager.shared.entity(entitiy: "MessageRead")!) as? MessageRead {
                                 newMessage.id = Int32(e.id)
-                                newMessage.read = false
-                                results[i].read = false
+                                newMessage.read = true
+                                results[i].read = true
                                 try DBManager.shared.context.save()
                             }
                         } else {

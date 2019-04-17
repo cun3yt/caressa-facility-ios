@@ -76,7 +76,7 @@ class MessageCell: UITableViewCell {
         }
         
         if message.read == true {
-            contentView.alpha = 0.5
+            contentView.alpha = 0.6
         }
     }
 

@@ -12,7 +12,7 @@ public class ZoomableImageSlider: UIPageViewController {
     var images = [String]()
     fileprivate var currentIndex: Int?
     let imageIndexLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
-    //let closeButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    let closeButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     
     init() {
@@ -67,29 +67,29 @@ public class ZoomableImageSlider: UIPageViewController {
     
     func setUpUI()
     {
-        //let bundle = Bundle(for: self.classForCoder)
-        //let image = UIImage(named: "close", in: bundle, compatibleWith: nil)
-        //closeButton.setBackgroundImage(image, for: .normal)
-        //closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        let bundle = Bundle(for: self.classForCoder)
+        let image = UIImage(named: "close", in: bundle, compatibleWith: nil)
+        closeButton.setBackgroundImage(image, for: .normal)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         
         imageIndexLabel.textColor = .white
         self.view.addSubview(imageIndexLabel)
-        //self.view.addSubview(closeButton)
+        self.view.addSubview(closeButton)
         self.view.bringSubviewToFront(imageIndexLabel)
-        //self.view.bringSubview(toFront: closeButton)
+        self.view.bringSubviewToFront(closeButton)
         
-        //closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         imageIndexLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let labelTrailingConstraint = NSLayoutConstraint(item: imageIndexLabel, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -8)
         let labelBottomConstraint = NSLayoutConstraint(item: imageIndexLabel, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -8)
         
-        //        let closeButtonLeadingConstraint = NSLayoutConstraint(item: closeButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 8)
-        //        let closeButtonTopConstraint = NSLayoutConstraint(item: closeButton, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 8)
-        //        let closeButtonWidthConstraint = NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 30)
-        //        let closeButtonHeightConstraint = NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 30)
+        let closeButtonLeadingConstraint = NSLayoutConstraint(item: closeButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 20)
+        let closeButtonTopConstraint = NSLayoutConstraint(item: closeButton, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 30)
+        let closeButtonWidthConstraint = NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 30)
+        let closeButtonHeightConstraint = NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 30)
         
-        self.view.addConstraints([labelTrailingConstraint, labelBottomConstraint]) //, closeButtonLeadingConstraint, closeButtonTopConstraint, closeButtonWidthConstraint, closeButtonHeightConstraint
+        self.view.addConstraints([labelTrailingConstraint, labelBottomConstraint, closeButtonLeadingConstraint, closeButtonTopConstraint, closeButtonWidthConstraint, closeButtonHeightConstraint]) //
     }
     
     

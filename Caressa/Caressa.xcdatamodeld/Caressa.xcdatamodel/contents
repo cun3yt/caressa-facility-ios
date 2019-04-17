@@ -4,7 +4,12 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="MessageThreadRead" representedClassName="MessageThreadRead" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="read" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <elements>
         <element name="MessageRead" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="MessageThreadRead" positionX="-63" positionY="0" width="128" height="75"/>
     </elements>
 </model>

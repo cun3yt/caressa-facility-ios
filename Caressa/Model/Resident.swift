@@ -35,7 +35,7 @@ struct Resident: Codable {
 struct DeviceStatus: Codable {
     let isOnline: Bool
     let statusChecked: String
-    let lastActivityTime: String
+    let lastActivityTime: String?
     let isTodayCheckedIn: Bool
     
     enum CodingKeys: String, CodingKey {

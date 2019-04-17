@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Caressa/Model/MessageThreadRead+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Caressa/Model/MessageThreadRead+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Caressa/Model/MessageRead+CoreDataClass.swift">
    </FileRef>
    <FileRef

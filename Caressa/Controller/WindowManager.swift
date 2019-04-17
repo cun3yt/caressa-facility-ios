@@ -166,4 +166,9 @@ class WindowManager: NSObject {
         return profile
     }
     
+    public static func repaintBarTitle(vc: UIViewController) {
+        DispatchQueue.main.async {
+            vc.navigationItem.titleView?.frame.size.width = vc.view.frame.width - 30
+        }
+    }
 }

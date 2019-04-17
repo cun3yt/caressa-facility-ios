@@ -48,6 +48,10 @@ class MessageThreadCell: UITableViewCell {
                 player = AudioPlayer(url: url!, play: btnAudio, stop: btnStop, timeLabel: audioDuration)
             }
         }
+        
+        if message.read == true {
+            contentView.alpha = 0.6
+        }
     }
     
     @IBAction func btnPlayAction(_ sender: UIButton) {

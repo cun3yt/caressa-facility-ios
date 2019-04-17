@@ -36,9 +36,12 @@ class PhotosVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
-        }
+        WindowManager.repaintBarTitle(vc: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        WindowManager.repaintBarTitle(vc: self)
     }
     
     @IBAction func btnCameraAction(_ sender: UIBarButtonItem) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MessageThreadVC: UIViewController {
 
@@ -14,6 +15,7 @@ class MessageThreadVC: UIViewController {
     
     private var messages: [MessageResult] = []
     private var ivFacility: UIButton!
+    private lazy var readMessages: [MessageThreadRead] = []
     
     public var resident: Resident!
     
@@ -35,13 +37,23 @@ class MessageThreadVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
-        }
+        WindowManager.repaintBarTitle(vc: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        WindowManager.repaintBarTitle(vc: self)
     }
     
     func setup() {
         title = nil
+        
+        do {
+            readMessages = try DBManager.shared.context.fetch(MessageThreadRead.fetchRequest())
+        } catch {
+            print(error)
+        }
+        
         WebAPI.shared.get(String(format: APIConst.messageThreads, resident.id)) { (response: MessageThread) in
             DispatchQueue.main.async {
                 self.ivFacility = WindowManager.setup(vc: self, title: "\(response.resident.firstName) \(response.resident.lastName)", deviceStatus: response.resident.deviceStatus)
@@ -49,8 +61,30 @@ class MessageThreadVC: UIViewController {
             }
             
             WebAPI.shared.get(String(format: APIConst.messageThreadsMessage, self.resident.id), completion: { (messages: MessageHeader) in
-                
-                if let results = messages.results {
+                if var results = messages.results {
+                    do {
+                        for (i,e) in results.enumerated() {
+                            if !self.readMessages.contains(where: {$0.id == e.id}) {
+                                if let newMessage = DBManager.shared.manageObject(entity: DBManager.shared.entity(entitiy: "MessageThreadRead")!) as? MessageThreadRead {
+                                    newMessage.id = Int32(e.id)
+                                    newMessage.read = true
+                                    results[i].read = true
+                                    try DBManager.shared.context.save()
+                                }
+                            } else {
+                                let fetchReq: NSFetchRequest<NSFetchRequestResult> = MessageThreadRead.fetchRequest()
+                                fetchReq.predicate = NSPredicate(format: "id = %d", e.id)
+                                if let founded = try DBManager.shared.context.fetch(fetchReq).first as? MessageThreadRead {
+                                    founded.read = true
+                                    results[i].read = true
+                                    try DBManager.shared.context.save()
+                                }
+                            }
+                        }
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
                     self.messages = results
                 }
                 DispatchQueue.main.async {

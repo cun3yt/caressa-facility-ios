@@ -24,12 +24,31 @@ final public class WebAPI: NSObject {
     }
     
     public func put(_ method: String, parameter: Data, completion: ((Bool) -> Void)? = nil) {
-        guard let url = URL(string: method) else { return }
+        request(type: "PUT", method, parameter: parameter, completion: completion)
+    }
+    
+    public func delete(_ method: String, completion: ((Bool) -> Void)? = nil) {
+        request(type: "DELETE", method, parameter: nil, completion: completion)
+    }
+    
+    public func request(type: String, _ method: String, parameter: Data?, completion: ((Bool) -> Void)? = nil) {
+        var urlOpt: URL? = URL(string: method)
+        if !method.contains("http")  {
+            urlOpt = URL(string: "\(APIConst.baseURL)\(method)")
+        }
+        guard let url = urlOpt else { return }
         
         var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
-        urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
-        urlRequest.httpMethod = "PUT"
-        urlRequest.httpBody = parameter
+        urlRequest.httpMethod = type
+        if let data = parameter {
+            urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = data
+        } else {
+            let token = SessionManager.shared.token ?? ""
+            if !token.isEmpty {
+                urlRequest.addValue(token, forHTTPHeaderField: "Authorization")
+            }
+        }
         
         DispatchQueue.main.async {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -60,7 +79,7 @@ final public class WebAPI: NSObject {
         
         guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         urlRequest.httpMethod = type
         
         let token = SessionManager.shared.token ?? ""

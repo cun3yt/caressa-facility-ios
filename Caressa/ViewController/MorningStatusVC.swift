@@ -25,9 +25,12 @@ class MorningStatusVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.async {
-            self.navigationItem.titleView?.frame.size.width = self.view.frame.width - 30
-        }
+        WindowManager.repaintBarTitle(vc: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        WindowManager.repaintBarTitle(vc: self)
     }
     
     @IBAction func backAction(_ sender: UIBarButtonItem) {
@@ -147,12 +150,24 @@ extension MorningStatusVC: ResidentCellDelegate {
     func touchCheckButon(_ isSelected: Bool, resident: Resident) {
         guard let url = resident.checkIn?.url else { return }
         let req = MorningCheckInRequest()
-        WebAPI.shared.post(url, parameter: req) { (response: MorningCheckToday) in
-            if !response.success {
-                WindowManager.showMessage(type: .error, message: "Failed")
+        if isSelected {
+            WebAPI.shared.post(url, parameter: req) { (response: MorningCheckToday) in
+                if !response.success {
+                    WindowManager.showMessage(type: .error, message: "Failed")
+                    return
+                }
+                self.setup()
             }
-            self.setup()
+        } else {
+            WebAPI.shared.delete(url) { (success) in
+                if !success {
+                    WindowManager.showMessage(type: .error, message: "Failed")
+                    return
+                }
+                self.setup()
+            }
         }
+        
     }
     
     
