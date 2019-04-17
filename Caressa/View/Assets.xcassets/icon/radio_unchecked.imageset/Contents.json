@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "circle-shape-outline.png",
+      "filename" : "baseline_radio_button_unchecked_black_24dp.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "circle-shape-outline-2.png",
+      "filename" : "baseline_radio_button_unchecked_black_24dp-1.png",
       "scale" : "2x"
     },
     {

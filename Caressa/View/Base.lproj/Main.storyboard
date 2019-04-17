@@ -40,7 +40,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bgz-Un-p11">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="542.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="517.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="tWG-X5-R7D">
                                                 <rect key="frame" x="62.5" y="20" width="250" height="76"/>
@@ -58,7 +58,7 @@ Login</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RGN-og-HCJ">
-                                                <rect key="frame" x="62.5" y="217.5" width="250" height="305"/>
+                                                <rect key="frame" x="62.5" y="217.5" width="250" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Error Message&gt;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bV-g6-TYl">
                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="16"/>
@@ -114,45 +114,40 @@ Login</string>
                                                             <action selector="loginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Qf-X6-qoB"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOs-vr-oAj">
-                                                        <rect key="frame" x="0.0" y="170" width="250" height="55"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="55" id="JhL-oN-JBz"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPP-8d-W1S">
-                                                        <rect key="frame" x="0.0" y="235" width="250" height="30"/>
-                                                        <state key="normal" title="Forgot Password?"/>
-                                                        <connections>
-                                                            <action selector="forgotPassAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HBn-es-VA5"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwL-Ua-Cht">
-                                                        <rect key="frame" x="0.0" y="275" width="250" height="30"/>
-                                                        <state key="normal" title="New Member?"/>
-                                                        <connections>
-                                                            <action selector="newMemberAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I1t-jP-1lg"/>
-                                                            <segue destination="LXZ-JH-EOh" kind="show" id="ZW3-vQ-3UY"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="cHC-NH-MH3"/>
                                                 </constraints>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPP-8d-W1S">
+                                                <rect key="frame" x="189.5" y="427.5" width="123" height="30"/>
+                                                <state key="normal" title="Forgot Password?"/>
+                                                <connections>
+                                                    <action selector="forgotPassAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HBn-es-VA5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwL-Ua-Cht">
+                                                <rect key="frame" x="212.5" y="467.5" width="100" height="30"/>
+                                                <state key="normal" title="New Member?"/>
+                                                <connections>
+                                                    <action selector="newMemberAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I1t-jP-1lg"/>
+                                                    <segue destination="LXZ-JH-EOh" kind="show" id="ZW3-vQ-3UY"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="gPP-8d-W1S" firstAttribute="trailing" secondItem="Wgm-0E-Jh7" secondAttribute="trailing" id="DFo-aD-dV3"/>
                                             <constraint firstItem="RGN-og-HCJ" firstAttribute="top" secondItem="do6-kz-Rdj" secondAttribute="bottom" constant="30" id="GON-W7-C4n"/>
-                                            <constraint firstAttribute="bottom" secondItem="RGN-og-HCJ" secondAttribute="bottom" constant="20" id="Qu2-WZ-S8y"/>
+                                            <constraint firstItem="bwL-Ua-Cht" firstAttribute="top" secondItem="gPP-8d-W1S" secondAttribute="bottom" constant="10" id="Zcr-7s-3gO"/>
+                                            <constraint firstItem="gPP-8d-W1S" firstAttribute="top" secondItem="RGN-og-HCJ" secondAttribute="bottom" constant="50" id="aox-NE-2rf"/>
                                             <constraint firstItem="tWG-X5-R7D" firstAttribute="centerX" secondItem="Bgz-Un-p11" secondAttribute="centerX" id="eKa-RZ-HNJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="bwL-Ua-Cht" secondAttribute="bottom" constant="20" id="hon-2A-o5j"/>
                                             <constraint firstItem="tWG-X5-R7D" firstAttribute="top" secondItem="Bgz-Un-p11" secondAttribute="top" constant="20" id="jcq-u6-lU6"/>
                                             <constraint firstItem="RGN-og-HCJ" firstAttribute="centerX" secondItem="tWG-X5-R7D" secondAttribute="centerX" id="jhw-NY-Ksd"/>
                                             <constraint firstItem="do6-kz-Rdj" firstAttribute="top" secondItem="tWG-X5-R7D" secondAttribute="bottom" constant="28" id="mYe-1M-BdF"/>
                                             <constraint firstItem="do6-kz-Rdj" firstAttribute="centerX" secondItem="tWG-X5-R7D" secondAttribute="centerX" id="oa6-bt-8aT"/>
+                                            <constraint firstItem="bwL-Ua-Cht" firstAttribute="trailing" secondItem="gPP-8d-W1S" secondAttribute="trailing" id="t97-pe-avP"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -259,7 +254,7 @@ Login</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wUe-I6-Vhn"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="message" badgeValue="3" id="iPs-3D-FMi"/>
+                    <tabBarItem key="tabBarItem" title="" image="message" id="iPs-3D-FMi"/>
                     <navigationItem key="navigationItem" title="Messages" id="672-k7-LWq">
                         <barButtonItem key="backBarButtonItem" title=" " id="T3y-Bk-41g"/>
                         <barButtonItem key="rightBarButtonItem" image="new_chat" id="5CP-sO-rML">
@@ -281,11 +276,11 @@ Login</string>
             <objects>
                 <viewController id="bMl-B1-0X4" customClass="NewMessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hTY-pp-U6W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-ul-9Lm">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLL-oW-WXy">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
@@ -584,11 +579,11 @@ Login</string>
             <objects>
                 <viewController id="6bu-pT-dOl" customClass="SearchVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lg8-ea-7cE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="68" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RTH-W4-dR9">
-                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="498"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6bu-pT-dOl" id="Ymm-HT-Zcu"/>
@@ -596,7 +591,7 @@ Login</string>
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Search in Resident Name or Room" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smX-0w-FMQ">
-                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                                 <color key="barTintColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -642,7 +637,7 @@ Login</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2c4-kr-bY0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2c4-kr-bY0">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -887,8 +882,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJb-rB-QIg">
-                                                <rect key="frame" x="161" y="240" width="53.5" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJb-rB-QIg">
+                                                <rect key="frame" x="178" y="240" width="19" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -899,8 +894,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4C6-gi-JgS">
-                                                <rect key="frame" x="20" y="312.5" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4C6-gi-JgS">
+                                                <rect key="frame" x="20" y="312.5" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -911,8 +906,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbL-Ru-ZKK">
-                                                <rect key="frame" x="20" y="394" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbL-Ru-ZKK">
+                                                <rect key="frame" x="20" y="394" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -947,32 +942,32 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHd-hZ-sQL">
-                                                <rect key="frame" x="110" y="442.5" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHd-hZ-sQL">
+                                                <rect key="frame" x="110" y="442.5" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CP1-ZE-kqg">
-                                                <rect key="frame" x="107" y="471" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CP1-ZE-kqg">
+                                                <rect key="frame" x="107" y="471" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-mO-aQF">
-                                                <rect key="frame" x="86.5" y="499.5" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENk-mO-aQF">
+                                                <rect key="frame" x="86.5" y="499.5" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iX4-ss-WFE">
-                                                <rect key="frame" x="101" y="528" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iX4-ss-WFE">
+                                                <rect key="frame" x="101" y="528" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cx-fk-f9W">
-                                                <rect key="frame" x="165.5" y="556.5" width="42" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5cx-fk-f9W">
+                                                <rect key="frame" x="165.5" y="556.5" width="14" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1458,6 +1453,6 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="uncheck_square" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Kgj-jc-7S9"/>
+        <segue reference="KwK-49-9yG"/>
     </inferredMetricsTieBreakers>
 </document>
