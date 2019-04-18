@@ -821,7 +821,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -1437,7 +1437,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="barChat" width="24" height="24"/>
         <image name="barPhone" width="24" height="24"/>
         <image name="calendar" width="25" height="25"/>
-        <image name="camera" width="32" height="32"/>
+        <image name="camera" width="24" height="24"/>
         <image name="chat" width="60" height="60"/>
         <image name="gallery" width="25" height="25"/>
         <image name="message" width="25" height="25"/>
@@ -1445,8 +1445,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="new_chat" width="24" height="24"/>
         <image name="people" width="25" height="25"/>
         <image name="phone" width="64" height="64"/>
-        <image name="photo" width="32" height="32"/>
-        <image name="radio_checked" width="16" height="16"/>
+        <image name="photo" width="24" height="24"/>
+        <image name="radio_checked" width="24" height="24"/>
         <image name="settings" width="25" height="25"/>
         <image name="sort" width="16" height="16"/>
         <image name="sunrise" width="24" height="24"/>

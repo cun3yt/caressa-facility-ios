@@ -15,7 +15,7 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ResidentCell" customModule="Caressa" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="327" height="76"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="327" height="75.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -56,8 +56,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6z-eB-hq3">
-                        <rect key="frame" x="271" y="19.5" width="40" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6z-eB-hq3">
+                        <rect key="frame" x="271" y="18" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="gSe-17-nOn"/>
                             <constraint firstAttribute="height" constant="40" id="vAf-ag-DcA"/>
@@ -78,8 +78,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHC-aT-89r">
-                        <rect key="frame" x="227" y="19.5" width="40" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHC-aT-89r">
+                        <rect key="frame" x="227" y="18" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="Adf-4l-uuU"/>
                             <constraint firstAttribute="height" constant="40" id="bj8-F5-blN"/>
@@ -103,7 +103,6 @@
                     <constraint firstItem="smd-cU-QA2" firstAttribute="leading" secondItem="Nt3-RU-Xaz" secondAttribute="trailing" constant="8" id="U9Z-CN-YjS"/>
                     <constraint firstItem="h6z-eB-hq3" firstAttribute="leading" secondItem="HHC-aT-89r" secondAttribute="trailing" constant="4" id="XC7-Qo-m3d"/>
                     <constraint firstItem="POq-CW-SRg" firstAttribute="trailing" secondItem="Nt3-RU-Xaz" secondAttribute="trailing" id="Y9D-ZH-U7p"/>
-                    <constraint firstAttribute="bottom" secondItem="Nt3-RU-Xaz" secondAttribute="bottom" constant="8" id="dZG-vM-0V4"/>
                     <constraint firstItem="h6z-eB-hq3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fmd-Fl-P1j"/>
                     <constraint firstItem="POq-CW-SRg" firstAttribute="top" secondItem="Nt3-RU-Xaz" secondAttribute="top" id="hDZ-JZ-swI"/>
                     <constraint firstItem="Nt3-RU-Xaz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="hgI-gU-hoi"/>

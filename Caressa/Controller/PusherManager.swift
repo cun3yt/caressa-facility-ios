@@ -32,7 +32,7 @@ class PusherManager: NSObject {
         let _ = channel.bind(eventName: "my-event", callback: { (data: Any?) -> Void in
             if let data = data as? [String : AnyObject] {
                 if let message = data["message"] as? String {
-                    print(message)
+                    WindowManager.showMessage(type: .information, message: message)
                 }
             }
         })

@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.beamsClient.start(instanceId: "72546c41-1370-4fca-b9a3-d6154896875a")
+        self.beamsClient.start(instanceId: "e3b941ef-5a8f-4faa-ad87-baea465c28b6")
         self.beamsClient.registerForRemoteNotifications()
-        try? self.beamsClient.addDeviceInterest(interest: "facility")
+        try? self.beamsClient.addDeviceInterest(interest: "debug-facility")
         UNUserNotificationCenter.current().delegate = self
 
         return true
