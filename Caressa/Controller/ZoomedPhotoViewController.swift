@@ -66,7 +66,7 @@ class ZoomedPhotoViewController: UIViewController, UIScrollViewDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
         tapGesture.numberOfTapsRequired = 2
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownGestureAction))
-        swipeGesture.direction = [.down, .up]
+        swipeGesture.direction = .down //[.down, .up]
         
         scrollView = UIScrollView(frame: frame)
         scrollView.minimumZoomScale = 1

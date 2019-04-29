@@ -19,34 +19,40 @@ final class ActivityManager: NSObject {
     fileprivate var indicator = UIActivityIndicatorView(style: .whiteLarge)
     
     func startActivity() {
-     
         if disableActivity { return }
-        if indicator.isAnimating { return }
         
-        var topView: UIView = UIView()
-        
-        if let view = UIApplication.shared.keyWindow?.rootViewController?.view {
-            topView = view
+        DispatchQueue.main.async {
+            if self.indicator.isAnimating { return }
+            
+            var topView: UIView = UIView()
+            
+            if let view = UIApplication.shared.keyWindow?.rootViewController?.view {
+                topView = view
+            }
+            
+            self.bgView.frame = UIScreen.main.bounds
+            self.bgView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+            
+            let aniX = Int(self.bgView.bounds.maxX / 2) - Int(self.size.width / 2)
+            let aniY = Int(self.bgView.bounds.maxY / 2) - Int(self.size.height / 2)
+            
+            self.indicator.frame.size = self.size
+            self.indicator.frame.origin = CGPoint(x: aniX, y: aniY)
+            
+            self.bgView.addSubview(self.indicator)
+            topView.addSubview(self.bgView)
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            self.indicator.startAnimating()
         }
-        
-        bgView.frame = UIScreen.main.bounds
-        bgView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        
-        let aniX = Int(bgView.bounds.maxX / 2) - Int(size.width / 2)
-        let aniY = Int(bgView.bounds.maxY / 2) - Int(size.height / 2)
-        
-        indicator.frame.size = size
-        indicator.frame.origin = CGPoint(x: aniX, y: aniY)
-        
-        bgView.addSubview(indicator)
-        topView.addSubview(bgView)
-        
-        indicator.startAnimating()
     }
     
     func stopActivity() {
-        indicator.stopAnimating()
-        bgView.removeFromSuperview()
-        disableActivity = false
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            self.indicator.stopAnimating()
+            self.bgView.removeFromSuperview()
+            self.disableActivity = false
+        }
     }
 }

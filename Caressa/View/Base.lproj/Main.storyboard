@@ -50,8 +50,8 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="do6-kz-Rdj">
-                                                <rect key="frame" x="80" y="124" width="215.5" height="63.5"/>
-                                                <string key="text">Caregiver &amp; Facility
+                                                <rect key="frame" x="54" y="124" width="267" height="63.5"/>
+                                                <string key="text">Caregiver &amp; Community
 Login</string>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <nil key="textColor"/>
@@ -276,11 +276,11 @@ Login</string>
             <objects>
                 <viewController id="bMl-B1-0X4" customClass="NewMessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hTY-pp-U6W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vf2-ul-9Lm">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLL-oW-WXy">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="330"/>
@@ -579,11 +579,11 @@ Login</string>
             <objects>
                 <viewController id="6bu-pT-dOl" customClass="SearchVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lg8-ea-7cE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="68" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RTH-W4-dR9">
-                                <rect key="frame" x="0.0" y="56" width="375" height="498"/>
+                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6bu-pT-dOl" id="Ymm-HT-Zcu"/>
@@ -591,7 +591,7 @@ Login</string>
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Search in Resident Name or Room" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smX-0w-FMQ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <color key="barTintColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -761,7 +761,7 @@ Login</string>
                                                 </constraints>
                                                 <string key="text">New To Caressa?
 
-Please reach out to your senior living facility to get signed up.
+Please reach out to your senior living community to get signed up.
 
 If you think you need a direct access, please out to support@caressa.ai</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -821,7 +821,7 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Auy-Ty-1r0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -979,6 +979,9 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     <constraint firstAttribute="width" constant="32" id="w7Z-bd-oJd"/>
                                                 </constraints>
                                                 <state key="normal" image="chat"/>
+                                                <connections>
+                                                    <action selector="btnMessageFamily:" destination="gGX-fY-p6x" eventType="touchUpInside" id="cn1-YP-pk2"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uaf-7K-T2o">
                                                 <rect key="frame" x="275" y="284" width="32" height="32"/>
@@ -987,6 +990,9 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     <constraint firstAttribute="width" constant="32" id="fAN-Sg-QHU"/>
                                                 </constraints>
                                                 <state key="normal" image="phone"/>
+                                                <connections>
+                                                    <action selector="btnCallFamily:" destination="gGX-fY-p6x" eventType="touchUpInside" id="tWC-0b-Y0F"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snd-h2-Lv6">
                                                 <rect key="frame" x="323" y="377" width="32" height="32"/>
@@ -995,6 +1001,9 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     <constraint firstAttribute="width" constant="32" id="hJs-AG-qBs"/>
                                                 </constraints>
                                                 <state key="normal" image="chat"/>
+                                                <connections>
+                                                    <action selector="btnMessageCaregiver:" destination="gGX-fY-p6x" eventType="touchUpInside" id="nZ9-Vd-EmT"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb0-wD-fQY">
                                                 <rect key="frame" x="275" y="377" width="32" height="32"/>
@@ -1003,6 +1012,9 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     <constraint firstAttribute="height" constant="32" id="lLy-A5-kmP"/>
                                                 </constraints>
                                                 <state key="normal" image="phone"/>
+                                                <connections>
+                                                    <action selector="btnCallCaregiver:" destination="gGX-fY-p6x" eventType="touchUpInside" id="ZoI-Ty-vXy"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ttg-CX-thQ">
                                                 <rect key="frame" x="247.5" y="36" width="24" height="24"/>
@@ -1086,8 +1098,16 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                     </view>
                     <navigationItem key="navigationItem" id="dWB-ab-zGr">
                         <rightBarButtonItems>
-                            <barButtonItem image="barChat" width="32" id="qn7-H2-SOa"/>
-                            <barButtonItem image="barPhone" id="IoK-yI-Xh8"/>
+                            <barButtonItem image="barChat" width="32" id="qn7-H2-SOa" userLabel="chat">
+                                <connections>
+                                    <action selector="btnMessageUser:" destination="gGX-fY-p6x" id="IIB-0a-jqK"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="barPhone" id="IoK-yI-Xh8" userLabel="phone">
+                                <connections>
+                                    <action selector="btnCallUser:" destination="gGX-fY-p6x" id="ux5-gw-Kh5"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -1139,15 +1159,15 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UwQ-Gg-OPv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWm-eb-hd4">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="eWm-eb-hd4">
                                     <size key="itemSize" width="86" height="86"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
-                                    <size key="footerReferenceSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="50" height="40"/>
+                                    <size key="footerReferenceSize" width="50" height="34"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ZpQ-KG-cWE">
-                                        <rect key="frame" x="0.0" y="50" width="86" height="86"/>
+                                        <rect key="frame" x="0.0" y="40" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
@@ -1156,41 +1176,42 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="header" id="3nX-t7-S5n" customClass="PhotoHeaderView" customModule="Caressa" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2Y-4L-2yT">
-                                            <rect key="frame" x="20" y="14.5" width="43.5" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <rect key="frame" x="12" y="13.5" width="43" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="centerY" secondItem="3nX-t7-S5n" secondAttribute="centerY" id="2kM-Ct-wxh"/>
-                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="leading" secondItem="3nX-t7-S5n" secondAttribute="leading" constant="20" id="Pmw-Ae-YFS"/>
+                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="centerY" secondItem="3nX-t7-S5n" secondAttribute="centerY" constant="4" id="2kM-Ct-wxh"/>
+                                        <constraint firstItem="s2Y-4L-2yT" firstAttribute="leading" secondItem="3nX-t7-S5n" secondAttribute="leading" constant="12" id="Pmw-Ae-YFS"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="lblTitle" destination="s2Y-4L-2yT" id="xJf-Yn-V0M"/>
                                     </connections>
                                 </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="footer" id="z0c-Mn-GNB" customClass="PhotoFooterView" customModule="Caressa" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="136" width="375" height="50"/>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="footer" id="VNk-1o-HgB" customClass="PhotoFooterView" customModule="Caressa" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="126" width="375" height="34"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fB0-dq-GUX">
-                                            <rect key="frame" x="275" y="8" width="80" height="34"/>
-                                            <state key="normal" title="10 more...">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cbd-en-iOd">
+                                            <rect key="frame" x="337" y="2" width="30" height="30"/>
+                                            <state key="normal" title="...">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="fB0-dq-GUX" secondAttribute="trailing" constant="20" id="tYG-bM-9go"/>
-                                        <constraint firstItem="fB0-dq-GUX" firstAttribute="centerY" secondItem="z0c-Mn-GNB" secondAttribute="centerY" id="ypJ-Cl-2Uk"/>
+                                        <constraint firstItem="Cbd-en-iOd" firstAttribute="top" secondItem="VNk-1o-HgB" secondAttribute="top" constant="2" id="CcO-Wc-bxf"/>
+                                        <constraint firstAttribute="bottom" secondItem="Cbd-en-iOd" secondAttribute="bottom" constant="2" id="DkK-8p-RMD"/>
+                                        <constraint firstAttribute="trailing" secondItem="Cbd-en-iOd" secondAttribute="trailing" constant="8" id="ghS-Js-r9R"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="btnMore" destination="fB0-dq-GUX" id="DcV-2U-Ibs"/>
+                                        <outlet property="btnMore" destination="Cbd-en-iOd" id="zU4-Bi-b5i"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>
@@ -1285,8 +1306,8 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facility Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX6-y5-1yz">
-                                                <rect key="frame" x="95" y="40" width="185.5" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Community Profile Picture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX6-y5-1yz">
+                                                <rect key="frame" x="75" y="40" width="225.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1446,13 +1467,13 @@ If you think you need a direct access, please out to support@caressa.ai</string>
         <image name="people" width="25" height="25"/>
         <image name="phone" width="64" height="64"/>
         <image name="photo" width="32" height="32"/>
-        <image name="radio_checked" width="16" height="16"/>
+        <image name="radio_checked" width="24" height="24"/>
         <image name="settings" width="25" height="25"/>
         <image name="sort" width="16" height="16"/>
         <image name="sunrise" width="24" height="24"/>
         <image name="uncheck_square" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KwK-49-9yG"/>
+        <segue reference="Kgj-jc-7S9"/>
     </inferredMetricsTieBreakers>
 </document>

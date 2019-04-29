@@ -14,13 +14,15 @@ struct LoginRequest: Encodable {
     let password: String
     let client_id: String
     let client_secret: String
+    let refresh_token: String?
     
-    init(username: String, password: String) {
-        self.grant_type = "password"
+    init(username: String, password: String, refreshToken: String?) {
+        self.grant_type = refreshToken != nil ? "refresh_token" : "password"
         self.username = username
         self.password = password
         self.client_id = "A6KaFyXMWdEAI63ysTeea2ZtDY4k5vWeVcl6xqns"
         self.client_secret = "nrhnRiWqcaEsnMBYlaoMzxvRa4lXMqPdOOlyaRC8UJBWnlnVKeKcXmGZpcVp6ggLSjxl6mZNp7cemn9dGmj2szlJ4TtMPtJ6hBd0Q9Bxq4YhnDiQebucGdJRugjzNgOK"
+        self.refresh_token = refreshToken
     }
 }
 

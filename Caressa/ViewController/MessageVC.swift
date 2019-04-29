@@ -17,6 +17,7 @@ class MessageVC: UIViewController {
     private var pageCount: Int = 1
     private var messages: [MessageResult] = []
     private var ivFacility: UIButton!
+    private var allResidentId: Int?
     
     private lazy var readMessages: [MessageRead] = []
     
@@ -25,6 +26,12 @@ class MessageVC: UIViewController {
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivFacility = WindowManager.setup(vc: self, title: "Messages")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
+        //setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         setup()
     }
     
@@ -84,6 +91,11 @@ class MessageVC: UIViewController {
                 }
                 
                 self.messages += results
+                self.allResidentId = results.first(where: {
+                    switch $0.resident {
+                    case .string?: return true
+                    default: return false
+                    }})?.id
             }
             self.pageCount = (response.count ?? 1) / (response.results?.count ?? 1)
             
@@ -115,23 +127,45 @@ class MessageVC: UIViewController {
 
 extension MessageVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return messages.count + (page < pageCount ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.row == messages.count {
+            let cell = UITableViewCell()
+            cell.contentView.tag = 998
+            return cell
+        }
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MessageCell
         cell.setup(message: messages[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if cell.viewWithTag(998) != nil {
+            if page < pageCount {
+                page += 1
+                setup()
+            }
+        }
+    }
+    
+    
 }
 
 extension MessageVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         switch messages[indexPath.row].resident {
-        case .residentClass(let x)? :
-            WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: x)
-        case .string?: break
+        case .residentClass(let x)?:
+            if x.messageThreadURL.url != nil {
+                WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: x)
+            }
+        case .string?:
+            WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: allResidentId)
         case .none: break
         }
     }
@@ -153,5 +187,3 @@ extension MessageVC: UITableViewDataSourcePrefetching {
     
     
 }
-
-

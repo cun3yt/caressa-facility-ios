@@ -9,37 +9,47 @@
 import Foundation
 import PusherSwift
 
+protocol PusherManagerDelegate {
+    func subscribed(deviceStatus: DeviceStatusEvent)
+    func subscribed(checkIn: CheckInEvent)
+}
 
 class PusherManager: NSObject {
     
-    static let shared = PusherManager()
+    //static let shared = PusherManager()
     
-    private var pusher: Pusher!
+    //private var pusher: Pusher = (UIApplication.shared.delegate as? AppDelegate)!.pusher
+    private var channel: PusherChannel!
+    
+    public var delegate: PusherManagerDelegate? {
+        didSet {
+            bind()
+        }
+    }
     
     override init() {
         super.init()
-        
-        let options = PusherClientOptions(
-            host: .cluster("us2")
-        )
-        
-        pusher = Pusher(key: "c984c4342b09e06c02a0", options: options)
-        
-        pusher.connect()
-        
-        let channel = pusher.subscribe("my-channel")
-        
-        let _ = channel.bind(eventName: "my-event", callback: { (data: Any?) -> Void in
-            if let data = data as? [String : AnyObject] {
-                if let message = data["message"] as? String {
-                    print(message)
-                }
+        channel = (UIApplication.shared.delegate as? AppDelegate)!.pusherChannel
+    }
+    
+    func bind() {
+        let _ = channel.bind(eventName: "DeviceStatusEvent", callback: { (dic: Any?) -> Void in
+            if let dic = dic as? [String : AnyObject],
+                let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
+                let deviceStatus = try? JSONManager().decoder.decode(DeviceStatusEvent.self, from: data) {
+                
+                self.delegate?.subscribed(deviceStatus: deviceStatus)
             }
         })
         
-    }
-    
-    func listen() {
         
+        let _ = channel.bind(eventName: "CheckInEvent", callback: { (dic: Any?) -> Void in
+            if let dic = dic as? [String : AnyObject],
+                let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
+                let checkin = try? JSONManager().decoder.decode(CheckInEvent.self, from: data) {
+                
+                self.delegate?.subscribed(checkIn: checkin)
+            }
+        })
     }
 }

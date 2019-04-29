@@ -20,6 +20,10 @@ class WindowManager: NSObject {
     }
     
     class public func pushToLoginVC() {
+        UserSettings.shared.accessToken = nil
+        UserSettings.shared.refreshToken = nil
+        UserSettings.shared.password = nil
+        
         DispatchQueue.main.async {
             let nc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNC") as! UINavigationController
             let AppDel = UIApplication.shared.delegate as! AppDelegate
@@ -33,9 +37,14 @@ class WindowManager: NSObject {
         navController.present(vc, animated: true)
     }
     
-    class public func pushToMessageThreadVC(navController: UINavigationController?, resident: Resident) {
+    class public func pushToMessageThreadVC<T>(navController: UINavigationController?, resident: T) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MessageThreadVC") as! MessageThreadVC
-        vc.resident = resident
+        if let r = resident as? Resident {
+            vc.resident = r
+        }
+        if let s = resident as? Int {
+            vc.allResidentId = s
+        }
         if let navController = navController {
             navController.pushViewController(vc, animated: true)
         } else {
@@ -158,7 +167,12 @@ class WindowManager: NSObject {
         if let stat = deviceStatus {
             let status = UIView(frame: CGRect(x: profile.frame.maxX - 8, y: 0, width: 14, height: 14))
             status.cornerRadius = 7
-            status.backgroundColor = stat.isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            if let isOnline = stat.isOnline {
+                status.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            } else {
+                status.backgroundColor = .clear
+            }
+            status.tag = 999
             titleView.addSubview(status)
         }
         vc.navigationItem.titleView = titleView
@@ -166,9 +180,16 @@ class WindowManager: NSObject {
         return profile
     }
     
-    public static func repaintBarTitle(vc: UIViewController) {
+    public static func repaintBarTitle(vc: UIViewController, deviceStatus: DeviceStatus? = nil) {
         DispatchQueue.main.async {
             vc.navigationItem.titleView?.frame.size.width = vc.view.frame.width - 30
+            if let stat = deviceStatus {
+                if let isOnline = stat.isOnline {
+                    vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                } else {
+                    vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = .clear
+                }
+            }
         }
     }
 }

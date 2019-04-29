@@ -30,6 +30,8 @@
 		BD159BC92256978C00701370 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC82256978C00701370 /* AudioRecorder.swift */; };
 		BD189387225BEEC2005660B7 /* GSImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD189386225BEEC2005660B7 /* GSImageViewer.swift */; };
 		BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */; };
+		BD4E029B226B1E99007C17D9 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4E029A226B1E99007C17D9 /* UserSettings.swift */; };
+		BD4E029D226B6EBB007C17D9 /* PusherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4E029C226B6EBB007C17D9 /* PusherModel.swift */; };
 		BD55310C22464A900062F894 /* ResidentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310B22464A900062F894 /* ResidentVC.swift */; };
 		BD553111224660810062F894 /* ResidentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55310F224660810062F894 /* ResidentCell.swift */; };
 		BD553112224660810062F894 /* ResidentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD553110224660810062F894 /* ResidentCell.xib */; };
@@ -39,6 +41,9 @@
 		BD55311C2247911D0062F894 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311A2247911D0062F894 /* MessageCell.swift */; };
 		BD55311D2247911D0062F894 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD55311B2247911D0062F894 /* MessageCell.xib */; };
 		BD55311F224794770062F894 /* MessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311E224794770062F894 /* MessageVC.swift */; };
+		BD6F132022723890002795F0 /* PhotoGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F131F22723890002795F0 /* PhotoGallery.swift */; };
+		BD6F13222274557C002795F0 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F13212274557C002795F0 /* Calendar.swift */; };
+		BD6F132422745AC9002795F0 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F132322745AC9002795F0 /* TimeState.swift */; };
 		BD6F378C2255FD0000BB133F /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378B2255FD0000BB133F /* Protocol.swift */; };
 		BD6F378E2255FD5500BB133F /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F378D2255FD5500BB133F /* AudioPlayer.swift */; };
 		BD948184225FDB9B004345AB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD948183225FDB9B004345AB /* NotificationService.swift */; };
@@ -116,6 +121,8 @@
 		BD159BC82256978C00701370 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BD189386225BEEC2005660B7 /* GSImageViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSImageViewer.swift; sourceTree = "<group>"; };
 		BD47E9BB224C14CB009B9887 /* MorningStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningStatusVC.swift; sourceTree = "<group>"; };
+		BD4E029A226B1E99007C17D9 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		BD4E029C226B6EBB007C17D9 /* PusherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PusherModel.swift; sourceTree = "<group>"; };
 		BD55310B22464A900062F894 /* ResidentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentVC.swift; sourceTree = "<group>"; };
 		BD55310F224660810062F894 /* ResidentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentCell.swift; sourceTree = "<group>"; };
 		BD553110224660810062F894 /* ResidentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResidentCell.xib; sourceTree = "<group>"; };
@@ -125,6 +132,9 @@
 		BD55311A2247911D0062F894 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		BD55311B2247911D0062F894 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		BD55311E224794770062F894 /* MessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVC.swift; sourceTree = "<group>"; };
+		BD6F131F22723890002795F0 /* PhotoGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGallery.swift; sourceTree = "<group>"; };
+		BD6F13212274557C002795F0 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		BD6F132322745AC9002795F0 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
 		BD6F378B2255FD0000BB133F /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		BD6F378D2255FD5500BB133F /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		BD94817C225FD34F004345AB /* Caressa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Caressa.entitlements; sourceTree = "<group>"; };
@@ -279,6 +289,10 @@
 				BD12354A225296C700FF1638 /* AmazonModel.swift */,
 				BD145CA62257D1A40040BAAC /* SendMessage.swift */,
 				BDF52C4B226270590016E69C /* MorningCheckIn.swift */,
+				BD4E029C226B6EBB007C17D9 /* PusherModel.swift */,
+				BD6F131F22723890002795F0 /* PhotoGallery.swift */,
+				BD6F13212274557C002795F0 /* Calendar.swift */,
+				BD6F132322745AC9002795F0 /* TimeState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +328,7 @@
 				BDB2B025225F5B80003D9FB5 /* DBManager.swift */,
 				BDF52C4822626AA50016E69C /* ZoomableImageSlider.swift */,
 				BDF52C4722626AA40016E69C /* ZoomedPhotoViewController.swift */,
+				BD4E029A226B1E99007C17D9 /* UserSettings.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -469,7 +484,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PushNotifications/PushNotifications.framework",
@@ -492,7 +507,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -518,11 +533,13 @@
 				BD14E668224F6E52001B12BE /* Message.swift in Sources */,
 				BD553111224660810062F894 /* ResidentCell.swift in Sources */,
 				BD145CAA2258B19A0040BAAC /* CalendarCell.swift in Sources */,
+				BD4E029D226B6EBB007C17D9 /* PusherModel.swift in Sources */,
 				BD145CA72257D1A40040BAAC /* SendMessage.swift in Sources */,
 				BD55310C22464A900062F894 /* ResidentVC.swift in Sources */,
 				BD14E65E224F5879001B12BE /* NewMemberVC.swift in Sources */,
 				BD999F44224571E400F7D1AB /* APIConst.swift in Sources */,
 				BD12354922528A4F00FF1638 /* User.swift in Sources */,
+				BD4E029B226B1E99007C17D9 /* UserSettings.swift in Sources */,
 				BD999F4622457E7F00F7D1AB /* BaseModel.swift in Sources */,
 				BD999F40224571E400F7D1AB /* JSONManager.swift in Sources */,
 				BD145CB92258EBBF0040BAAC /* PusherManager.swift in Sources */,
@@ -530,7 +547,9 @@
 				BD553115224662030062F894 /* View+Extension.swift in Sources */,
 				BD999F3E224571E400F7D1AB /* ImageManager.swift in Sources */,
 				BDF52C4A22626AA50016E69C /* ZoomableImageSlider.swift in Sources */,
+				BD6F132422745AC9002795F0 /* TimeState.swift in Sources */,
 				BDEBA83B224F9766005F3EDE /* ProfilePageVC.swift in Sources */,
+				BD6F132022723890002795F0 /* PhotoGallery.swift in Sources */,
 				BD145CB02258C61C0040BAAC /* PhotoCell.swift in Sources */,
 				BDF52C4C226270590016E69C /* MorningCheckIn.swift in Sources */,
 				BD14E660224F61DD001B12BE /* NewMessageVC.swift in Sources */,
@@ -538,6 +557,7 @@
 				BD145CB72258D1010040BAAC /* PhotoHeaderView.swift in Sources */,
 				BD47E9BC224C14CB009B9887 /* MorningStatusVC.swift in Sources */,
 				BD999F482246226500F7D1AB /* Login.swift in Sources */,
+				BD6F13222274557C002795F0 /* Calendar.swift in Sources */,
 				BDB2B024225F589D003D9FB5 /* Caressa.xcdatamodeld in Sources */,
 				BD5531192246B4950062F894 /* Resident.swift in Sources */,
 				BD14E663224F6984001B12BE /* MessageThreadCell.swift in Sources */,

@@ -82,8 +82,8 @@ class AudioRecorder: NSObject {
         if timer == nil { return }
         if let rec = recorder {
             
-            let time = DateManager.getDateParts(seconds: rec.currentTime)
-            let dur = DateManager.getDateParts(seconds: duration)
+            let time = DateManager().getDateParts(seconds: rec.currentTime)
+            let dur = DateManager().getDateParts(seconds: duration)
             audioButton.setTitle("STOP " + String(format: "%02d:%02d",  time.1, time.2)
                 + " / " +
                 String(format: "%02d:%02d", dur.1, dur.2), for: .normal)

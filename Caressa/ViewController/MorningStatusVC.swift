@@ -50,7 +50,7 @@ class MorningStatusVC: UIViewController {
 
 extension MorningStatusVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return morningChecks == nil ? 0 : 4 //residents.count
+        return morningChecks == nil ? 0 : 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,6 +76,7 @@ extension MorningStatusVC: UITableViewDataSource {
         cell.setup(resident: resident)
         cell.navigationController = self.navigationController
         cell.delegate = self
+        cell.lblDetail.text = nil
         if let ci = resident.checkIn, let by = ci.checkedBy, let tm = ci.checkInTime {
             cell.lblDetail.text = "By: \(by) @ \(DateManager("hh:mm a").string(date: tm))"
             cell.lblDetail.isHidden = false
@@ -125,13 +126,6 @@ extension MorningStatusVC: UITableViewDelegate {
         return view
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        switch indexPath.section {
-//        case 2: return 75
-//        default: return 68
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         var resident: Resident!
@@ -144,30 +138,49 @@ extension MorningStatusVC: UITableViewDelegate {
         }
         WindowManager.pushToProfileVC(navController: self.navigationController!, resident: resident)
     }
+    
+    func changedStatus(checked: Bool, resident: Resident) {
+        if checked {
+            if let i = morningChecks.staffChecked.residents.firstIndex(where: {$0.id==resident.id}) {
+                var removed = morningChecks.staffChecked.residents.remove(at: i)
+                removed.checkIn = CheckInURL(url: removed.checkIn?.url ?? "", checkedBy: nil, checkInTime: nil)
+                morningChecks.pending.residents.append(removed)
+            }
+        } else {
+            if let i = morningChecks.pending.residents.firstIndex(where: {$0.id==resident.id}) {
+                var removed = morningChecks.pending.residents.remove(at: i)
+                let name = (SessionManager.shared.activeUser?.firstName ?? "") + (SessionManager.shared.activeUser?.lastName ?? "")
+                removed.checkIn = CheckInURL(url: removed.checkIn?.url ?? "", checkedBy: "Staff \(name)", checkInTime: Date())
+                morningChecks.staffChecked.residents.append(removed)
+            }
+        }
+        self.tableView.reloadSections(IndexSet(arrayLiteral: 1,3), with: .automatic)
+    }
 }
 
 extension MorningStatusVC: ResidentCellDelegate {
     func touchCheckButon(_ isSelected: Bool, resident: Resident) {
         guard let url = resident.checkIn?.url else { return }
         let req = MorningCheckInRequest()
+        WebAPI.shared.disableActivity = true
         if isSelected {
             WebAPI.shared.post(url, parameter: req) { (response: MorningCheckToday) in
+                WebAPI.shared.disableActivity = false
                 if !response.success {
                     WindowManager.showMessage(type: .error, message: "Failed")
                     return
                 }
-                self.setup()
             }
         } else {
             WebAPI.shared.delete(url) { (success) in
+                WebAPI.shared.disableActivity = false
                 if !success {
                     WindowManager.showMessage(type: .error, message: "Failed")
                     return
                 }
-                self.setup()
             }
         }
-        
+        changedStatus(checked: !isSelected, resident: resident)
     }
     
     

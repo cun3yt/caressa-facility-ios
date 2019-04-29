@@ -24,6 +24,7 @@ struct MessageHeader: Codable {
     }
 }
 
+
 struct MessageResult: Codable {
     let id: Int
     let resident: ResidentUnion?
@@ -32,7 +33,7 @@ struct MessageResult: Codable {
     let mockStatus: Bool?
     let messageFrom: MessageFrom?
     var read: Bool?
-    
+
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case resident = "resident"
@@ -50,7 +51,7 @@ struct MessageItem: Codable {
     let content: Content
     let messageType: String
     let messageFrom: MessageFrom?
-    
+
     enum CodingKeys: String, CodingKey {
         case time = "time"
         case reply = "reply"
@@ -83,19 +84,25 @@ struct Reply: Codable {
 }
 
 struct MessageFrom: Codable {
-    let lastName: String?
-    let firstName: String?
+    let pk: Int
+    let firstName: String
+    let lastName: String
+    let userType: String
+    let seniorLivingFacility: Int
     
     enum CodingKeys: String, CodingKey {
-        case lastName = "last_name"
+        case pk = "pk"
         case firstName = "first_name"
+        case lastName = "last_name"
+        case userType = "user_type"
+        case seniorLivingFacility = "senior_living_facility"
     }
 }
 
 enum ResidentUnion: Codable {
     case residentClass(Resident)
     case string(String)
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let x = try? container.decode(String.self) {
@@ -108,7 +115,7 @@ enum ResidentUnion: Codable {
         }
         throw DecodingError.typeMismatch(ResidentUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ResidentUnion"))
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {

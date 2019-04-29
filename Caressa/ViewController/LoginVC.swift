@@ -19,6 +19,10 @@ class LoginVC: UIViewController {
         super.viewDidLoad()
         
         lblErrorMessage.isHidden = true
+        
+        if !(UserSettings.shared.accessToken ?? "").isEmpty {
+            WindowManager.pushToTabBarVC()
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -36,7 +40,7 @@ class LoginVC: UIViewController {
                 return
         }
         
-        let param = LoginRequest(username: user, password: pass)
+        let param = LoginRequest(username: user, password: pass, refreshToken: nil)
         WebAPI.shared.post(APIConst.token, parameter: param) { (response: LoginResponse) in
             
             DispatchQueue.main.async {
@@ -58,9 +62,11 @@ class LoginVC: UIViewController {
                 
             }
             
+            UserSettings.shared.username = user
+            UserSettings.shared.password = pass
             SessionManager.shared.token = "\(type) \(token)"
             if let refresh = response.refreshToken {
-                SessionManager.shared.refreshToken = "\(type) \(refresh)"
+                SessionManager.shared.refreshToken = refresh
             }
             
             WindowManager.pushToTabBarVC()

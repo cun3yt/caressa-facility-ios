@@ -9,38 +9,68 @@
 import Foundation
 
 struct User: Codable {
-    let id: Int?
-    let firstName: String?
-    let lastName: String?
-    let profilePictureURL: String?
-    let thumbnailURL: String?
-    let onlineStatus: String?
-    let messageThreadURL: String?
-    let phoneNumber: String?
-    let birthday: String?
-    let moveInData: String?
-    let serviceType: String?
-    let morningStatus: MorningStatus?
-    let senior: Senior?
-    let mockStatus: Bool?
-    let roomNo: String?
+    let id: Int
+    let firstName: String
+    let lastName: String
+    let email: String
+    let userType: String
+    let seniorLivingFacility: Int
+    let phoneNumber: String
+    let birthDate: String?
+    let moveInDate: String?
+    let serviceType: String
+    let roomNo: String
+    let primaryContact: Caretaker?
+    let caregivers: [Caretaker]
+    let thumbnailURL: String
+    let deviceStatus: DeviceStatus
+    let messageThreadURL: MessageThreadURL?
+    let profilePictureURL: String
+    let checkInInfo: CheckInInfo
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case firstName = "first_name"
         case lastName = "last_name"
+        case email = "email"
+        case userType = "user_type"
+        case seniorLivingFacility = "senior_living_facility"
+        case phoneNumber = "phone_number"
+        case birthDate = "birth_date"
+        case moveInDate = "move_in_date"
+        case serviceType = "service_type"
+        case roomNo = "room_no"
+        case primaryContact = "primary_contact"
+        case caregivers = "caregivers"
+        case thumbnailURL = "thumbnail_url"
+        case deviceStatus = "device_status"
+        case messageThreadURL = "message_thread_url"
+        case profilePictureURL = "profile_picture_url"
+        case checkInInfo = "check_in_info"
+    }
+}
+
+struct UserMe: Codable {
+    let pk: Int
+    let firstName: String
+    let lastName: String
+    let email: String
+    let userType: String
+    let seniorLivingFacility: Int
+    let senior: Senior
+    let profilePictureURL: String
+    let thumbnailURL: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pk = "pk"
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case email = "email"
+        case userType = "user_type"
+        case seniorLivingFacility = "senior_living_facility"
+        case senior = "senior"
         case profilePictureURL = "profile_picture_url"
         case thumbnailURL = "thumbnail_url"
-        case onlineStatus = "online_status"
-        case messageThreadURL = "message_thread_url"
-        case phoneNumber = "phone_number"
-        case birthday = "birthday:"
-        case moveInData = "move_in data"
-        case serviceType = "service_type"
-        case morningStatus = "morning_status"
-        case senior = "senior"
-        case mockStatus = "mock_status"
-        case roomNo = "room_no"
     }
 }
 
@@ -59,12 +89,14 @@ struct Caretaker: Codable {
     let lastName: String?
     let phoneNumber: String?
     let relationship: String?
+    let email: String?
     
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
         case lastName = "last_name"
         case phoneNumber = "phone_number"
         case relationship = "relationship"
+        case email
     }
 }
 

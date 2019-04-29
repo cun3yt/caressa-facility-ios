@@ -13,16 +13,26 @@ class MessageThreadVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private var messages: [MessageResult] = []
+    private var messages: [MessageThreadResult] = []
     private var ivFacility: UIButton!
     private lazy var readMessages: [MessageThreadRead] = []
     
-    public var resident: Resident!
+    public var resident: Resident?
+    public var allResidentId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MessageThreadCell", bundle: nil), forCellReuseIdentifier: "cell")
-        ivFacility = WindowManager.setup(vc: self, title: "", deviceStatus: resident.deviceStatus)
+        
+        if let r = resident {
+            ivFacility = WindowManager.setup(vc: self, title: "", deviceStatus: r.deviceStatus?.status)
+        } else
+            if allResidentId != nil {
+            ivFacility = WindowManager.setup(vc: self, title: "")
+        }
+        
+        PusherManager().delegate = self
+        
         setup()
     }
     
@@ -54,13 +64,27 @@ class MessageThreadVC: UIViewController {
             print(error)
         }
         
-        WebAPI.shared.get(String(format: APIConst.messageThreads, resident.id)) { (response: MessageThread) in
+        var url_: String?
+        if let id = allResidentId {
+            url_ = String(format: APIConst.messageThread, id)
+        } else {
+            url_ = resident?.messageThreadURL.url
+        }
+        guard let url = url_ else { return }
+        
+        WebAPI.shared.get(url) { (response: MessageThread) in
             DispatchQueue.main.async {
-                self.ivFacility = WindowManager.setup(vc: self, title: "\(response.resident.firstName) \(response.resident.lastName)", deviceStatus: response.resident.deviceStatus)
-                ImageManager.shared.downloadImage(url: response.resident.profilePicture, view: self.ivFacility)
+                switch response.resident {
+                case .residentClass(let x):
+                    self.ivFacility = WindowManager.setup(vc: self, title: "\(x.firstName) \(x.lastName)", deviceStatus: x.deviceStatus?.status)
+                    ImageManager.shared.downloadImage(url: x.profilePicture, view: self.ivFacility)
+                case .string(let s):
+                    self.ivFacility = WindowManager.setup(vc: self, title: s)
+                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
+                }
             }
             
-            WebAPI.shared.get(String(format: APIConst.messageThreadsMessage, self.resident.id), completion: { (messages: MessageHeader) in
+            WebAPI.shared.get(response.messages.url, completion: { (messages: MessageThreadHeader) in
                 if var results = messages.results {
                     do {
                         for (i,e) in results.enumerated() {
@@ -93,7 +117,7 @@ class MessageThreadVC: UIViewController {
             })
         }
     }
-
+    
 }
 
 extension MessageThreadVC: UITableViewDataSource {
@@ -123,3 +147,13 @@ extension MessageThreadVC: UITableViewDataSourcePrefetching {
     }
 }
 
+extension MessageThreadVC: PusherManagerDelegate {
+    func subscribed(deviceStatus: DeviceStatusEvent) {
+        if let new = deviceStatus.value.new {
+            resident?.deviceStatus?.status.isOnline = new
+            WindowManager.repaintBarTitle(vc: self, deviceStatus: resident?.deviceStatus?.status)
+        }
+    }
+    
+    func subscribed(checkIn: CheckInEvent) { }
+}

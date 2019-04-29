@@ -13,11 +13,10 @@ struct Resident: Codable {
     let firstName: String
     let lastName: String
     let roomNo: String
-    let deviceStatus: DeviceStatus?
-    let messageThreadURL: MessageUnion?
+    var deviceStatus: DeviceStat?
+    let messageThreadURL: MessageThreadURL //MessageUnion?
     let profilePicture: String?
-    let mockStatus: Bool
-    let checkIn: CheckInURL?
+    var checkIn: CheckInURL?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -26,17 +25,26 @@ struct Resident: Codable {
         case roomNo = "room_no"
         case deviceStatus = "device_status"
         case messageThreadURL = "message_thread_url"
-        case profilePicture = "profile_picture"
-        case mockStatus = "mock_status"
-        case checkIn = "check_in"
+        case profilePicture = "profile_picture_url"
+        case checkIn = "check_in_info"
+    }
+}
+
+struct DeviceStat: Codable {
+    let isThereDevice: Bool
+    var status: DeviceStatus
+    
+    enum CodingKeys: String, CodingKey {
+        case isThereDevice = "is_there_device"
+        case status = "status"
     }
 }
 
 struct DeviceStatus: Codable {
-    let isOnline: Bool
-    let statusChecked: String
+    var isOnline: Bool?
+    let statusChecked: String?
     let lastActivityTime: String?
-    let isTodayCheckedIn: Bool
+    let isTodayCheckedIn: Bool?
     
     enum CodingKeys: String, CodingKey {
         case isOnline = "is_online"
@@ -57,7 +65,7 @@ struct CheckInInfo: Codable {
 }
 
 struct MessageThreadURL: Codable {
-    let url: String
+    let url: String?
 }
 
 struct CheckInURL: Codable {

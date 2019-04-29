@@ -93,8 +93,8 @@ class AudioPlayer: NSObject {
             }
             
             stopButton.isHidden = false
-            let time = DateManager.getDateParts(seconds: player.currentTime().seconds)
-            let duration = DateManager.getDateParts(seconds: player.duration.seconds)
+            let time = DateManager().getDateParts(seconds: player.currentTime().seconds)
+            let duration = DateManager().getDateParts(seconds: player.duration.seconds)
             timeLabel.text = String(format: "%02d:%02d",  time.1, time.2)
                 + " / " +
                 String(format: "%02d:%02d",  duration.1, duration.2)

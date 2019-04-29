@@ -22,6 +22,7 @@ class ProfilePageVC: UIViewController {
     
     private lazy var imagePicker = UIImagePickerController()
     private var ivHeaderProfile: UIButton!
+    private var user: User!
     
     public var resident: Resident!
     
@@ -29,7 +30,7 @@ class ProfilePageVC: UIViewController {
         super.viewDidLoad()
         ivHeaderProfile = WindowManager.setup(vc: self,
                                               title: "\(resident.firstName) \(resident.lastName)",
-                                              deviceStatus: resident.deviceStatus)
+                                              deviceStatus: resident.deviceStatus?.status)
         setup()
     }
     
@@ -51,6 +52,54 @@ class ProfilePageVC: UIViewController {
         
         ImageManager.shared.takePhoto(view: self) { (image) in
             self.changeProfilePhoto(image: image)
+        }
+    }
+    
+    // MARK: User
+    @IBAction func btnCallUser(_ sender: UIBarButtonItem) {
+        if let url = URL(string: "tel://\(user.phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    @IBAction func btnMessageUser(_ sender: UIBarButtonItem) {
+        if resident.messageThreadURL.url != nil {
+            WindowManager.pushToMessageThreadVC(navController: navigationController, resident: resident)
+        }
+    }
+    
+    // MARK: Family
+    @IBAction func btnCallFamily(_ sender: UIBarButtonItem) {
+        if let phoneNumber = user.primaryContact?.phoneNumber,
+            let url = URL(string: "tel://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    @IBAction func btnMessageFamily(_ sender: UIBarButtonItem) {
+        if let email = user.primaryContact?.email,
+            let url = URL(string: "mailto://\(email)"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    // MARK: Caregiver
+    @IBAction func btnCallCaregiver(_ sender: UIBarButtonItem) {
+        if let phoneNumber = user.caregivers.first?.phoneNumber,
+            let url = URL(string: "tel://\(phoneNumber)"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    @IBAction func btnMessageCaregiver(_ sender: UIBarButtonItem) {
+        if let email = user.caregivers.first?.email,
+            let url = URL(string: "mailto://\(email)"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
         }
     }
     
@@ -96,20 +145,21 @@ class ProfilePageVC: UIViewController {
     
     func setup() {
         
-        WebAPI.shared.get(String(format: APIConst.users, resident.id)) { (u: User) in
+        WebAPI.shared.get(String(format: APIConst.resident, resident.id)) { (u: User) in
+            self.user = u
             DispatchQueue.main.async {
                 ImageManager.shared.downloadImage(suffix: u.profilePictureURL, view: self.ivProfile)
                 ImageManager.shared.downloadImage(url: u.profilePictureURL, view: self.ivHeaderProfile)
                 
-                self.lblName.text  = "\(u.firstName ?? "") \(u.lastName ?? "")"
-                self.title = "\(u.firstName ?? "") \(u.lastName ?? "")"
-                self.lblFamilyName.text = "\(u.senior?.primaryContact?.firstName ?? "") \(u.senior?.primaryContact?.lastName ?? "")"
-                self.lblCaretaker.text =  "\(u.senior?.caretaker?.firstName ?? "") \(u.senior?.caretaker?.lastName ?? "")"
-                self.lblBirthday.text = u.birthday
-                self.lblMoveIn.text = u.moveInData
+                self.lblName.text  = "\(u.firstName) \(u.lastName)"
+                self.title = "\(u.firstName) \(u.lastName)"
+                self.lblFamilyName.text = "\(u.primaryContact?.firstName ?? "") \(u.primaryContact?.lastName ?? "")"
+                self.lblCaretaker.text =  "\(u.caregivers.first?.firstName ?? "") \(u.caregivers.first?.lastName ?? "")"
+                self.lblBirthday.text = u.birthDate
+                self.lblMoveIn.text = u.moveInDate
                 self.lblRoom.text = u.roomNo
                 self.lblService.text = u.serviceType
-                self.lblMorningStatus.text = u.morningStatus?.label
+                self.lblMorningStatus.text = u.checkInInfo.checkedBy != nil ? "Checked" : ""
             }
         }
     }

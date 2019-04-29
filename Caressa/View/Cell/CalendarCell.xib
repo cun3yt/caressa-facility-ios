@@ -20,36 +20,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="29p-gu-gaV">
-                        <rect key="frame" x="16" y="8" width="80" height="17"/>
+                        <rect key="frame" x="16" y="8" width="72" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="6wn-X0-mfX"/>
+                            <constraint firstAttribute="width" constant="72" id="6wn-X0-mfX"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poker Game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="g67-K3-UTk">
-                        <rect key="frame" x="116" y="8" width="98.5" height="17"/>
+                        <rect key="frame" x="92" y="8" width="143" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library on the head of street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="COi-SV-moN">
-                        <rect key="frame" x="224.5" y="8" width="98.5" height="17"/>
+                        <rect key="frame" x="239" y="8" width="89" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="g67-K3-UTk" firstAttribute="leading" secondItem="29p-gu-gaV" secondAttribute="trailing" constant="20" id="Azm-0x-OUe"/>
+                    <constraint firstItem="g67-K3-UTk" firstAttribute="leading" secondItem="29p-gu-gaV" secondAttribute="trailing" constant="4" id="Azm-0x-OUe"/>
                     <constraint firstItem="g67-K3-UTk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Qqk-FO-s85"/>
-                    <constraint firstItem="COi-SV-moN" firstAttribute="leading" secondItem="g67-K3-UTk" secondAttribute="trailing" constant="10" id="Sev-cO-jbP"/>
+                    <constraint firstItem="COi-SV-moN" firstAttribute="leading" secondItem="g67-K3-UTk" secondAttribute="trailing" constant="4" id="Sev-cO-jbP"/>
                     <constraint firstItem="29p-gu-gaV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="gWT-vA-qmq"/>
                     <constraint firstItem="29p-gu-gaV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="peJ-Wl-Xdk"/>
                     <constraint firstItem="COi-SV-moN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="xLv-4r-EiS"/>
-                    <constraint firstAttribute="trailing" secondItem="COi-SV-moN" secondAttribute="trailing" constant="8" id="xYI-jC-eSE"/>
-                    <constraint firstItem="g67-K3-UTk" firstAttribute="width" secondItem="COi-SV-moN" secondAttribute="width" id="zua-9V-gmK"/>
+                    <constraint firstAttribute="trailing" secondItem="COi-SV-moN" secondAttribute="trailing" constant="3" id="xYI-jC-eSE"/>
+                    <constraint firstItem="g67-K3-UTk" firstAttribute="width" secondItem="COi-SV-moN" secondAttribute="width" multiplier="8:5" id="zua-9V-gmK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

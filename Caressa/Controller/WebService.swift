@@ -40,6 +40,7 @@ final public class WebAPI: NSObject {
         
         var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         urlRequest.httpMethod = type
+        
         if let data = parameter {
             urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = data
@@ -49,19 +50,35 @@ final public class WebAPI: NSObject {
                 urlRequest.addValue(token, forHTTPHeaderField: "Authorization")
             }
         }
-        
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            if !self.disableActivity {
-                ActivityManager.shared.startActivity()
-            }
+        if !disableActivity {
+            ActivityManager.shared.startActivity()
         }
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            ActivityManager.shared.stopActivity()
             
-            DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                ActivityManager.shared.stopActivity()
+            // MARK: Session Time Out
+            if [401, 403].contains((response as? HTTPURLResponse)?.statusCode) {
+                ActivityManager.shared.startActivity()
+                self.login(onError: {
+                    ActivityManager.shared.stopActivity()
+                    WindowManager.pushToLoginVC()
+                    completion?(false)
+                }, onSuccess: {
+                    let token = SessionManager.shared.token ?? ""
+                    if !token.isEmpty {
+                        urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
+                    }
+                    URLSession.shared.dataTask(with: urlRequest) { (d, re, e) in
+                        ActivityManager.shared.stopActivity()
+                        guard let _ = data, error == nil else {
+                            completion?(false)
+                            return
+                        }
+                        completion?(true)
+                    }.resume()
+                })
+                return
             }
             
             guard let _ = data, error == nil else {
@@ -70,14 +87,19 @@ final public class WebAPI: NSObject {
             }
             
             completion?(true)
-        }
-        
-        task.resume()
+            
+        }.resume()
     }
     
     private func request<T1: Encodable, T2: Decodable>(type: String, _ method: String, parameter: T1?, completion: ((T2) -> Void)? = nil) {
         
-        guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
+        var urlOpt: URL? = URL(string: method)
+        if !method.contains("http")  {
+            urlOpt = URL(string: "\(APIConst.baseURL)\(method)")
+        }
+        guard let url = urlOpt else { return }
+        
+        //guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
         
         var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
         urlRequest.httpMethod = type
@@ -112,18 +134,46 @@ final public class WebAPI: NSObject {
         }
         #endif
         
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            if !self.disableActivity {
-                ActivityManager.shared.startActivity()
-            }
+        if !disableActivity {
+            ActivityManager.shared.startActivity()
         }
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             
-            DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                ActivityManager.shared.stopActivity()
+            ActivityManager.shared.stopActivity()
+            
+            // MARK: Session Time Out
+            if [401, 403].contains((response as? HTTPURLResponse)?.statusCode) {
+                ActivityManager.shared.startActivity()
+                self.login(onError: {
+                    ActivityManager.shared.stopActivity()
+                    WindowManager.pushToLoginVC()
+                }, onSuccess: {
+                    let token = SessionManager.shared.token ?? ""
+                    if !token.isEmpty {
+                        urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
+                    }
+                    URLSession.shared.dataTask(with: urlRequest) { (d, r, e) in
+                        guard let d = d, e == nil else { return }
+                        do {
+                            if method == APIConst.generateSignedURL {
+                                let res = "{\"url\":" + String(data: d, encoding: .utf8)! + "}"
+                                let resModel = try JSONManager().decoder.decode(T2.self, from: res.data(using: .utf8)!)
+                                completion?(resModel)
+                                return
+                            }
+                            
+                            let responseModel = try JSONManager().decoder.decode(T2.self, from: d)
+                            
+                            completion?(responseModel)
+                        } catch {
+                            WindowManager.showMessage(type: .error, message: error.localizedDescription)
+                            print(String(data: d, encoding: .utf8) ?? "", error)
+                            return
+                        }
+                    }.resume()
+                })
+                return
             }
             
             guard let data = data, error == nil else { return }
@@ -136,11 +186,8 @@ final public class WebAPI: NSObject {
             
             do {
                 if method == APIConst.generateSignedURL {
-                    var res = String(data: data, encoding: .utf8)!
-                    res = "{\"url\":" + res + "}"
-                    print(res)
-                    let newData = res.data(using: .utf8)!
-                    let resModel = try JSONManager().decoder.decode(T2.self, from: newData)
+                    let res =  "{\"url\":" + String(data: data, encoding: .utf8)! + "}"
+                    let resModel = try JSONManager().decoder.decode(T2.self, from: res.data(using: .utf8)!)
                     completion?(resModel)
                     return
                 }
@@ -154,9 +201,33 @@ final public class WebAPI: NSObject {
                 return
             }
             
+        }.resume()
+    }
+    
+    
+    func login(onError: (() -> Void)? = nil, onSuccess: (() -> Void)? = nil) {
+        
+        guard let username = UserSettings.shared.username,
+            let password = UserSettings.shared.password else {
+                onError?()
+                return
         }
         
-        task.resume()
+        let param = LoginRequest(username: username, password: password, refreshToken: UserSettings.shared.refreshToken)
+        WebAPI.shared.post(APIConst.token, parameter: param) { (response: LoginResponse) in
+            
+            guard let token = response.accessToken, let type = response.tokenType else {
+                onError?()
+                return
+            }
+            
+            SessionManager.shared.token = "\(type) \(token)"
+            if let refresh = response.refreshToken {
+                SessionManager.shared.refreshToken = refresh
+            }
+            
+            onSuccess?()
+        }
     }
     
 }

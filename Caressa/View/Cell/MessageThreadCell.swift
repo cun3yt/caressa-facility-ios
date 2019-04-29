@@ -27,26 +27,24 @@ class MessageThreadCell: UITableViewCell {
     public var player: AudioPlayer?
     public var audioPlayerDelegate: AudioPlayerDelegate?
 
-    func setup(message: MessageResult) {
-        lblName.text = "\(message.messageFrom?.firstName ?? "") \(message.messageFrom?.lastName ?? "")"
-        if let lastMessage = message.message {
-            lblContent.text = lastMessage.content.details
-            lblTime.text = DateManager("d/M/yy HH:mm a").string(date: lastMessage.time)
-            lblReply.text = lastMessage.reply != nil ? "Replied \(DateManager("d/M/yy HH:mm a").string(date: lastMessage.reply!.time))" : "No Reply Yet"
-            lblReplyTo.text = lastMessage.reply != nil ? "Yes" : ""
-            lblType.text = lastMessage.messageType
-            
-            vAudio.isHidden = lastMessage.content.type != "Audio"
-            lblContent.isHidden = !vAudio.isHidden
-            lblReply.isHidden = !vAudio.isHidden
-            lblReplyTo.isHidden = !vAudio.isHidden
-            btnStop.isHidden = true
-            audioDuration.text = ""
-            
-            if !vAudio.isHidden {
-                url = URL(string: lastMessage.content.details)
-                player = AudioPlayer(url: url!, play: btnAudio, stop: btnStop, timeLabel: audioDuration)
-            }
+    func setup(message: MessageThreadResult) {
+        lblName.text = "\(message.messageFrom.firstName) \(message.messageFrom.lastName)"
+        lblContent.text = message.content.details
+        lblTime.text = DateManager("d/M/yy HH:mm a").string(date: message.time)
+        lblReply.text = message.reply != nil ? "Replied \(DateManager("d/M/yy HH:mm a").string(date: message.reply!.time))" : "No Reply Yet"
+        lblReplyTo.text = message.reply != nil ? "Yes" : ""
+        lblType.text = message.messageType
+        
+        vAudio.isHidden = message.content.type != "Audio"
+        lblContent.isHidden = !vAudio.isHidden
+        lblReply.isHidden = !vAudio.isHidden
+        lblReplyTo.isHidden = !vAudio.isHidden
+        btnStop.isHidden = true
+        audioDuration.text = ""
+        
+        if !vAudio.isHidden {
+            url = URL(string: message.content.details)
+            player = AudioPlayer(url: url!, play: btnAudio, stop: btnStop, timeLabel: audioDuration)
         }
         
         if message.read == true {

@@ -36,11 +36,11 @@ class MessageCell: UITableViewCell {
             ImageManager.shared.downloadImage(suffix: x.profilePicture, view: ivImage)
             
             //contentView.alpha = 1.0
-            if let devStat = x.deviceStatus {
-                if devStat.isOnline {
-                    deviceStatus.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+            if let devStat = x.deviceStatus?.status {
+                if let isOnline = devStat.isOnline {
+                    deviceStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
                 } else {
-                    deviceStatus.backgroundColor = #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
+                    deviceStatus.backgroundColor = .clear
                 }
             } else {
                 //contentView.alpha = 0.4

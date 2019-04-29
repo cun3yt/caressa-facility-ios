@@ -13,9 +13,9 @@ struct MorningCheckInRequest: Encodable {
 }
 
 struct MorningCheckInResponse: Codable {
-    let staffChecked: Status
-    let selfChecked: Status
-    let pending: Status
+    var staffChecked: Status
+    var selfChecked: Status
+    var pending: Status
     let notified: Status
     
     enum CodingKeys: String, CodingKey {
@@ -29,7 +29,7 @@ struct MorningCheckInResponse: Codable {
 struct Status: Codable {
     let status: String
     let label: String
-    let residents: [Resident]
+    var residents: [Resident]
     
     enum CodingKeys: String, CodingKey {
         case status = "status"

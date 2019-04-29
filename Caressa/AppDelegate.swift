@@ -11,12 +11,17 @@ import AVKit
 import CoreData
 import PushNotifications
 import UserNotifications
+import PusherSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     let beamsClient = PushNotifications.shared
+    var pusher: Pusher!
+    var pusherChannel: PusherChannel!
+    var serverTimeState: TimeState?
+    
 
     public static var audioPlayer: AVPlayer? {
         didSet {
@@ -32,11 +37,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.beamsClient.start(instanceId: "72546c41-1370-4fca-b9a3-d6154896875a")
+        // Notification
+        self.beamsClient.start(instanceId: "e3b941ef-5a8f-4faa-ad87-baea465c28b6")
         self.beamsClient.registerForRemoteNotifications()
-        try? self.beamsClient.addDeviceInterest(interest: "facility")
+        try? self.beamsClient.addDeviceInterest(interest: "debug-facility")
         UNUserNotificationCenter.current().delegate = self
 
+        //Real Time Channels
+        let options = PusherClientOptions(host: .cluster("us2"))
+        pusher = Pusher(key: "c984c4342b09e06c02a0", options: options)
+        pusher.connect()
+        pusherChannel = pusher.subscribe("my-channel")
+        
+        getServerDateTime()
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (_) in
+            self.getServerDateTime()
+        }
+        
         return true
     }
 
@@ -119,5 +136,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
+    func getServerDateTime() {
+        WebAPI.shared.disableActivity = true
+        WebAPI.shared.get(APIConst.timeState) { (response: TimeState) in
+            WebAPI.shared.disableActivity = false
+            self.serverTimeState = response
+        }
+    }
 }
 

@@ -35,21 +35,26 @@ public class APIConst {
     public static let messageSignedUrl         = "/api/facility/\(facilityId)/message-signed-urls/"
     
     // MARK: Message thread
-    public static let messageThreads           = "/api/message-threads/%d/"
-    public static let messageThreadsMessage    = "/api/message-threads/%d/messages/"
+    public static let messageThread            = "/api/message-thread/%d/"
+    public static let messageThreadsMessage    = "/api/message-thread/%d/messages/"
     
     // MARK: Profile Page
+    public static let resident                 = "/api/residents/%d/"
     public static let users                    = "/api/users/%d/"
+    public static let userMe                   = "/api/users/me/"
     public static let profilePicSignedUrl      = "/api/users/%d/uploaded_new_profile_picture/"
     
     // MARK: Photo Gallery
     public static let photoGallery             = "/api/photo-galleries/\(facilityId)/"
-    public static let photos                   = "/api/photo-galleries/\(facilityId)/photos/"
-    public static let photoGalleryDates        = "/api/photo-galleries/\(facilityId)/days/{date}/"
+    //public static let photos                   = "/api/photo-galleries/\(facilityId)/photos/"
+    public static let photoGalleryDates        = "/api/photo-galleries/\(facilityId)/days/%@/"
     
     // MARK: Calendar
-    public static let calendar                 = "/api/calendars/\(facilityId)/?start=2019-03-15"
+    public static let calendar                 = "/api/calendars/\(facilityId)/?start=%@"
     
     // MARK: Amazon
     public static let generateSignedURL        = "/generate_signed_url/"
+    
+    // MARK: Others
+    public static let timeState                = "/api/facility/\(facilityId)/time-state/"
 }

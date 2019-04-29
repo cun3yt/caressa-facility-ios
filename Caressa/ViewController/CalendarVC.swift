@@ -13,8 +13,7 @@ class CalendarVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private var ivFacility: UIButton!
-    private var dateList: [Date] = []
-    private var calendar: [String] = ["Poker","Pizza","Boook"]
+    private var calendar: [CalendarModel] = []
     private var btnToday: UIButton!
     
     override func viewDidLoad() {
@@ -47,33 +46,35 @@ class CalendarVC: UIViewController {
     }
     
     @IBAction func todayAction() {
-        guard let week = DateManager.dayOfWeek(today: Date()) else { return }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: week - 2), at: .top, animated: true)
+        //guard let week = DateManager().dayOfWeek(today: DateManager().now()) else { return }
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 7), at: .top, animated: true)
     }
     
     func setup() {
-        dateList = DateManager.dates(from: DateManager.startOfWeek()!, to: DateManager.endOfWeek()!)
-        
-        
-//        WebAPI.shared.get(APIConst.calendar) { (response: Calendar) in
-//
-//        }
+        WebAPI.shared.get(String(format: APIConst.calendar, DateManager("yyyy-MM-dd").string(date: DateManager().now()))) { (response: [CalendarModel]) in
+            self.calendar = response
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.todayAction()
+            }
+        }
     }
     
 }
 
 extension CalendarVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dateList.count
+        return calendar.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return calendar.count
+        return calendar[section].events.hourlyEvents.hourlyEventsSet.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CalendarCell
-        cell.setup(date: dateList[indexPath.section], item: calendar[indexPath.row])
+        cell.setup(set: calendar[indexPath.section].events.hourlyEvents.hourlyEventsSet[indexPath.row])
         return cell
     }
 }
@@ -83,10 +84,10 @@ extension CalendarVC: UITableViewDelegate {
         let label = UILabel(frame: .zero)
         label.backgroundColor = .white
         label.font = UIFont.systemFont(ofSize: 15, weight: .heavy)
-        label.text = "    " + DateManager("EEEE, MMMM dd, yyyy").string(date: dateList[section])
+        label.text = calendar[section].date
         
-        let date = DateManager.onlyDate(date: dateList[section])
-        if date == DateManager.onlyDate(date: Date()) {
+        let date = DateManager("EEEE, MMMM dd, yyyy", useUTC: true).date(string: calendar[section].date)!
+        if DateManager(useUTC: true).onlyDate(date: date) == DateManager(useUTC: true).onlyDate(date: DateManager().now()) {
             label.textColor = .red
         } else 
             if date < Date() {

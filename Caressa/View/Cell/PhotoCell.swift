@@ -12,8 +12,8 @@ class PhotoCell: UICollectionViewCell {
 
     @IBOutlet weak var ivImage: UIImageView!
     
-    func setup(image: UIImage) {
-        ivImage.image = image
+    func setup(url: String) {
+        ImageManager.shared.downloadImage(suffix: url, view: ivImage)
     }
     
     override func awakeFromNib() {

@@ -15,7 +15,7 @@ class ResidentVC: UIViewController {
     private var residents: [Resident] = []
     private var ivFacility: UIButton!
     
-    private var pusher = PusherManager()
+    //private var pusher = PusherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,8 @@ class ResidentVC: UIViewController {
         self.tabBarController?.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
         ivFacility = WindowManager.setup(vc: self, title: "Residents")
+        
+        PusherManager().delegate = self
         
         setup()
     }
@@ -38,8 +40,6 @@ class ResidentVC: UIViewController {
     }
     
     func setup() {
-        
-        
         WebAPI.shared.get(APIConst.facility) { (response: FacilityResponse) in
             SessionManager.shared.facility = response
 
@@ -47,8 +47,12 @@ class ResidentVC: UIViewController {
                 ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
 
                 let cnt = DBManager.shared.getUnreadMessageCount()
-                self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil // String(response.numberOfUnreadNotifications)
+                self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
             }
+        }
+        
+        WebAPI.shared.get(APIConst.userMe) { (response: UserMe) in
+            SessionManager.shared.activeUser = response
         }
         
         WebAPI.shared.get(APIConst.residents) { (response: [Resident]) in
@@ -78,4 +82,17 @@ extension ResidentVC: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         WindowManager.pushToProfileVC(navController: self.navigationController!, resident: residents[indexPath.row])
     }
+}
+
+extension ResidentVC: PusherManagerDelegate {
+    func subscribed(deviceStatus: DeviceStatusEvent) {
+        if let index = residents.firstIndex(where: {$0.id == deviceStatus.user_id}) {
+            if let new = deviceStatus.value.new {
+                residents[index].deviceStatus?.status.isOnline = new
+                tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            }
+        }
+    }
+    
+    func subscribed(checkIn: CheckInEvent) { }
 }

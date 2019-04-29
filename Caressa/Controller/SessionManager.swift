@@ -12,13 +12,21 @@ class SessionManager: NSObject {
     
     static let shared: SessionManager = SessionManager()
     
-    public var token: String?
-    public var refreshToken: String?
+    public var token: String? {
+        get { return UserSettings.shared.accessToken }
+        set { UserSettings.shared.accessToken = newValue }
+    }
+    public var refreshToken: String? {
+        get { return UserSettings.shared.refreshToken }
+        set { UserSettings.shared.refreshToken = newValue }
+    }
     
     public var facility: FacilityResponse?
+    public var activeUser: UserMe?
     
     static var appVersion: String {
         return "\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String).\(Bundle.main.infoDictionary?["CFBundleVersion"] as! String)"
     }
     
+    public var subscribedChannel: Bool = false
 }

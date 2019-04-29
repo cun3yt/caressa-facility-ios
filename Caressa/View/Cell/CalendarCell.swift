@@ -14,12 +14,12 @@ class CalendarCell: UITableViewCell {
     @IBOutlet weak var lblActivity: UILabel!
     @IBOutlet weak var lblPlace: UILabel!
     
-    func setup(date: Date, item: String) {
-        lblTime.text = DateManager("hh:MM a").string(date: date)
-        lblActivity.text = item
-        lblPlace.text = "Library"
+    func setup(set: HourlyEventsSet) {
+        lblTime.text = set.startSpoken
+        lblActivity.text = set.summary
+        lblPlace.text = set.location
         
-        if date < Date() {
+        if set.start < Date() {
             lblTime.textColor = .lightGray
             lblActivity.textColor = .lightGray
             lblPlace.textColor = .lightGray
@@ -28,17 +28,6 @@ class CalendarCell: UITableViewCell {
             lblActivity.textColor = .black
             lblPlace.textColor = .black
         }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

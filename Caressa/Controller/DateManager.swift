@@ -6,20 +6,39 @@
 //  Copyright © 2018 Hüseyin METİN. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-public class DateManager {
+public class DateManager: NSObject {
     private let formatter: DateFormatter
+
+    private var calendar: Calendar
+    private var appDel = (UIApplication.shared.delegate as! AppDelegate)
+//    static private var calendar: Calendar = {
+//        var calendar = Calendar(identifier: .gregorian)
+//        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+//        return calendar
+//    }()
     
-    static private var calendar: Calendar = {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(abbreviation: "UTC")!
-        return calendar
-    }()
-    
-    init(_ format: String) {
+    init(_ format: String? = nil, useUTC: Bool? = nil) {
+        calendar = Calendar(identifier: .gregorian)
         formatter = DateFormatter()
-        formatter.dateFormat = format
+        
+        if let timezone = appDel.serverTimeState?.timezone {
+            calendar.timeZone = TimeZone(identifier: timezone)!
+            formatter.timeZone = TimeZone(identifier: timezone)!
+        }
+        if useUTC == true {
+            calendar.timeZone = TimeZone(abbreviation: "UTC")!
+            formatter.timeZone = TimeZone(abbreviation: "UTC")!
+        }
+        
+        if let format = format {
+            formatter.dateFormat = format
+        }
+    }
+    
+    func now() -> Date {
+        return appDel.serverTimeState!.currentTime
     }
     
     func string(date: Date) -> String {
@@ -30,13 +49,13 @@ public class DateManager {
         return formatter.date(from: string)
     }
     
-    static func onlyDate(date: Date) -> Date {
+    func onlyDate(date: Date) -> Date {
         let components = calendar.dateComponents([.year, .month, .day], from: date)
         let oDate = calendar.date(from: components)
         return oDate!
     }
 
-    static func getDateParts(seconds: Double) -> (hours: Int, minutes: Int, seconds: Int) {
+    func getDateParts(seconds: Double) -> (hours: Int, minutes: Int, seconds: Int) {
         if seconds.isNaN { return (0,0,0) }
         let secs = Int(seconds)
         let hours = secs / 3600
@@ -45,22 +64,22 @@ public class DateManager {
         return (hours, minutes, seconds)
     }
     
-    static func startOfWeek() -> Date? {
+    func startOfWeek() -> Date? {
         guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
         return calendar.date(byAdding: .day, value: 1, to: sunday)
     }
     
-    static func endOfWeek() -> Date? {
+    func endOfWeek() -> Date? {
         guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
         return calendar.date(byAdding: .day, value: 7, to: sunday)
     }
     
-    static func dayOfWeek(today: Date) -> Int? {
+    func dayOfWeek(today: Date) -> Int? {
         let weekDay = calendar.component(.weekday, from: today)
         return weekDay
     }
     
-    static func dates(from fromDate: Date, to toDate: Date) -> [Date] {
+    func dates(from fromDate: Date, to toDate: Date) -> [Date] {
         var dates: [Date] = []
         var date = fromDate
         
