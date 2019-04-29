@@ -127,7 +127,15 @@ class NewMessageVC: UIViewController {
             }
         }
         
-        guard let text = txtMessage.text, !receiver.isEmpty else { return }
+        guard !receiver.isEmpty else {
+            WindowManager.showMessage(type: .warning, message: "Please select the resident.")
+            return
+        }
+        
+        guard let text = txtMessage.text, !text.isEmpty, text != textViewPlaceholder else {
+            WindowManager.showMessage(type: .warning, message: "Please write your message.")
+            return
+        }
         
         var messageType = "Message"
         if btnBroadcast.isSelected { messageType = "Broadcast" }

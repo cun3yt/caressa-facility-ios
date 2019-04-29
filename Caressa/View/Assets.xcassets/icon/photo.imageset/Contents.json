@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "image.png",
+      "filename" : "baseline_photo_library_black_24dp.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "baseline_photo_library_black_24dp-1.png",
       "scale" : "2x"
     },
     {
