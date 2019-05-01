@@ -9,5 +9,6 @@ target 'Caressa' do
 pod 'PusherSwift'
 pod 'CropViewController'
 pod 'PushNotifications'
+pod 'DKImagePickerController'
 
 end

@@ -8,12 +8,15 @@
 
 import UIKit
 import CropViewController
+import DKImagePickerController
 
 class ImageManager: NSObject {
     
     static let shared: ImageManager = ImageManager()
     
+    private lazy var multiImagePicker = DKImagePickerController()
     private lazy var imagePicker = UIImagePickerController()
+    private var onImagesSelect: (([UIImage]) -> Void)?
     private var onImageSelect: ((UIImage) -> Void)?
     
     let mediaURL = "" //APIConst.WebBase + "/public/images/proclamation/"
@@ -21,7 +24,7 @@ class ImageManager: NSObject {
     
     func downloadImage(suffix: String?, view: UIImageView, width: CGFloat? = nil, height: CGFloat? = nil, completion: (() -> Void)? = nil) {
         
-        view.image = UIImage(named: "emptyphoto")
+        view.image = UIImage(named: "emptyPhoto")
         
         if let suffix = suffix {
             
@@ -38,7 +41,10 @@ class ImageManager: NSObject {
                     URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                         guard error == nil else { return }
                         guard data != nil else { return }
-                        guard let image = UIImage(data: data!) else { return }
+                        guard let image = UIImage(data: data!) else {
+                            DispatchQueue.main.async { view.image = #imageLiteral(resourceName: "default_profile.jpg") }
+                            return
+                        }
                         
                         self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                         
@@ -172,6 +178,48 @@ class ImageManager: NSObject {
             onImageSelect = completion
         }
     }
+    
+    // MARK: Multi
+    func takePhotos(view: UIViewController, completion: (([UIImage]) -> Void)? = nil) {
+        
+        let prompt = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        prompt.addAction(UIAlertAction(title: "Camera", style: .default) { (_) in
+            self.takePhotos(from: .camera, view: view, completion: completion)
+        })
+        prompt.addAction(UIAlertAction(title: "Photo Libary", style: .default) { (_) in
+            self.takePhotos(from: .photo, view: view, completion: completion)
+        })
+        prompt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        view.present(prompt, animated: true)
+    }
+    
+    func takePhotos(from: DKImagePickerControllerSourceType, view: UIViewController, completion: (([UIImage]) -> Void)? = nil) {
+        multiImagePicker.delegate = self
+        multiImagePicker.allowMultipleTypes = true
+        multiImagePicker.sourceType = from
+        
+        multiImagePicker.didSelectAssets = { [unowned self] (assets) in
+            var images: [UIImage] = []
+            let queue = DispatchGroup()
+            for asset in assets {
+                queue.enter()
+                asset.fetchOriginalImage(completeBlock: { (image, _) in
+                    if let image = image {
+                        images.append(image)
+                    }
+                    queue.leave()
+                })
+            }
+            queue.notify(queue: .main, execute: {
+                self.onImagesSelect?(images)
+            })
+        }
+        
+        view.present(multiImagePicker, animated: true)
+        onImagesSelect = completion
+    }
+    
     
     func fixOrientation(image: UIImage) -> UIImage {
         if (image.imageOrientation == .up) { return image }

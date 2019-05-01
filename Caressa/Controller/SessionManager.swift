@@ -29,4 +29,5 @@ class SessionManager: NSObject {
     }
     
     public var subscribedChannel: Bool = false
+    public var calendarSyncTime: Date?
 }

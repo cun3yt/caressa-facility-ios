@@ -15,12 +15,16 @@ class CalendarVC: UIViewController {
     private var ivFacility: UIButton!
     private var calendar: [CalendarModel] = []
     private var btnToday: UIButton!
+    private var refreshControl = UIRefreshControl(frame: .zero)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "CalendarCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivFacility = WindowManager.setup(vc: self, title: "Calendar")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
+        
+        refreshControl.addTarget(self, action: #selector(cacheControl), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         
         btnToday = UIButton(type: .custom)
         btnToday.titleLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -35,6 +39,11 @@ class CalendarVC: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        cacheControl()
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         WindowManager.repaintBarTitle(vc: self)
@@ -46,18 +55,33 @@ class CalendarVC: UIViewController {
     }
     
     @IBAction func todayAction() {
-        //guard let week = DateManager().dayOfWeek(today: DateManager().now()) else { return }
         tableView.scrollToRow(at: IndexPath(row: 0, section: 7), at: .top, animated: true)
     }
     
     func setup() {
         WebAPI.shared.get(String(format: APIConst.calendar, DateManager("yyyy-MM-dd").string(date: DateManager().now()))) { (response: [CalendarModel]) in
             self.calendar = response
+            SessionManager.shared.calendarSyncTime = Date()
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
                 self.todayAction()
             }
+        }
+    }
+    
+    @objc func cacheControl() {
+        if let syncTime = SessionManager.shared.calendarSyncTime {
+            let diff = Date().timeIntervalSince(syncTime) / 60
+            if diff > 60 {
+                setup()
+                return
+            }
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -84,7 +108,7 @@ extension CalendarVC: UITableViewDelegate {
         let label = UILabel(frame: .zero)
         label.backgroundColor = .white
         label.font = UIFont.systemFont(ofSize: 15, weight: .heavy)
-        label.text = calendar[section].date
+        label.text = "    " + calendar[section].date
         
         let date = DateManager("EEEE, MMMM dd, yyyy", useUTC: true).date(string: calendar[section].date)!
         if DateManager(useUTC: true).onlyDate(date: date) == DateManager(useUTC: true).onlyDate(date: DateManager().now()) {

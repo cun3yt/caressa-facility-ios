@@ -18,6 +18,7 @@ class MessageVC: UIViewController {
     private var messages: [MessageResult] = []
     private var ivFacility: UIButton!
     private var allResidentId: Int?
+    private var refreshControl = UIRefreshControl(frame: .zero)
     
     private lazy var readMessages: [MessageRead] = []
     
@@ -26,12 +27,8 @@ class MessageVC: UIViewController {
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "cell")
         ivFacility = WindowManager.setup(vc: self, title: "Messages")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
-        //setup()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+        refreshControl.addTarget(self, action: #selector(setup), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         setup()
     }
     
@@ -43,7 +40,7 @@ class MessageVC: UIViewController {
             AppDelegate.audioPlayer = nil
         }
         
-         readAll()
+        readAll()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -57,7 +54,7 @@ class MessageVC: UIViewController {
         tableView.reloadData()
     }
     
-    private func setup() {
+    @objc private func setup() {
         do {
             readMessages = try DBManager.shared.context.fetch(MessageRead.fetchRequest())
         } catch {
@@ -103,6 +100,7 @@ class MessageVC: UIViewController {
                 let cnt = self.messages.filter({$0.read != true}).count
                 self.tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             }
         }
     }
@@ -131,13 +129,11 @@ extension MessageVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.row == messages.count {
             let cell = UITableViewCell()
             cell.contentView.tag = 998
             return cell
         }
-        
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MessageCell
         cell.setup(message: messages[indexPath.row])

@@ -30,14 +30,15 @@ class ResidentCell: UITableViewCell  {
     func setup(resident: Resident) {
         self.resident = resident
         self.contentView.alpha = 1.0
-        if let devStat = resident.deviceStatus?.status {
-            if let isOnline = devStat.isOnline {
+        
+        if let devStat = resident.deviceStatus {
+            if devStat.isThereDevice,
+                let isOnline = devStat.status.isOnline {
                 vStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
             } else {
-                vStatus.backgroundColor = .clear
+                vStatus.backgroundColor = .gray
+                self.contentView.alpha = 0.5
             }
-        } else {
-            self.contentView.alpha = 0.4
         }
         
         lblName.text = "\(resident.firstName) \(resident.lastName)"
@@ -70,9 +71,9 @@ class ResidentCell: UITableViewCell  {
     }
     
     @IBAction func btnMessageAction(_ sender: Any) {
-        if resident.messageThreadURL.url != nil {
+        //if resident.messageThreadURL.url != nil {
             WindowManager.pushToMessageThreadVC(navController: navigationController, resident: resident)
-        }
+        //}
     }
     
 }

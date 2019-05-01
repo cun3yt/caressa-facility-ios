@@ -8,6 +8,9 @@
 
 import Foundation
 
+typealias PresignedMultipleRequest = [PresignedRequest]
+typealias PresignedMultipleResponse = [PresignedResponse]
+
 struct PresignedRequest: Codable {
     let key: String
     let contentType: String
@@ -23,6 +26,7 @@ struct PresignedRequest: Codable {
 }
 
 struct PresignedResponse: Codable {
+    let key: String
     let url: String
 }
 
@@ -43,3 +47,4 @@ struct NewPhotoResponse: Codable {
         case thumbnailURL = "thumbnail_url"
     }
 }
+

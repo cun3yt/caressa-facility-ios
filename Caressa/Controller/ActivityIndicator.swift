@@ -15,8 +15,16 @@ final class ActivityManager: NSObject {
     public var disableActivity: Bool = false
     
     fileprivate var size = CGSize(width: 80, height: 80)
-    fileprivate let bgView = UIView()
-    fileprivate var indicator = UIActivityIndicatorView(style: .whiteLarge)
+    fileprivate var bgView: UIView!
+    fileprivate var indicator: UIActivityIndicatorView!
+    
+    override init() {
+        super.init()
+        DispatchQueue.main.async {
+            self.bgView = UIView()
+            self.indicator = UIActivityIndicatorView(style: .whiteLarge)
+        }
+    }
     
     func startActivity() {
         if disableActivity { return }

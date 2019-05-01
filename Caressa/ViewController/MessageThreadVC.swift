@@ -12,6 +12,7 @@ import CoreData
 class MessageThreadVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noMessageView: UIView!
     
     private var messages: [MessageThreadResult] = []
     private var ivFacility: UIButton!
@@ -25,10 +26,12 @@ class MessageThreadVC: UIViewController {
         tableView.register(UINib(nibName: "MessageThreadCell", bundle: nil), forCellReuseIdentifier: "cell")
         
         if let r = resident {
-            ivFacility = WindowManager.setup(vc: self, title: "", deviceStatus: r.deviceStatus?.status)
+            self.ivFacility = WindowManager.setup(vc: self, title: "\(r.firstName) \(r.lastName)", deviceStatus: r.deviceStatus?.status)
+            ImageManager.shared.downloadImage(url: r.profilePicture, view: self.ivFacility)
         } else
             if allResidentId != nil {
-            ivFacility = WindowManager.setup(vc: self, title: "")
+                self.ivFacility = WindowManager.setup(vc: self, title: "All Residents")
+                ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
         }
         
         PusherManager().delegate = self
@@ -70,21 +73,25 @@ class MessageThreadVC: UIViewController {
         } else {
             url_ = resident?.messageThreadURL.url
         }
-        guard let url = url_ else { return }
+        guard let url = url_ else {
+            self.tableView.reloadData()
+            return
+        }
         
-        WebAPI.shared.get(url) { (response: MessageThread) in
-            DispatchQueue.main.async {
-                switch response.resident {
-                case .residentClass(let x):
-                    self.ivFacility = WindowManager.setup(vc: self, title: "\(x.firstName) \(x.lastName)", deviceStatus: x.deviceStatus?.status)
-                    ImageManager.shared.downloadImage(url: x.profilePicture, view: self.ivFacility)
-                case .string(let s):
-                    self.ivFacility = WindowManager.setup(vc: self, title: s)
-                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
-                }
-            }
-            
-            WebAPI.shared.get(response.messages.url, completion: { (messages: MessageThreadHeader) in
+//        WebAPI.shared.get(url) { (response: MessageThread) in
+//            DispatchQueue.main.async {
+//                switch response.resident {
+//                case .residentClass(let x):
+//                    self.ivFacility = WindowManager.setup(vc: self, title: "\(x.firstName) \(x.lastName)", deviceStatus: x.deviceStatus?.status)
+//                    ImageManager.shared.downloadImage(url: x.profilePicture, view: self.ivFacility)
+//                case .string(let s):
+//                    self.ivFacility = WindowManager.setup(vc: self, title: s)
+//                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
+//                }
+//            }
+        
+        //response.messages.
+            WebAPI.shared.get(url+"messages/", completion: { (messages: MessageThreadHeader) in
                 if var results = messages.results {
                     do {
                         for (i,e) in results.enumerated() {
@@ -116,12 +123,16 @@ class MessageThreadVC: UIViewController {
                 }
             })
         }
-    }
+    //}
     
 }
 
 extension MessageThreadVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            self.tableView.isHidden = self.messages.count == 0
+            self.noMessageView.isHidden = !tableView.isHidden
+        }
         return messages.count
     }
     

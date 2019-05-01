@@ -45,16 +45,18 @@ public class APIConst {
     public static let profilePicSignedUrl      = "/api/users/%d/uploaded_new_profile_picture/"
     
     // MARK: Photo Gallery
-    public static let photoGallery             = "/api/photo-galleries/\(facilityId)/"
+    public static let photoGallery              = "/api/photo-galleries/\(facilityId)/"
     //public static let photos                   = "/api/photo-galleries/\(facilityId)/photos/"
-    public static let photoGalleryDates        = "/api/photo-galleries/\(facilityId)/days/%@/"
+    public static let photoGalleryDates         = "/api/photo-galleries/\(facilityId)/days/%@/"
+    public static let photoGalleryPhotos        = "/api/photo-galleries/\(facilityId)/photos/"
     
     // MARK: Calendar
-    public static let calendar                 = "/api/calendars/\(facilityId)/?start=%@"
+    public static let calendar                  = "/api/calendars/\(facilityId)/?start=%@"
     
     // MARK: Amazon
-    public static let generateSignedURL        = "/generate_signed_url/"
+    public static let generateSignedURL         = "/generate_signed_url/"
+    public static let generateSignedURLMultiple = "/generate_signed_url_multiple/"
     
     // MARK: Others
-    public static let timeState                = "/api/facility/\(facilityId)/time-state/"
+    public static let timeState                 = "/api/facility/\(facilityId)/time-state/"
 }

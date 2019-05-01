@@ -12,6 +12,9 @@ final public class WebAPI: NSObject {
     
     public static let shared: WebAPI = WebAPI()
     
+    private var tryCount = 3
+    private var triedCount = 0
+    
     public var disableActivity: Bool = false
     
     public func post<T1: Encodable, T2: Decodable>(_ method: String, parameter: T1, completion: ((T2) -> Void)? = nil) {
@@ -55,13 +58,19 @@ final public class WebAPI: NSObject {
         }
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            ActivityManager.shared.stopActivity()
+            if !self.disableActivity {
+                ActivityManager.shared.stopActivity()
+            }
             
             // MARK: Session Time Out
             if [401, 403].contains((response as? HTTPURLResponse)?.statusCode) {
-                ActivityManager.shared.startActivity()
+                if !self.disableActivity {
+                    ActivityManager.shared.startActivity()
+                }
                 self.login(onError: {
-                    ActivityManager.shared.stopActivity()
+                    if !self.disableActivity {
+                        ActivityManager.shared.stopActivity()
+                    }
                     WindowManager.pushToLoginVC()
                     completion?(false)
                 }, onSuccess: {
@@ -70,7 +79,9 @@ final public class WebAPI: NSObject {
                         urlRequest.setValue(token, forHTTPHeaderField: "Authorization")
                     }
                     URLSession.shared.dataTask(with: urlRequest) { (d, re, e) in
-                        ActivityManager.shared.stopActivity()
+                        if !self.disableActivity {
+                            ActivityManager.shared.stopActivity()
+                        }
                         guard let _ = data, error == nil else {
                             completion?(false)
                             return
@@ -80,6 +91,16 @@ final public class WebAPI: NSObject {
                 })
                 return
             }
+            
+            if (response as? HTTPURLResponse)?.statusCode == 500 {
+                if self.triedCount < self.tryCount {
+                    self.request(type: type, method, parameter: parameter, completion: completion)
+                    self.triedCount += 1
+                    return
+                }
+            }
+            
+            self.triedCount = 0
             
             guard let _ = data, error == nil else {
                 completion?(false)
@@ -110,6 +131,8 @@ final public class WebAPI: NSObject {
         }
         
         if method == APIConst.generateSignedURL ||
+            method == APIConst.generateSignedURLMultiple ||
+            method == APIConst.photoGalleryPhotos ||
             method == APIConst.message ||
             method.contains("uploaded_new_profile_picture")
         {
@@ -139,14 +162,19 @@ final public class WebAPI: NSObject {
         }
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            
-            ActivityManager.shared.stopActivity()
+            if !self.disableActivity {
+                ActivityManager.shared.stopActivity()
+            }
             
             // MARK: Session Time Out
             if [401, 403].contains((response as? HTTPURLResponse)?.statusCode) {
-                ActivityManager.shared.startActivity()
+                if !self.disableActivity {
+                    ActivityManager.shared.startActivity()
+                }
                 self.login(onError: {
-                    ActivityManager.shared.stopActivity()
+                    if !self.disableActivity {
+                        ActivityManager.shared.stopActivity()
+                    }
                     WindowManager.pushToLoginVC()
                 }, onSuccess: {
                     let token = SessionManager.shared.token ?? ""
@@ -176,6 +204,15 @@ final public class WebAPI: NSObject {
                 return
             }
             
+            if (response as? HTTPURLResponse)?.statusCode == 500 {
+                if self.triedCount < self.tryCount {
+                    self.request(type: type, method, parameter: parameter, completion: completion)
+                    self.triedCount += 1
+                    return
+                }
+            }
+            
+            self.triedCount = 0
             guard let data = data, error == nil else { return }
             
             #if DEBUG

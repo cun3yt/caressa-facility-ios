@@ -94,6 +94,12 @@ class NewMessageVC: UIViewController {
     }
     
     @IBAction func audioAction(_ sender: UIButton) {
+        
+        if !btnAllResidents.isSelected && to == nil {
+            WindowManager.showMessage(type: .warning, message: "Please select the resident.")
+            return
+        }
+        
         if sendAudio {
             sendAudio = false
             sender.setTitle(nil, for: .normal)
@@ -132,18 +138,20 @@ class NewMessageVC: UIViewController {
             return
         }
         
-        guard let text = txtMessage.text, !text.isEmpty, text != textViewPlaceholder else {
-            WindowManager.showMessage(type: .warning, message: "Please write your message.")
-            return
+        let text = txtMessage.text ?? ""
+        if url == nil {
+            guard !text.isEmpty, text != textViewPlaceholder else {
+                WindowManager.showMessage(type: .warning, message: "Please write your message.")
+                return
+            }
         }
-        
         var messageType = "Message"
         if btnBroadcast.isSelected { messageType = "Broadcast" }
         if btnAnnounce.isSelected { messageType = "Announcement" }
         
         var message = Message(format: .text, content: text)
-        if let key = url?.split(separator: "/").last {
-           message = Message(format: .audio, content: String(key))
+        if let key = url {
+           message = Message(format: .audio, content: key)
         }
         
         let param = SendMessageRequest(to: receiver, messageType: messageType, message: message, requestReply: btnRequest.isSelected)
@@ -154,6 +162,11 @@ class NewMessageVC: UIViewController {
                 WindowManager.showMessage(type: .error, message: detail)
             } else {
                 WindowManager.showMessage(type: .success, message: "Message Sent!")
+                DispatchQueue.main.async {
+                    self.txtMessage.text = self.textViewPlaceholder
+                    self.txtMessage.textColor = .lightGray
+                    self.btnRequest.isSelected = false
+                }
             }
             
         }
@@ -162,7 +175,7 @@ class NewMessageVC: UIViewController {
     func uploadAudio(filename: URL) {
         guard let data = try? Data(contentsOf: filename) else { return }
         
-        let key = "\(filename.lastPathComponent)\(UUID().uuidString.prefix(4))"
+        let key = "\(filename.lastPathComponent)" //"\(UUID().uuidString.prefix(4))"
         let param = PresignedRequest(key: key,
                                      contentType: "audio/mpeg",
                                      clientMethod: "put_object",

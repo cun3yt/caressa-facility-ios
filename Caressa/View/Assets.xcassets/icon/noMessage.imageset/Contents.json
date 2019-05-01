@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "baseline_add_circle_outline_black_36dp-1.png",
+      "filename" : "baseline_message_black_48dp-1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "baseline_add_circle_outline_black_36dp.png",
+      "filename" : "baseline_message_black_48dp.png",
       "scale" : "2x"
     },
     {
@@ -18,5 +18,8 @@
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

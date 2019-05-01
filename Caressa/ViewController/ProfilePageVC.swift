@@ -106,9 +106,7 @@ class ProfilePageVC: UIViewController {
     func changeProfilePhoto(image: UIImage?) {
         guard let image = image else { return }
         
-        DispatchQueue.main.async {
-            ActivityManager.shared.startActivity()
-        }
+        ActivityManager.shared.startActivity()
         
         let imageData = image.pngData()
         let key = "\(resident.firstName)\(UUID().uuidString.prefix(4))"

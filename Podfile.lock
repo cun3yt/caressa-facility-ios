@@ -1,6 +1,51 @@
 PODS:
   - CropViewController (2.4.0)
   - CryptoSwift (0.9.0)
+  - DKCamera (1.6.4)
+  - DKImagePickerController (4.1.4):
+    - DKImagePickerController/Camera (= 4.1.4)
+    - DKImagePickerController/Core (= 4.1.4)
+    - DKImagePickerController/ImageDataManager (= 4.1.4)
+    - DKImagePickerController/InlineCamera (= 4.1.4)
+    - DKImagePickerController/PhotoEditor (= 4.1.4)
+    - DKImagePickerController/PhotoGallery (= 4.1.4)
+    - DKImagePickerController/Resource (= 4.1.4)
+  - DKImagePickerController/Camera (4.1.4):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/Core (4.1.4):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.1.4)
+  - DKImagePickerController/InlineCamera (4.1.4):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/PhotoEditor (4.1.4):
+    - CropViewController (~> 2.4)
+    - DKImagePickerController/Core
+  - DKImagePickerController/PhotoGallery (4.1.4):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.1.4)
+  - DKPhotoGallery (0.0.12):
+    - DKPhotoGallery/Core (= 0.0.12)
+    - DKPhotoGallery/Model (= 0.0.12)
+    - DKPhotoGallery/Preview (= 0.0.12)
+    - DKPhotoGallery/Resource (= 0.0.12)
+    - SDWebImage/GIF
+  - DKPhotoGallery/Core (0.0.12):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage/GIF
+  - DKPhotoGallery/Model (0.0.12):
+    - SDWebImage/GIF
+  - DKPhotoGallery/Preview (0.0.12):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage/GIF
+  - DKPhotoGallery/Resource (0.0.12):
+    - SDWebImage/GIF
+  - FLAnimatedImage (1.0.12)
   - PusherSwift (6.1.0):
     - CryptoSwift (~> 0.9.0)
     - ReachabilitySwift (~> 4.1.0)
@@ -8,11 +53,16 @@ PODS:
     - TaskQueue (~> 1.1.1)
   - PushNotifications (1.3.0)
   - ReachabilitySwift (4.1.0)
+  - SDWebImage/Core (4.4.6)
+  - SDWebImage/GIF (4.4.6):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
   - Starscream (3.0.6)
   - TaskQueue (1.1.1)
 
 DEPENDENCIES:
   - CropViewController
+  - DKImagePickerController
   - PusherSwift
   - PushNotifications
 
@@ -20,21 +70,31 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - CropViewController
     - CryptoSwift
+    - DKCamera
+    - DKImagePickerController
+    - DKPhotoGallery
+    - FLAnimatedImage
     - PusherSwift
     - PushNotifications
     - ReachabilitySwift
+    - SDWebImage
     - Starscream
     - TaskQueue
 
 SPEC CHECKSUMS:
   CropViewController: a090820b15fc3da68e694d7c192a4708c576828b
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
+  DKCamera: 61fa47629a39354e5111bca1fe96695de020dcb9
+  DKImagePickerController: 1b21dd7ba0eb488ef0869d1eb6f23b3534b69bb5
+  DKPhotoGallery: 1b4d65d9a485dfdd2002f22daa5b955eafb350ea
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
   PushNotifications: 88b6aedf3433d97ebeefa7336a5a797729c887a7
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
+  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
 
-PODFILE CHECKSUM: 71bc0071e1219dd3ac0578bedd47d72838d37749
+PODFILE CHECKSUM: de3f89db58cc05c02b572d1967ed3854a0c754f8
 
 COCOAPODS: 1.5.3

@@ -13,9 +13,13 @@ class PhotosVC: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    private var page: Int = 1
+    private var pageCount: Int = 1
+    private var nextPage: String?
     private var ivFacility: UIButton!
     private var photoDays: [PhotoGalleryDay] = []
     private var photos: [[Photo]] = []
+    private var refreshControl = UIRefreshControl(frame: .zero)
     
     private var moreSections: [Int] = []
     private let showPhotoCount = 4
@@ -23,6 +27,8 @@ class PhotosVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+        refreshControl.addTarget(self, action: #selector(setup), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
         
         ivFacility = WindowManager.setup(vc: self, title: "Photos")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
@@ -41,24 +47,41 @@ class PhotosVC: UIViewController {
     }
     
     @IBAction func btnCameraAction(_ sender: UIBarButtonItem) {
-        ImageManager.shared.takePhoto(from: .camera, view: self) { (image) in
-            
+        ImageManager.shared.takePhotos(from: .camera, view: self) { (images) in
+            self.upload(images: images)
         }
     }
     
     @IBAction func btnPhotoAction(_ sender: UIBarButtonItem) {
-        ImageManager.shared.takePhoto(from: .photoLibrary, view: self) { (image) in
-            
+        ImageManager.shared.takePhotos(from: .photo, view: self) { (images) in
+            self.upload(images: images)
         }
     }
     
-    func setup() {
-        WebAPI.shared.get(APIConst.photoGallery) { (result: PhotoGallery) in
-            self.photoDays = result.results
+    @objc func setup() {
+        let url_ = nextPage != nil ? nextPage : APIConst.photoGallery
+        guard let url = url_ else { return }
+        
+        WebAPI.shared.get(url) { (result: PhotoGallery) in
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
+            let startPoint = self.photoDays.count
+            if self.nextPage != nil {
+                self.photoDays = self.photoDays + result.results
+            } else {
+                self.photoDays = result.results
+            }
+            self.pageCount = result.count / result.results.count
+            self.nextPage = result.next
+            
             //self.photoDays.insert(PhotoGalleryDay(day: Day(date: "2019-04-10", url: "https://caressa.herokuapp.com/api/photo-galleries/1/days/2019-04-10/")), at: 0)
             
-            for i in self.photoDays {
-                WebAPI.shared.get(String(format: APIConst.photoGalleryDates, i.day.date), completion: { (result2: PhotoDay) in
+            //for i in self.photoDays {
+            for i in startPoint..<self.photoDays.count {
+                let p = self.photoDays[i]
+                
+                WebAPI.shared.get(String(format: APIConst.photoGalleryDates, p.day.date), completion: { (result2: PhotoDay) in
                     
                     self.photos.append(result2.results)
                     
@@ -82,6 +105,50 @@ class PhotosVC: UIViewController {
         }
         collectionView.reloadSections(IndexSet(integer: sender.tag))
     }
+    
+    func upload(images: [UIImage]?) {
+        guard let images = images, !images.isEmpty else { return }
+
+        ActivityManager.shared.startActivity()
+        
+        var param: PresignedMultipleRequest = []
+        var imageDatas: [Data] = []
+        
+        for image in images {
+            imageDatas.append(image.pngData()!)
+            
+            let key = "\(UUID().uuidString.prefix(6))"
+            param.append(PresignedRequest(key: key,
+                                         contentType: "image/png",
+                                         clientMethod: "put_object",
+                                         requestType: "PUT"))
+        }
+        
+        WebAPI.shared.post(APIConst.generateSignedURLMultiple, parameter: param) { (response: PresignedMultipleResponse) in
+            
+            let queue = DispatchGroup()
+            
+            for (i,presigned) in response.enumerated() {
+                queue.enter()
+                WebAPI.shared.put(presigned.url, parameter: imageDatas[i], completion: { (success) in
+                    queue.leave()
+                })
+            }
+            
+            queue.notify(queue: .main, execute: {
+                
+                let keyList = param.compactMap({UploadedNewPhoto(key: $0.key)})
+                WebAPI.shared.post(APIConst.photoGalleryPhotos,
+                                   parameter: keyList,
+                                   completion: { (responsePhoto: NewPhotoResponse) in
+                                    
+                                    DispatchQueue.main.async {
+                                        self.collectionView.reloadData()
+                                    }
+                })
+            })
+        }
+    }
 }
 
 extension PhotosVC: UICollectionViewDataSource {
@@ -91,7 +158,7 @@ extension PhotosVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let spc = photos[section].count
-        return moreSections.contains(section) ? spc : (spc > showPhotoCount ? showPhotoCount : spc)
+        return (moreSections.contains(section) ? spc : (spc > showPhotoCount ? showPhotoCount : spc))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -103,7 +170,8 @@ extension PhotosVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! PhotoHeaderView
-            header.lblTitle.text = photoDays[indexPath.section].day.date
+            let date = DateManager("yyyy-MM-dd").date(string: photoDays[indexPath.section].day.date)!
+            header.lblTitle.text = DateManager("MMMM dd, yyyy").string(date: date)
             return header
         } else
             if kind == UICollectionView.elementKindSectionFooter {
@@ -112,9 +180,33 @@ extension PhotosVC: UICollectionViewDataSource {
                 footer.btnMore.setTitle("\(more) more...", for: .normal)
                 footer.btnMore.tag = indexPath.section
                 footer.btnMore.addTarget(self, action: #selector(btnMore(_:)), for: .touchUpInside)
+                
+                if indexPath.section == photoDays.count - 1 {
+                    footer.tag = 998
+                }
+                
                 return footer
         }
         return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            if view.viewWithTag(998) != nil {
+                if page < pageCount {
+                    page += 1
+                    setup()
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            if view.viewWithTag(998) != nil {
+                view.tag = 0
+            }
+        }
     }
 }
 
@@ -128,11 +220,13 @@ extension PhotosVC: UICollectionViewDelegate {
 
 extension PhotosVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        let w = (collectionView.bounds.width / 2) - 10
+        return  CGSize(width: w, height: w / 1.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let width = collectionView.bounds.width
-        return moreSections.contains(section) ? CGSize(width: width, height: 0) : (photos[section].count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0))
+        return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos[section].count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
     }
 }
+
