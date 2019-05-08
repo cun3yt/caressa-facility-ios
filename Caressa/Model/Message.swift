@@ -27,10 +27,9 @@ struct MessageHeader: Codable {
 
 struct MessageResult: Codable {
     let id: Int
-    let resident: ResidentUnion?
+    let resident: ResidentUnion
     let lastMessage: MessageItem?
     let message: MessageItem?
-    let mockStatus: Bool?
     let messageFrom: MessageFrom?
     var read: Bool?
 
@@ -39,7 +38,6 @@ struct MessageResult: Codable {
         case resident = "resident"
         case message = "message"
         case lastMessage = "last_message"
-        case mockStatus = "mock_status"
         case messageFrom = "message_from"
         case read
     }
@@ -47,7 +45,7 @@ struct MessageResult: Codable {
 
 struct MessageItem: Codable {
     let time: Date
-    let reply: Reply?
+    let reply: String? //Reply?
     let content: Content
     let messageType: String
     let messageFrom: MessageFrom?
@@ -99,18 +97,33 @@ struct MessageFrom: Codable {
     }
 }
 
+struct AllResidents: Codable {
+    let allResidents: Bool?
+    let messageThreadURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case allResidents = "All Residents"
+        case messageThreadURL = "message-thread-url"
+    }
+}
+
 enum ResidentUnion: Codable {
     case residentClass(Resident)
+    case allResidents(AllResidents)
     case string(String)
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let x = try? container.decode(String.self) {
-            self = .string(x)
-            return
-        }
         if let x = try? container.decode(Resident.self) {
             self = .residentClass(x)
+            return
+        }
+        if let x = try? container.decode(AllResidents.self) {
+            self = .allResidents(x)
+            return
+        }
+        if let x = try? container.decode(String.self) {
+            self = .string(x)
             return
         }
         throw DecodingError.typeMismatch(ResidentUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ResidentUnion"))
@@ -120,6 +133,8 @@ enum ResidentUnion: Codable {
         var container = encoder.singleValueContainer()
         switch self {
         case .residentClass(let x):
+            try container.encode(x)
+        case .allResidents(let x):
             try container.encode(x)
         case .string(let x):
             try container.encode(x)

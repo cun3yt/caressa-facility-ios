@@ -30,4 +30,10 @@ class SessionManager: NSObject {
     
     public var subscribedChannel: Bool = false
     public var calendarSyncTime: Date?
+    public var refreshRequired: Bool = false {
+        didSet {
+            ImageManager.shared.imageCache.removeAllObjects()
+        }
+    }
+    public var temporaryProfile: TemporaryProfile?
 }

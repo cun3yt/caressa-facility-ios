@@ -29,7 +29,6 @@ struct LoginRequest: Encodable {
 struct LoginResponse: Codable {
     let error: String?
     let errorDescription: String?
-    
     let accessToken: String?
     let expiresIn: Int?
     let tokenType: String?

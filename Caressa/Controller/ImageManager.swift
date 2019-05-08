@@ -77,7 +77,10 @@ class ImageManager: NSObject {
                     URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                         guard error == nil else { return }
                         guard data != nil else { return }
-                        guard let image = UIImage(data: data!) else { return }
+                        guard let image = UIImage(data: data!) else {
+                            DispatchQueue.main.async { view.setImage(#imageLiteral(resourceName: "default_profile.jpg"), for: .normal) }
+                            return
+                        }
                         
                         self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                         
@@ -161,7 +164,7 @@ class ImageManager: NSObject {
             self.takePhoto(from: .camera, view: view, completion: completion)
         })
         prompt.addAction(UIAlertAction(title: "Photo Libary", style: .default) { (_) in
-            self.takePhoto(from: .photoLibrary, view: view, completion: completion)
+            self.takePhoto(from: .savedPhotosAlbum, view: view, completion: completion)
         })
         prompt.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         

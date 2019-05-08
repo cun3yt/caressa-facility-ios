@@ -39,7 +39,7 @@ struct MessageThreadResult: Codable {
     let messageType: String
     let messageFrom: MessageFrom
     let content: Content
-    let reply: Reply?
+    let reply: String? //Reply?
     var read: Bool?
     
     enum CodingKeys: String, CodingKey {

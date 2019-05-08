@@ -29,8 +29,9 @@ class ResidentCell: UITableViewCell  {
     
     func setup(resident: Resident) {
         self.resident = resident
-        self.contentView.alpha = 1.0
         
+        vStatus.backgroundColor = .clear
+        self.contentView.alpha = 1.0
         if let devStat = resident.deviceStatus {
             if devStat.isThereDevice,
                 let isOnline = devStat.status.isOnline {
@@ -43,7 +44,13 @@ class ResidentCell: UITableViewCell  {
         
         lblName.text = "\(resident.firstName) \(resident.lastName)"
         lblRoom.text = "Room # \(resident.roomNo)"
-        ImageManager.shared.downloadImage(suffix: resident.profilePicture, view: ivThumb)
+        if let tempImage = SessionManager.shared.temporaryProfile,
+            tempImage.id == resident.id {
+            ivThumb.image = tempImage.image
+        } else {
+            ImageManager.shared.downloadImage(suffix: resident.profilePicture, view: ivThumb)
+        }
+            
         
         btnCheck.isHidden = resident.checkIn == nil
         if let ci = resident.checkIn {

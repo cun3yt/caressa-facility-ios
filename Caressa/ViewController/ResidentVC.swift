@@ -29,6 +29,14 @@ class ResidentVC: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkChangeProfilePage()
+        if SessionManager.shared.refreshRequired {
+            refreshResidentList()
+        }
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         WindowManager.repaintBarTitle(vc: self)
@@ -55,11 +63,24 @@ class ResidentVC: UIViewController {
             SessionManager.shared.activeUser = response
         }
         
+        refreshResidentList()
+    }
+    
+    func refreshResidentList() {
         WebAPI.shared.get(APIConst.residents) { (response: [Resident]) in
             self.residents = response
+            SessionManager.shared.refreshRequired = false
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+        }
+    }
+    
+    func checkChangeProfilePage() {
+        if let tempImage = SessionManager.shared.temporaryProfile,
+            let inx = residents.firstIndex(where: {$0.id == tempImage.id}),
+            let cell = tableView.cellForRow(at: IndexPath(row: inx, section: 0)) as? ResidentCell {
+            cell.ivThumb.image = tempImage.image
         }
     }
 }

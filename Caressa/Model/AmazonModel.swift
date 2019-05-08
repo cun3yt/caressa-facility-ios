@@ -8,8 +8,8 @@
 
 import Foundation
 
-typealias PresignedMultipleRequest = [PresignedRequest]
-typealias PresignedMultipleResponse = [PresignedResponse]
+//typealias PresignedMultipleRequest = [PresignedRequest]
+//typealias PresignedMultipleResponse = [PresignedResponse]
 
 struct PresignedRequest: Codable {
     let key: String

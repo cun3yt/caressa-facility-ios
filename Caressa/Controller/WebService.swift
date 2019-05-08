@@ -41,7 +41,7 @@ final public class WebAPI: NSObject {
         }
         guard let url = urlOpt else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         urlRequest.httpMethod = type
         
         if let data = parameter {
@@ -122,7 +122,7 @@ final public class WebAPI: NSObject {
         
         //guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 60)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
         urlRequest.httpMethod = type
         
         let token = SessionManager.shared.token ?? ""
@@ -222,12 +222,12 @@ final public class WebAPI: NSObject {
             #endif
             
             do {
-                if method == APIConst.generateSignedURL {
-                    let res =  "{\"url\":" + String(data: data, encoding: .utf8)! + "}"
-                    let resModel = try JSONManager().decoder.decode(T2.self, from: res.data(using: .utf8)!)
-                    completion?(resModel)
-                    return
-                }
+//                if method == APIConst.generateSignedURL {
+//                    let res =  "{\"url\":" + String(data: data, encoding: .utf8)! + "}"
+//                    let resModel = try JSONManager().decoder.decode(T2.self, from: res.data(using: .utf8)!)
+//                    completion?(resModel)
+//                    return
+//                }
                 
                 let responseModel = try JSONManager().decoder.decode(T2.self, from: data)
                 

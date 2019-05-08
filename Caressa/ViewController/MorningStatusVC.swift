@@ -11,6 +11,7 @@ import UIKit
 class MorningStatusVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var unMorningStatus: UIView!
     
     private var morningChecks: MorningCheckInResponse!
     private var ivImage: UIButton!
@@ -38,6 +39,12 @@ class MorningStatusVC: UIViewController {
     }
     
     func setup() {
+        
+        if (UIApplication.shared.delegate as! AppDelegate).serverTimeState?.status == "morning-status-not-available" {
+            tableView.isHidden = true
+            return
+        }
+        
         WebAPI.shared.get(APIConst.morningCheckIn) { (response: MorningCheckInResponse) in
             self.morningChecks = response
             
@@ -153,13 +160,13 @@ extension MorningStatusVC: UITableViewDelegate {
     func changedStatus(checked: Bool, resident: Resident) {
         if checked {
             if let i = morningChecks.staffChecked.residents.firstIndex(where: {$0.id==resident.id}) {
-                var removed = morningChecks.staffChecked.residents.remove(at: i)
+                let removed = morningChecks.staffChecked.residents.remove(at: i)
                 removed.checkIn = CheckInURL(url: removed.checkIn?.url ?? "", checkedBy: nil, checkInTime: nil)
                 morningChecks.pending.residents.append(removed)
             }
         } else {
             if let i = morningChecks.pending.residents.firstIndex(where: {$0.id==resident.id}) {
-                var removed = morningChecks.pending.residents.remove(at: i)
+                let removed = morningChecks.pending.residents.remove(at: i)
                 let name = (SessionManager.shared.activeUser?.firstName ?? "") + (SessionManager.shared.activeUser?.lastName ?? "")
                 removed.checkIn = CheckInURL(url: removed.checkIn?.url ?? "", checkedBy: "Staff \(name)", checkInTime: Date())
                 morningChecks.staffChecked.residents.append(removed)

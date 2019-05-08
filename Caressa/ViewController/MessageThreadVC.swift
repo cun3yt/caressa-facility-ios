@@ -17,21 +17,21 @@ class MessageThreadVC: UIViewController {
     private var messages: [MessageThreadResult] = []
     private var ivFacility: UIButton!
     private lazy var readMessages: [MessageThreadRead] = []
-    
+
     public var resident: Resident?
-    public var allResidentId: Int?
+    public var messageThreadUrl: String?
+    //public var allResidentId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MessageThreadCell", bundle: nil), forCellReuseIdentifier: "cell")
-        
-        if let r = resident {
-            self.ivFacility = WindowManager.setup(vc: self, title: "\(r.firstName) \(r.lastName)", deviceStatus: r.deviceStatus?.status)
-            ImageManager.shared.downloadImage(url: r.profilePicture, view: self.ivFacility)
-        } else
-            if allResidentId != nil {
-                self.ivFacility = WindowManager.setup(vc: self, title: "All Residents")
-                ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
+
+        if let resident = self.resident {
+            self.ivFacility = WindowManager.setup(vc: self, title: "\(resident.firstName) \(resident.lastName)", deviceStatus: resident.deviceStatus?.status)
+            ImageManager.shared.downloadImage(url: resident.profilePicture, view: self.ivFacility)
+        } else {
+            self.ivFacility = WindowManager.setup(vc: self, title: "All Residents")
+            ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
         }
         
         PusherManager().delegate = self
@@ -58,8 +58,23 @@ class MessageThreadVC: UIViewController {
         WindowManager.repaintBarTitle(vc: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "newChat" {
+            if let newVc = segue.destination as? NewMessageVC {
+                newVc.to = resident
+            }
+        }
+    }
+    
     func setup() {
         title = nil
+        
+        guard let url = messageThreadUrl else {
+            self.tableView.reloadData()
+            return
+        }
         
         do {
             readMessages = try DBManager.shared.context.fetch(MessageThreadRead.fetchRequest())
@@ -67,31 +82,22 @@ class MessageThreadVC: UIViewController {
             print(error)
         }
         
-        var url_: String?
-        if let id = allResidentId {
-            url_ = String(format: APIConst.messageThread, id)
-        } else {
-            url_ = resident?.messageThreadURL.url
-        }
-        guard let url = url_ else {
-            self.tableView.reloadData()
-            return
-        }
-        
-//        WebAPI.shared.get(url) { (response: MessageThread) in
-//            DispatchQueue.main.async {
-//                switch response.resident {
-//                case .residentClass(let x):
-//                    self.ivFacility = WindowManager.setup(vc: self, title: "\(x.firstName) \(x.lastName)", deviceStatus: x.deviceStatus?.status)
-//                    ImageManager.shared.downloadImage(url: x.profilePicture, view: self.ivFacility)
-//                case .string(let s):
-//                    self.ivFacility = WindowManager.setup(vc: self, title: s)
-//                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
-//                }
-//            }
-        
-        //response.messages.
-            WebAPI.shared.get(url+"messages/", completion: { (messages: MessageThreadHeader) in
+        WebAPI.shared.get(url) { (response: MessageThread) in
+            DispatchQueue.main.async {
+                switch response.resident {
+                case .residentClass(let x):
+                    self.ivFacility = WindowManager.setup(vc: self, title: "\(x.firstName) \(x.lastName)", deviceStatus: x.deviceStatus?.status)
+                    ImageManager.shared.downloadImage(url: x.profilePicture, view: self.ivFacility)
+                case .allResidents:
+                    self.ivFacility = WindowManager.setup(vc: self, title: "All Residents")
+                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
+                case .string(let x):
+                    self.ivFacility = WindowManager.setup(vc: self, title: x)
+                    ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: self.ivFacility)
+                }
+            }
+            
+            WebAPI.shared.get(response.messages.url, completion: { (messages: MessageThreadHeader) in
                 if var results = messages.results {
                     do {
                         for (i,e) in results.enumerated() {
@@ -123,7 +129,7 @@ class MessageThreadVC: UIViewController {
                 }
             })
         }
-    //}
+    }
     
 }
 

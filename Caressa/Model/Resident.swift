@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Resident: Codable {
+class Resident: Codable {
     let id: Int
     let firstName: String
     let lastName: String

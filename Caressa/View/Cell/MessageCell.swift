@@ -31,48 +31,46 @@ class MessageCell: UITableViewCell {
     
     func setup(message: MessageResult) {
         switch message.resident {
-        case .residentClass(let x)? :
+        case .residentClass(let x):
             lblTitle.text = "\(x.firstName) \(x.lastName)"
             ImageManager.shared.downloadImage(suffix: x.profilePicture, view: ivImage)
 
             ivImage.alpha = 1.0
-            
             if let devStat = x.deviceStatus {
                 if devStat.isThereDevice,
                     let isOnline = devStat.status.isOnline {
                     deviceStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
                 } else {
                     deviceStatus.backgroundColor = .gray
-                    
                     ivImage.alpha = 0.5
                 }
             }
-            
-            //contentView.alpha = 1.0
-//            if let devStat = x.deviceStatus?.status {
-//                if let isOnline = devStat.isOnline {
-//                    deviceStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
-//                } else {
-//                    deviceStatus.backgroundColor = .clear
-//                }
-//            } else {
-//                //contentView.alpha = 0.4
-//            }
-            
-            
-        case .string(let x)?:
-            lblTitle.text = x
+
+        case .allResidents:
+            lblTitle.text = "All Residents"
             ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.profilePicture, view: ivImage)
-            
-        case .none:
-            break
+
+        case .string: break
         }
+
+//        lblTitle.text = "\(message.resident.firstName) \(message.resident.lastName)"
+//        ImageManager.shared.downloadImage(suffix: message.resident.profilePicture, view: ivImage)
+//        ivImage.alpha = 1.0
+//        if let devStat = message.resident.deviceStatus {
+//            if devStat.isThereDevice,
+//                let isOnline = devStat.status.isOnline {
+//                deviceStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
+//            } else {
+//                deviceStatus.backgroundColor = .gray
+//                ivImage.alpha = 0.5
+//            }
+//        }
         
         if let lastMessage = message.lastMessage {
             lblBody.text = lastMessage.content.details
             lblTime.text = DateManager("HH:mm a").string(date: lastMessage.time)
-            lblStatus.text = lastMessage.reply != nil ? "Replied \(DateManager("HH:mm a").string(date: lastMessage.reply!.time))" : "No Reply Yet"
-            lblRepliedTo.text = lastMessage.reply != nil ? "Yes" : ""
+            lblStatus.text = lastMessage.reply //lastMessage.reply != nil ? "Replied \(DateManager("HH:mm a").string(date: lastMessage.reply!.time))" : "No Reply Yet"
+            lblRepliedTo.text = nil //lastMessage.reply != nil ? "Yes" : ""
             lblType.text = lastMessage.messageType
             
             audioView.isHidden = lastMessage.content.type != "Audio"

@@ -109,45 +109,46 @@ class PhotosVC: UIViewController {
     func upload(images: [UIImage]?) {
         guard let images = images, !images.isEmpty else { return }
 
-        ActivityManager.shared.startActivity()
+        //ActivityManager.shared.startActivity()
         
-        var param: PresignedMultipleRequest = []
+        var param: [PresignedRequest] = []
         var imageDatas: [Data] = []
+        let queue = DispatchGroup()
+        var keyList: [UploadedNewPhoto] = []
         
+        WebAPI.shared.disableActivity = true
         for image in images {
-            imageDatas.append(image.pngData()!)
+            queue.enter()
             
+            imageDatas.append(image.pngData()!)
             let key = "\(UUID().uuidString.prefix(6))"
             param.append(PresignedRequest(key: key,
                                          contentType: "image/png",
                                          clientMethod: "put_object",
                                          requestType: "PUT"))
+            keyList.append(UploadedNewPhoto(key: key))
         }
         
-        WebAPI.shared.post(APIConst.generateSignedURLMultiple, parameter: param) { (response: PresignedMultipleResponse) in
-            
-            let queue = DispatchGroup()
-            
-            for (i,presigned) in response.enumerated() {
-                queue.enter()
-                WebAPI.shared.put(presigned.url, parameter: imageDatas[i], completion: { (success) in
+        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: [PresignedResponse]) in
+            for (i,url) in response.enumerated() {
+                WebAPI.shared.put(url.url, parameter: imageDatas[i], completion: { (success) in
                     queue.leave()
                 })
             }
-            
-            queue.notify(queue: .main, execute: {
-                
-                let keyList = param.compactMap({UploadedNewPhoto(key: $0.key)})
-                WebAPI.shared.post(APIConst.photoGalleryPhotos,
-                                   parameter: keyList,
-                                   completion: { (responsePhoto: NewPhotoResponse) in
-                                    
-                                    DispatchQueue.main.async {
-                                        self.collectionView.reloadData()
-                                    }
-                })
-            })
         }
+        
+        WebAPI.shared.post(APIConst.photoGalleryPhotos,
+                           parameter: keyList,
+                           completion: { (responsePhoto: NewPhotoResponse) in
+//                            DispatchQueue.main.async {
+//                                self.collectionView.reloadData()
+//                            }
+        })
+        
+        queue.notify(queue: .main, execute: {
+            WebAPI.shared.disableActivity = false
+        })
+        
     }
 }
 
@@ -176,7 +177,7 @@ extension PhotosVC: UICollectionViewDataSource {
         } else
             if kind == UICollectionView.elementKindSectionFooter {
                 let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath) as! PhotoFooterView
-                let more = photos[indexPath.section].count - 3
+                let more = photos[indexPath.section].count - showPhotoCount
                 footer.btnMore.setTitle("\(more) more...", for: .normal)
                 footer.btnMore.tag = indexPath.section
                 footer.btnMore.addTarget(self, action: #selector(btnMore(_:)), for: .touchUpInside)

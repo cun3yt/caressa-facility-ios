@@ -42,7 +42,7 @@ public class APIConst {
     public static let resident                 = "/api/residents/%d/"
     public static let users                    = "/api/users/%d/"
     public static let userMe                   = "/api/users/me/"
-    public static let profilePicSignedUrl      = "/api/users/%d/uploaded_new_profile_picture/"
+    public static let profilePicSignedUrl      = "/api/users/%d/profile-picture/" //"/api/users/%d/uploaded_new_profile_picture/"
     
     // MARK: Photo Gallery
     public static let photoGallery              = "/api/photo-galleries/\(facilityId)/"
@@ -54,7 +54,7 @@ public class APIConst {
     public static let calendar                  = "/api/calendars/\(facilityId)/?start=%@"
     
     // MARK: Amazon
-    public static let generateSignedURL         = "/generate_signed_url/"
+    public static let generateSignedURL         = "/generate-signed-url/"
     public static let generateSignedURLMultiple = "/generate_signed_url_multiple/"
     
     // MARK: Others

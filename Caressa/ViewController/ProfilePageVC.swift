@@ -44,6 +44,11 @@ class ProfilePageVC: UIViewController {
         WindowManager.repaintBarTitle(vc: self)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        WebAPI.shared.disableActivity = false
+    }
+    
     @IBAction func backAction(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -103,41 +108,38 @@ class ProfilePageVC: UIViewController {
         }
     }
     
+    
+    // MARK: Change Profile Photo
     func changeProfilePhoto(image: UIImage?) {
         guard let image = image else { return }
         
-        ActivityManager.shared.startActivity()
-        
+        WebAPI.shared.disableActivity = true
         let imageData = image.pngData()
         let key = "\(resident.firstName)\(UUID().uuidString.prefix(4))"
-        let param = PresignedRequest(key: key,
+        let param = [PresignedRequest(key: key,
                                      contentType: "image/png",
                                      clientMethod: "put_object",
-                                     requestType: "PUT")
+                                     requestType: "PUT")]
         
-        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: PresignedResponse) in
-            
-            WebAPI.shared.put(response.url, parameter: imageData!, completion: { (success) in
+        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: [PresignedResponse]) in
+            guard let url = response.first?.url else { return }
+            WebAPI.shared.put(url, parameter: imageData!, completion: { (success) in
                 
                 WebAPI.shared.post(String(format: APIConst.profilePicSignedUrl, self.resident.id),
                                    parameter: UploadedNewPhoto(key: key),
                                    completion: { (responsePhoto: NewPhotoResponse) in
-                                    
-                                    DispatchQueue.main.async {
-                                        if responsePhoto.detail == nil {
-                                            
-                                            ImageManager.shared.downloadImage(suffix: responsePhoto.profilePictureURL, view: self.ivProfile)
-                                            ImageManager.shared.downloadImage(url: responsePhoto.thumbnailURL, view: self.ivHeaderProfile)
-                                            
-                                            ActivityManager.shared.stopActivity()
-                                            
-                                            WindowManager.showMessage(type: .success, message: responsePhoto.message!)
-                                        } else {
-                                            WindowManager.showMessage(type: .success, message: responsePhoto.detail!)
-                                        }
-                                    }
+                                   
+                                    SessionManager.shared.temporaryProfile = nil
+                                    SessionManager.shared.refreshRequired = true
+                                    WebAPI.shared.disableActivity = false
                 })
             })
+        }
+        
+        DispatchQueue.main.async {
+            SessionManager.shared.temporaryProfile = TemporaryProfile(id: self.resident.id, image: image)
+            self.ivProfile.image = image
+            self.ivHeaderProfile.setImage(image, for: .normal)
         }
     }
     
@@ -147,7 +149,7 @@ class ProfilePageVC: UIViewController {
             self.user = u
             DispatchQueue.main.async {
                 ImageManager.shared.downloadImage(suffix: u.profilePictureURL, view: self.ivProfile)
-                ImageManager.shared.downloadImage(url: u.profilePictureURL, view: self.ivHeaderProfile)
+                ImageManager.shared.downloadImage(url: u.thumbnailURL, view: self.ivHeaderProfile)
                 
                 self.lblName.text  = "\(u.firstName) \(u.lastName)"
                 self.title = "\(u.firstName) \(u.lastName)"

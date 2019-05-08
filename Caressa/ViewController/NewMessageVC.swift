@@ -33,7 +33,8 @@ class NewMessageVC: UIViewController {
     private var sendAudio: Bool = false
     private var audioURL: URL?
     private let textViewPlaceholder = "Message..."
-    private var to: Resident?
+    
+    public var to: Resident?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,10 @@ class NewMessageVC: UIViewController {
         
         setup()
         registerForKeyboardNotifications()
+        
+        if to != nil {
+            refresh()
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -112,7 +117,7 @@ class NewMessageVC: UIViewController {
             sendAudio = true
             sender.setTitle("Send Audio", for: .normal)
         } else {
-            lcAudioBtnWidth.constant = 250
+            lcAudioBtnWidth.constant = 220
             sender.setTitle("Stop 00:00 / 02:00", for: .normal)
             
             audioRecorder = AudioRecorder(delegate: self, button: sender)
@@ -163,9 +168,18 @@ class NewMessageVC: UIViewController {
             } else {
                 WindowManager.showMessage(type: .success, message: "Message Sent!")
                 DispatchQueue.main.async {
+                    self.to = nil
+                    self.ivProfile.image = nil
+                    self.lblName.text = nil
+                    self.lblRoomNo.text = nil
+                    self.btnAllResidents.isSelected = false
                     self.txtMessage.text = self.textViewPlaceholder
                     self.txtMessage.textColor = .lightGray
                     self.btnRequest.isSelected = false
+                    self.btnAnnounce.isSelected = false
+                    self.btnBroadcast.isSelected = false
+                    self.btnMessage.isSelected = true
+                    self.endEditing()
                 }
             }
             
@@ -176,19 +190,20 @@ class NewMessageVC: UIViewController {
         guard let data = try? Data(contentsOf: filename) else { return }
         
         let key = "\(filename.lastPathComponent)" //"\(UUID().uuidString.prefix(4))"
-        let param = PresignedRequest(key: key,
+        let param = [PresignedRequest(key: key,
                                      contentType: "audio/mpeg",
                                      clientMethod: "put_object",
-                                     requestType: "PUT")
+                                     requestType: "PUT")]
         
-        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: PresignedResponse) in
-            
-            WebAPI.shared.put(response.url, parameter: data, completion: { (success) in
-                
-                DispatchQueue.main.async {
-                    self.send(uploaded: response.url)
-                }
-            })
+        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: [PresignedResponse]) in
+            if let url = response.first?.url {
+                WebAPI.shared.put(url, parameter: data, completion: { (success) in
+                    
+                    DispatchQueue.main.async {
+                        self.send(uploaded: key)
+                    }
+                })
+            }
         }
     }
     

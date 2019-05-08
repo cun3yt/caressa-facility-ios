@@ -39,12 +39,27 @@ class WindowManager: NSObject {
     
     class public func pushToMessageThreadVC<T>(navController: UINavigationController?, resident: T) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MessageThreadVC") as! MessageThreadVC
-        if let r = resident as? Resident {
-            vc.resident = r
+
+        if let res = resident as? Resident {
+            vc.resident = res
+            vc.messageThreadUrl = res.messageThreadURL.url
         }
-        if let s = resident as? Int {
-            vc.allResidentId = s
+        else if let res = resident as? AllResidents {
+            vc.messageThreadUrl = res.messageThreadURL
         }
+        
+//        if resident.allResidents == true {
+//            vc.messageThreadUrl = resident.allResidentMTUrl
+//        } else {
+//            vc.messageThreadUrl = resident.messageThreadURL?.url
+//        }
+        
+//        if let r = resident as? Resident {
+//            vc.resident = r
+//        }
+//        if let s = resident as? AllResidents {
+//            vc.allResidentId = s
+//        }
         if let navController = navController {
             navController.pushViewController(vc, animated: true)
         } else {
@@ -150,8 +165,8 @@ class WindowManager: NSObject {
         let profile = UIButton(frame: CGRect(x: 0, y: 0, width: headerHeight, height: headerHeight))
         profile.setImage(nil, for: .normal)
         profile.contentMode = .scaleAspectFit
-        profile.clipsToBounds = true
         profile.layer.cornerRadius = headerHeight / 2
+        profile.clipsToBounds = true
  
         let titleLabel = UILabel(frame: CGRect(x: 6, y: 0, width: headerWidth, height: headerHeight))
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
