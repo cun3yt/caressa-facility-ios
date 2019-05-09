@@ -34,7 +34,7 @@ struct UploadedNewPhoto: Codable {
     let key: String
 }
 
-struct NewPhotoResponse: Codable {
+struct NewProfileResponse: Codable {
     let detail: String?
     let message: String?
     let profilePictureURL: String?
@@ -48,3 +48,7 @@ struct NewPhotoResponse: Codable {
     }
 }
 
+struct NewPhotoResponse: Codable {
+    let key: String
+    let url: String
+}

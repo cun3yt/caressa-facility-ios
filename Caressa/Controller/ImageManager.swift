@@ -24,6 +24,11 @@ class ImageManager: NSObject {
     
     func downloadImage(suffix: String?, view: UIImageView, width: CGFloat? = nil, height: CGFloat? = nil, completion: (() -> Void)? = nil) {
         
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.frame.origin = CGPoint(x: view.frame.midX - (indicator.frame.width / 2), y: view.frame.midY - (indicator.frame.height / 2))
+        view.addSubview(indicator)
+        indicator.bringSubviewToFront(view)
+        indicator.startAnimating()
         view.image = UIImage(named: "emptyPhoto")
         
         if let suffix = suffix {
@@ -33,6 +38,7 @@ class ImageManager: NSObject {
                     
                     DispatchQueue.main.async {
                         view.image = cachedImage
+                        indicator.removeFromSuperview()
                         completion?()
                     }
                     
@@ -42,13 +48,17 @@ class ImageManager: NSObject {
                         guard error == nil else { return }
                         guard data != nil else { return }
                         guard let image = UIImage(data: data!) else {
-                            DispatchQueue.main.async { view.image = #imageLiteral(resourceName: "default_profile.jpg") }
+                            DispatchQueue.main.async {
+                                view.image = #imageLiteral(resourceName: "default_profile.jpg")
+                                indicator.removeFromSuperview()
+                            }
                             return
                         }
                         
                         self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                         
                         DispatchQueue.main.async {
+                            indicator.removeFromSuperview()
                             view.image = image
                             completion?()
                         }

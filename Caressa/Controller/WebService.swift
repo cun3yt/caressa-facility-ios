@@ -41,11 +41,15 @@ final public class WebAPI: NSObject {
         }
         guard let url = urlOpt else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: type == "PUT" ? 60 : 10)
         urlRequest.httpMethod = type
         
         if let data = parameter {
-            urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
+            if method.contains(".m4a") {
+                urlRequest.addValue("audio/mpeg", forHTTPHeaderField: "Content-Type")
+            } else {
+                urlRequest.addValue("image/png", forHTTPHeaderField: "Content-Type")
+            }
             urlRequest.httpBody = data
         } else {
             let token = SessionManager.shared.token ?? ""

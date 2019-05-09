@@ -127,7 +127,7 @@ class ProfilePageVC: UIViewController {
                 
                 WebAPI.shared.post(String(format: APIConst.profilePicSignedUrl, self.resident.id),
                                    parameter: UploadedNewPhoto(key: key),
-                                   completion: { (responsePhoto: NewPhotoResponse) in
+                                   completion: { (responsePhoto: NewProfileResponse) in
                                    
                                     SessionManager.shared.temporaryProfile = nil
                                     SessionManager.shared.refreshRequired = true

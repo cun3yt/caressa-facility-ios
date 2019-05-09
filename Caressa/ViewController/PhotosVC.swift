@@ -27,13 +27,13 @@ class PhotosVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        refreshControl.addTarget(self, action: #selector(setup), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(pull2Refresh), for: .valueChanged)
         collectionView.refreshControl = refreshControl
         
         ivFacility = WindowManager.setup(vc: self, title: "Photos")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
         
-        setup()
+        setup(clear: false)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,9 +58,17 @@ class PhotosVC: UIViewController {
         }
     }
     
-    @objc func setup() {
+    func setup(clear cache: Bool) {
         let url_ = nextPage != nil ? nextPage : APIConst.photoGallery
         guard let url = url_ else { return }
+        
+        if cache {
+            self.photoDays.removeAll()
+            self.photos.removeAll()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
         
         WebAPI.shared.get(url) { (result: PhotoGallery) in
             DispatchQueue.main.async {
@@ -132,23 +140,26 @@ class PhotosVC: UIViewController {
         WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: [PresignedResponse]) in
             for (i,url) in response.enumerated() {
                 WebAPI.shared.put(url.url, parameter: imageDatas[i], completion: { (success) in
-                    queue.leave()
+                    WebAPI.shared.post(APIConst.photoGalleryPhotos,
+                                       parameter: keyList,
+                                       completion: { (responsePhoto: [NewPhotoResponse]) in
+                                        queue.leave()
+//                                        DispatchQueue.main.async {
+//                                            self.collectionView.reloadData()
+//                                        }
+                    })
                 })
             }
         }
-        
-        WebAPI.shared.post(APIConst.photoGalleryPhotos,
-                           parameter: keyList,
-                           completion: { (responsePhoto: NewPhotoResponse) in
-//                            DispatchQueue.main.async {
-//                                self.collectionView.reloadData()
-//                            }
-        })
         
         queue.notify(queue: .main, execute: {
             WebAPI.shared.disableActivity = false
         })
         
+    }
+    
+    @objc func pull2Refresh() {
+        setup(clear: true)
     }
 }
 
@@ -196,7 +207,7 @@ extension PhotosVC: UICollectionViewDataSource {
             if view.viewWithTag(998) != nil {
                 if page < pageCount {
                     page += 1
-                    setup()
+                    setup(clear: false)
                 }
             }
         }
