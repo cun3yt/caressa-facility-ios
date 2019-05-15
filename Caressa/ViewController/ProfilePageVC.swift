@@ -20,6 +20,13 @@ class ProfilePageVC: UIViewController {
     @IBOutlet weak var lblService: UILabel!
     @IBOutlet weak var lblMorningStatus: UILabel!
     
+    @IBOutlet weak var btnCallUser: UIBarButtonItem!
+    @IBOutlet weak var btnMessageUser: UIBarButtonItem!
+    @IBOutlet weak var btnCallFamily: UIButton!
+    @IBOutlet weak var btnMessageFamily: UIButton!
+    @IBOutlet weak var btnCallCaregiver: UIButton!
+    @IBOutlet weak var btnMessageCaregiver: UIButton!
+    
     private lazy var imagePicker = UIImagePickerController()
     private var ivHeaderProfile: UIButton!
     private var user: User!
@@ -62,41 +69,58 @@ class ProfilePageVC: UIViewController {
     
     // MARK: User
     @IBAction func btnCallUser(_ sender: UIBarButtonItem) {
-        if let url = URL(string: "tel://\(user.phoneNumber)"),
-            UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
+        WindowManager.showConfirmation(message: "Do you want to call \(user.phoneNumber)") {
+            if let url = URL(string: "tel://\(self.user.phoneNumber)"),
+                
+                UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:])
+            }
         }
     }
     
     @IBAction func btnMessageUser(_ sender: UIBarButtonItem) {
         if resident.messageThreadURL.url != nil {
             WindowManager.pushToMessageThreadVC(navController: navigationController, resident: resident)
+        } else {
+            WindowManager.pushToNewMessageVC(navController: navigationController!, resident: resident)
         }
     }
     
     // MARK: Family
     @IBAction func btnCallFamily(_ sender: UIBarButtonItem) {
-        if let phoneNumber = user.primaryContact?.phoneNumber,
-            let url = URL(string: "tel://\(phoneNumber)"),
-            UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
+        if let phoneNumber = user.primaryContact?.phoneNumber {
+            WindowManager.showConfirmation(message: "Do you want to call \(phoneNumber)") {
+                if let url = URL(string: "tel://\(phoneNumber)"),
+                    UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
         }
     }
     
     @IBAction func btnMessageFamily(_ sender: UIBarButtonItem) {
-        if let email = user.primaryContact?.email,
-            let url = URL(string: "mailto://\(email)"),
-            UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
+        if let sms = user.primaryContact?.phoneNumber {
+            if let url = URL(string: "sms:\(sms)"),
+                UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:])
+            }
         }
+//        else if let email = user.primaryContact?.email,
+//            let url = URL(string: "mailto://\(email)"),
+//            UIApplication.shared.canOpenURL(url) {
+//            UIApplication.shared.open(url, options: [:])
+//        }
     }
     
     // MARK: Caregiver
     @IBAction func btnCallCaregiver(_ sender: UIBarButtonItem) {
-        if let phoneNumber = user.caregivers.first?.phoneNumber,
-            let url = URL(string: "tel://\(phoneNumber)"),
-            UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
+        if let phoneNumber = user.caregivers.first?.phoneNumber {
+            WindowManager.showConfirmation(message: "Do you want to call \(phoneNumber)") {
+                if let url = URL(string: "tel://\(phoneNumber)"),
+                    UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
         }
     }
     
@@ -153,13 +177,37 @@ class ProfilePageVC: UIViewController {
                 
                 self.lblName.text  = "\(u.firstName) \(u.lastName)"
                 self.title = "\(u.firstName) \(u.lastName)"
-                self.lblFamilyName.text = "\(u.primaryContact?.firstName ?? "") \(u.primaryContact?.lastName ?? "")"
-                self.lblCaretaker.text =  "\(u.caregivers.first?.firstName ?? "") \(u.caregivers.first?.lastName ?? "")"
+               
+                if let family = u.primaryContact,
+                    let first = family.firstName,
+                    let last = family.lastName,
+                    !(first + last).trimmingCharacters(in: .whitespaces).isEmpty {
+                    self.lblFamilyName.text = first + " " + last
+                } else {
+                    self.lblFamilyName.text = "Nobody is specified"
+                }
+                
+                if let caregiver = u.caregivers.first,
+                    let first = caregiver.firstName,
+                    let last = caregiver.lastName,
+                    !(first + last).trimmingCharacters(in: .whitespaces).isEmpty {
+                    self.lblCaretaker.text =  first + last
+                } else {
+                    self.lblCaretaker.text = "Nobody is specified"
+                }
                 self.lblBirthday.text = u.birthDate
                 self.lblMoveIn.text = u.moveInDate
                 self.lblRoom.text = u.roomNo
                 self.lblService.text = u.serviceType
                 self.lblMorningStatus.text = u.checkInInfo.checkedBy != nil ? "Checked" : ""
+                
+                self.btnCallFamily.isEnabled = !(u.primaryContact?.phoneNumber ?? "").isEmpty
+                self.btnMessageFamily.isEnabled = !(u.primaryContact?.phoneNumber ?? "").isEmpty //!(u.primaryContact?.email ?? "").isEmpty ||
+                self.btnCallCaregiver.isEnabled = !(u.caregivers.first?.phoneNumber ?? "").isEmpty
+                self.btnMessageCaregiver.isEnabled = !(u.caregivers.first?.email ?? "").isEmpty
+                self.btnCallUser.isEnabled = !self.user.phoneNumber.isEmpty
+                self.btnCallUser.image = self.btnCallUser.isEnabled ? #imageLiteral(resourceName: "barPhone") : #imageLiteral(resourceName: "barPhone_grayed")
+                //self.btnMessageUser.isEnabled = self.user.messageThreadURL != nil
             }
         }
     }

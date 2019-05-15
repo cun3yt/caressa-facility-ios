@@ -12,11 +12,15 @@ class SettingsVC: UIViewController {
     
     @IBOutlet weak var ivFacility: UIImageView!
     
+    private var ivHeaderProfile: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ivHeaderProfile = WindowManager.setup(vc: self, title: "Settings")
 
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture,
-                                          view: WindowManager.setup(vc: self, title: "Settings"))
+                                          view: ivHeaderProfile)
         ImageManager.shared.downloadImage(suffix: SessionManager.shared.facility?.profilePicture,
                                           view: ivFacility)
     }
@@ -44,8 +48,33 @@ class SettingsVC: UIViewController {
     }
     
     func changeProfilePhoto(image: UIImage?) {
-        //guard let image = image else { return }
+        guard let image = image else { return }
         
-        // to be continue...
+        WebAPI.shared.disableActivity = true
+        let imageData = image.pngData()
+        let key = "facility_\(UUID().uuidString.prefix(4))"
+        let param = [PresignedRequest(key: key,
+                                      contentType: "image/png",
+                                      clientMethod: "put_object",
+                                      requestType: "PUT")]
+        
+        WebAPI.shared.post(APIConst.generateSignedURL, parameter: param) { (response: [PresignedResponse]) in
+            guard let url = response.first?.url else { return }
+            WebAPI.shared.put(url, parameter: imageData!, completion: { (success) in
+                
+                WebAPI.shared.post(APIConst.facilityProfilePicture,
+                                   parameter: UploadedNewPhoto(key: key),
+                                   completion: { (responsePhoto: NewProfileResponse) in
+                                    
+                                    WebAPI.shared.disableActivity = false
+                })
+            })
+        }
+        
+        DispatchQueue.main.async {
+            SessionManager.shared.changedFacilityProfile = image
+            self.ivFacility.image = image
+            self.ivHeaderProfile.setImage(image, for: .normal)
+        }
     }
 }

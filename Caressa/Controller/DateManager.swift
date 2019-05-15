@@ -19,7 +19,7 @@ public class DateManager: NSObject {
 //        return calendar
 //    }()
     
-    init(_ format: String? = nil, useUTC: Bool? = nil) {
+    init(_ format: String? = nil, useUTC: Bool? = nil, onlyTime: Bool = false) {
         calendar = Calendar(identifier: .gregorian)
         formatter = DateFormatter()
         
@@ -34,6 +34,11 @@ public class DateManager: NSObject {
         
         if let format = format {
             formatter.dateFormat = format
+        } else {
+            if !onlyTime {
+                formatter.dateStyle = .short
+            }
+            formatter.timeStyle = .short
         }
     }
     

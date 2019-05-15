@@ -47,19 +47,6 @@ class WindowManager: NSObject {
         else if let res = resident as? AllResidents {
             vc.messageThreadUrl = res.messageThreadURL
         }
-        
-//        if resident.allResidents == true {
-//            vc.messageThreadUrl = resident.allResidentMTUrl
-//        } else {
-//            vc.messageThreadUrl = resident.messageThreadURL?.url
-//        }
-        
-//        if let r = resident as? Resident {
-//            vc.resident = r
-//        }
-//        if let s = resident as? AllResidents {
-//            vc.allResidentId = s
-//        }
         if let navController = navController {
             navController.pushViewController(vc, animated: true)
         } else {
@@ -80,35 +67,46 @@ class WindowManager: NSObject {
             }
         }
     }
+
+    class public func pushToNewMessageVC(navController: UINavigationController, resident: Resident) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewMessageVC") as! NewMessageVC
+        vc.to = resident
+        navController.pushViewController(vc, animated: true)
+    }
     
+//    class public func pushTo(vc name: String, parameter: String?) {
+//        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let tc = storyboard.instantiateViewController(withIdentifier: "TabBarVC") as! UITabBarController
+//            let vc = storyboard.instantiateViewController(withIdentifier: name) as! BaseViewController
+//            vc.pushParameter = parameter
+//            if let vcs = tc.viewControllers,
+//                let nc = vc.navigationController,
+//                let inx = vcs.firstIndex(of: nc) {
+//                tc.selectedIndex = inx
+//            }
+//        }
+//    }
     
     //Popups
     enum MessageTypes {
-        case error
-        case success
-        case information
-        case warning
+        case error, success, information, warning
     }
     
     class open func showMessage(type: MessageTypes, message: String, handler: (()->Void)? = nil) {
         
         DispatchQueue.main.async {
             if var topView = UIApplication.shared.keyWindow?.rootViewController {
-                
                 while let presentedViewController = topView.presentedViewController {
                     topView = presentedViewController
                 }
                 
                 var errorTitle = ""
                 switch type {
-                case .error:
-                    errorTitle = "Error"
-                case .success:
-                    errorTitle = "Success"
-                case .information:
-                    errorTitle = "Information"
-                case .warning:
-                    errorTitle = "Warning"
+                case .error:       errorTitle = "Error"
+                case .success:     errorTitle = "Success"
+                case .information: errorTitle = "Information"
+                case .warning:     errorTitle = "Warning"
                 }
                 
                 let alertView = UIAlertController(title: errorTitle, message: message, preferredStyle: .alert)
@@ -130,10 +128,10 @@ class WindowManager: NSObject {
                 }
                 
                 let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-                let yes = UIAlertAction(title: "OK", style: .default) { (_) in
+                let yes = UIAlertAction(title: "Yes", style: .default) { (_) in
                     yesHandler?()
                 }
-                let no = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let no = UIAlertAction(title: "No", style: .default, handler: nil)
                 alert.addAction(yes)
                 alert.addAction(no)
                 topView.present(alert, animated: true)
@@ -167,6 +165,7 @@ class WindowManager: NSObject {
         profile.contentMode = .scaleAspectFit
         profile.layer.cornerRadius = headerHeight / 2
         profile.clipsToBounds = true
+        profile.tag = 996
  
         let titleLabel = UILabel(frame: CGRect(x: 6, y: 0, width: headerWidth, height: headerHeight))
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -203,6 +202,12 @@ class WindowManager: NSObject {
                     vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
                 } else {
                     vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = .gray
+                }
+            }
+            
+            if let newImage = SessionManager.shared.changedFacilityProfile {
+                if let profileButton = vc.navigationItem.titleView?.viewWithTag(996) as? UIButton {
+                    profileButton.setImage(newImage, for: .normal)
                 }
             }
         }

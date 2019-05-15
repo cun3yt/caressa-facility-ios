@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SessionManager: NSObject {
     
@@ -36,4 +37,6 @@ class SessionManager: NSObject {
         }
     }
     public var temporaryProfile: TemporaryProfile?
+    public var residentsCache: [Resident] = []
+    public var changedFacilityProfile: UIImage?
 }

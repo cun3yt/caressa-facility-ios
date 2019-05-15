@@ -24,11 +24,15 @@ class ImageManager: NSObject {
     
     func downloadImage(suffix: String?, view: UIImageView, width: CGFloat? = nil, height: CGFloat? = nil, completion: (() -> Void)? = nil) {
         
-        let indicator = UIActivityIndicatorView(style: .gray)
-        indicator.frame.origin = CGPoint(x: view.frame.midX - (indicator.frame.width / 2), y: view.frame.midY - (indicator.frame.height / 2))
-        view.addSubview(indicator)
-        indicator.bringSubviewToFront(view)
-        indicator.startAnimating()
+        if view.viewWithTag(997) == nil {
+            let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            indicator.color = #colorLiteral(red: 0.3343098164, green: 0.5628555417, blue: 0.8677328229, alpha: 1)
+            indicator.tag = 997
+            indicator.frame.origin = CGPoint(x: view.frame.midX-30, y: view.frame.midY-30)
+            view.addSubview(indicator)
+            indicator.bringSubviewToFront(view)
+            indicator.startAnimating()
+        }
         view.image = UIImage(named: "emptyPhoto")
         
         if let suffix = suffix {
@@ -38,7 +42,7 @@ class ImageManager: NSObject {
                     
                     DispatchQueue.main.async {
                         view.image = cachedImage
-                        indicator.removeFromSuperview()
+                        view.viewWithTag(997)?.removeFromSuperview()
                         completion?()
                     }
                     
@@ -50,7 +54,7 @@ class ImageManager: NSObject {
                         guard let image = UIImage(data: data!) else {
                             DispatchQueue.main.async {
                                 view.image = #imageLiteral(resourceName: "default_profile.jpg")
-                                indicator.removeFromSuperview()
+                                view.viewWithTag(997)?.removeFromSuperview()
                             }
                             return
                         }
@@ -58,7 +62,7 @@ class ImageManager: NSObject {
                         self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
                         
                         DispatchQueue.main.async {
-                            indicator.removeFromSuperview()
+                            view.viewWithTag(997)?.removeFromSuperview()
                             view.image = image
                             completion?()
                         }

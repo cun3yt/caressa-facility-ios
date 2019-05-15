@@ -30,7 +30,7 @@ class MessageThreadCell: UITableViewCell {
     func setup(message: MessageThreadResult) {
         lblName.text = "\(message.messageFrom.firstName) \(message.messageFrom.lastName)"
         lblContent.text = message.content.details
-        lblTime.text = DateManager("d/M/yy HH:mm a").string(date: message.time)
+        lblTime.text = DateManager().string(date: message.time) //("d/M/yy HH:mm a")
         lblReply.text = message.reply //message.reply != nil ? "Replied \(DateManager("d/M/yy HH:mm a").string(date: message.reply!.time))" : "No Reply Yet"
         lblReplyTo.text = nil //message.reply != nil ? "Yes" : ""
         lblType.text = message.messageType

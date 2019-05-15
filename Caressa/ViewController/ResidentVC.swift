@@ -8,12 +8,14 @@
 
 import UIKit
 
-class ResidentVC: UIViewController {
+class ResidentVC: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var buttonMorningStatus: UIBarButtonItem!
     
     private var residents: [Resident] = []
     private var ivFacility: UIButton!
+    private var appDelegate = (UIApplication.shared.delegate as! AppDelegate)
     
     //private var pusher = PusherManager()
     
@@ -24,17 +26,23 @@ class ResidentVC: UIViewController {
         
         ivFacility = WindowManager.setup(vc: self, title: "Residents")
         
-        PusherManager().delegate = self
-        
         setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(pushControl), name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+        pushControl()
+        
         checkChangeProfilePage()
         if SessionManager.shared.refreshRequired {
             refreshResidentList()
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -48,10 +56,20 @@ class ResidentVC: UIViewController {
     }
     
     func setup() {
+        buttonMorningStatus.isEnabled = false
+        buttonMorningStatus.tintColor = .clear
         WebAPI.shared.get(APIConst.facility) { (response: FacilityResponse) in
             SessionManager.shared.facility = response
 
             DispatchQueue.main.async {
+                self.appDelegate.checkinChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.checkIn.channel)
+                self.appDelegate.deviceStatusChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.deviceStatus.channel)
+                
+                PusherManager().delegate = self
+                
+                self.buttonMorningStatus.isEnabled = response.featureFlags.morningCheckIn
+                self.buttonMorningStatus.tintColor = self.buttonMorningStatus.isEnabled ? .white : .clear
+                
                 ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
 
                 let cnt = DBManager.shared.getUnreadMessageCount()
@@ -69,6 +87,7 @@ class ResidentVC: UIViewController {
     func refreshResidentList() {
         WebAPI.shared.get(APIConst.residents) { (response: [Resident]) in
             self.residents = response
+            SessionManager.shared.residentsCache = response
             SessionManager.shared.refreshRequired = false
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -81,6 +100,19 @@ class ResidentVC: UIViewController {
             let inx = residents.firstIndex(where: {$0.id == tempImage.id}),
             let cell = tableView.cellForRow(at: IndexPath(row: inx, section: 0)) as? ResidentCell {
             cell.ivThumb.image = tempImage.image
+        }
+    }
+    
+    @objc func pushControl() {
+        if let param = pushParameter {
+            pushParameter = nil
+            if param == "morning_status" {
+                performSegue(withIdentifier: "morningStatusSegue", sender: nil)
+            } else {
+                if let res = SessionManager.shared.residentsCache.first(where: {String($0.id) == param}) {
+                    WindowManager.pushToProfileVC(navController: self.navigationController!, resident: res)
+                }
+            }
         }
     }
 }

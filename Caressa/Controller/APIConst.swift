@@ -57,6 +57,9 @@ public class APIConst {
     public static let generateSignedURL         = "/generate-signed-url/"
     public static let generateSignedURLMultiple = "/generate_signed_url_multiple/"
     
+    // MARK: Settings
+    public static let facilityProfilePicture    = "/api/facilities/\(facilityId)/profile-picture/"
+    
     // MARK: Others
     public static let timeState                 = "/api/facility/\(facilityId)/time-state/"
 }

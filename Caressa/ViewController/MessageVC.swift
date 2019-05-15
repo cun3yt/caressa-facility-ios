@@ -9,19 +9,16 @@
 import UIKit
 import CoreData
 
-class MessageVC: UIViewController {
+class MessageVC: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     private var page: Int = 1
-//    private var pageCount: Int = 1
     private var nextPage: String?
     private var lastPage: Int = 0
     private var messages: [MessageResult] = []
     private var ivFacility: UIButton!
-    //private var allResidentId: Int?
     private var refreshControl = UIRefreshControl(frame: .zero)
-    
     private lazy var readMessages: [MessageRead] = []
     
     override func viewDidLoad() {
@@ -34,9 +31,15 @@ class MessageVC: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(pushControl), name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+        pushControl()
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+        NotificationCenter.default.removeObserver(self)
         if AppDelegate.audioPlayer?.timeControlStatus == .playing {
             AppDelegate.audioPlayer?.pause()
             AppDelegate.audioPlayer = nil
@@ -59,7 +62,11 @@ class MessageVC: UIViewController {
     @objc private func setup() {
         var url_: String? = APIConst.messages + String(page)
         if page > 1 { url_ = nextPage }
-        guard let url = url_ else { return }
+        
+        guard let url = url_ else {
+            self.refreshControl.endRefreshing()
+            return
+        }
         
         do {
             readMessages = try DBManager.shared.context.fetch(MessageRead.fetchRequest())
@@ -96,15 +103,9 @@ class MessageVC: UIViewController {
                     self.messages += results
                 }
                 
-//                self.allResidentId = results.first(where: {
-//                    switch $0.resident {
-//                    case .string?: return true
-//                    default: return false
-//                    }})?.id
             }
             self.lastPage = self.page
             self.nextPage = response.next
-            //self.pageCount = (response.count ?? 1) / (response.results?.count ?? 1)
             
             DispatchQueue.main.async {
                 let cnt = self.messages.filter({$0.read != true}).count
@@ -129,6 +130,14 @@ class MessageVC: UIViewController {
         DispatchQueue.main.async {
             let cnt = self.messages.filter({$0.read != true}).count
             self.tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
+        }
+    }
+    
+    @objc func pushControl() {
+        if let param = pushParameter {
+            if let res = SessionManager.shared.residentsCache.first(where: {String($0.id) == param }) {
+                WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: res)
+            }
         }
     }
 }

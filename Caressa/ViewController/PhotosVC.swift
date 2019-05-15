@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PhotosVC: UIViewController {
+class PhotosVC: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -34,6 +34,17 @@ class PhotosVC: UIViewController {
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
         
         setup(clear: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(pushControl), name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+        pushControl()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -99,6 +110,15 @@ class PhotosVC: UIViewController {
                         }
                     }
                 })
+            }
+        }
+    }
+    
+    @objc func pushControl() {
+        if let param = self.pushParameter {
+            self.pushParameter = nil
+            if let index = self.photoDays.firstIndex(where: {$0.day.date == param}) {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: index), at: .top, animated: true)
             }
         }
     }

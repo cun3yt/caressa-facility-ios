@@ -215,11 +215,12 @@ Login</string>
                             <inset key="imageInsets" minX="0.0" minY="-6" maxX="0.0" maxY="6"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="Oti-fX-EXT" kind="show" id="cop-iZ-vMv"/>
+                                <segue destination="Oti-fX-EXT" kind="show" identifier="morningStatusSegue" id="cop-iZ-vMv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="buttonMorningStatus" destination="cGe-v2-dzo" id="PhK-p6-Hbd"/>
                         <outlet property="tableView" destination="hpA-BQ-n4L" id="8kU-L0-LTF"/>
                     </connections>
                 </viewController>
@@ -230,7 +231,7 @@ Login</string>
         <!--Messages-->
         <scene sceneID="inA-0P-Wbo">
             <objects>
-                <viewController id="8UF-7s-Ekg" customClass="MessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MessagesVC" id="8UF-7s-Ekg" customClass="MessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rFb-b2-szW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -274,7 +275,7 @@ Login</string>
         <!--Send Message-->
         <scene sceneID="Npe-ad-7NQ">
             <objects>
-                <viewController id="bMl-B1-0X4" customClass="NewMessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewMessageVC" id="bMl-B1-0X4" customClass="NewMessageVC" customModule="Caressa" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hTY-pp-U6W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1176,6 +1177,12 @@ during check-in hours</string>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnCallCaregiver" destination="zb0-wD-fQY" id="NZQ-w9-ED7"/>
+                        <outlet property="btnCallFamily" destination="uaf-7K-T2o" id="c1P-VU-IlX"/>
+                        <outlet property="btnCallUser" destination="IoK-yI-Xh8" id="RN7-eW-7eP"/>
+                        <outlet property="btnMessageCaregiver" destination="Snd-h2-Lv6" id="dzX-9U-20n"/>
+                        <outlet property="btnMessageFamily" destination="0TH-Ez-Bi8" id="lft-Kw-CMF"/>
+                        <outlet property="btnMessageUser" destination="qn7-H2-SOa" id="4kB-iD-9Vl"/>
                         <outlet property="ivProfile" destination="8hw-Sj-vJW" id="6W8-gM-gXH"/>
                         <outlet property="lblBirthday" destination="BHd-hZ-sQL" id="JcS-3i-ej0"/>
                         <outlet property="lblCaretaker" destination="EbL-Ru-ZKK" id="VuM-YP-ceE"/>
@@ -1189,7 +1196,7 @@ during check-in hours</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yE-QT-2Ah" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1924.6376811594205" y="776.78571428571422"/>
+            <point key="canvasLocation" x="1817" y="777"/>
         </scene>
         <!--Item-->
         <scene sceneID="r11-sa-d0B">

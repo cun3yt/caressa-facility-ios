@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     let beamsClient = PushNotifications.shared
     var pusher: Pusher!
-    var pusherChannel: PusherChannel!
+    var checkinChannel: PusherChannel!
+    var deviceStatusChannel: PusherChannel!
     var serverTimeState: TimeState?
     
 
@@ -47,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let options = PusherClientOptions(host: .cluster("us2"))
         pusher = Pusher(key: "c984c4342b09e06c02a0", options: options)
         pusher.connect()
-        pusherChannel = pusher.subscribe("my-channel")
+        //pusherChannel = pusher.subscribe("my-channel")
         
         getServerDateTime()
         Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (_) in
@@ -91,6 +92,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     {
         completionHandler([.alert, .badge, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        //print(userInfo)
+        
+        if let aps = userInfo["aps"] as? [String: Any],
+            let payload = aps["payload"] as? [String: Any],
+            let type = payload["type"] as? String {
+            
+            let value = payload["value"] as? String
+            
+            switch type {
+            case "residents"     : pushTo(tab: 0, parameter: nil)
+            case "messages"      : pushTo(tab: 1, parameter: nil)
+            case "calendar"      : pushTo(tab: 2, parameter: value)
+            case "photos"        : pushTo(tab: 3, parameter: value)
+            case "settings"      : pushTo(tab: 4, parameter: nil)
+            case "message_thread": pushTo(tab: 1, parameter: value)
+            case "profile"       : pushTo(tab: 0, parameter: value)
+            case "morning_status": pushTo(tab: 0, parameter: "morning_status")
+            default: break
+            }
+            
+        }
+        completionHandler()
     }
 
     // MARK: - Core Data stack
@@ -141,6 +169,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         WebAPI.shared.get(APIConst.timeState) { (response: TimeState) in
             WebAPI.shared.disableActivity = false
             self.serverTimeState = response
+        }
+    }
+    
+    // MARK: PUSH TO ...
+    func pushTo(tab index: Int, parameter: String?) {
+//        if UIApplication.shared.applicationState == .inactive || UIApplication.shared.applicationState == .background {
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+//                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                let proclamationDetailVC = mainStoryboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessageVC
+//                let tabBarC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarVC") as! UITabBarController
+//                self.window = UIWindow(frame: UIScreen.main.bounds)
+//
+//                self.window?.rootViewController = tabBarC
+//                tabBarC.selectedIndex = 1
+//                (tabBarC.selectedViewController as? UINavigationController)?.pushViewController(proclamationDetailVC, animated: false)
+//                self.window?.makeKeyAndVisible()
+//            }
+//        } else {
+//            //WindowManager.pushToTabBarVC()
+            if let tabBarC = self.window?.rootViewController as? UITabBarController {
+                tabBarC.selectedIndex = index
+                if let baseNC = tabBarC.selectedViewController as? UINavigationController,
+                    let base = baseNC.viewControllers.first as? BaseViewController {
+                    base.pushParameter = parameter
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+                    return
+                }
+                if let base = tabBarC.selectedViewController as? BaseViewController {
+                    base.pushParameter = parameter
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+                    return
+                }
+            }
         }
     }
 }

@@ -17,15 +17,18 @@ class MessageThreadVC: UIViewController {
     private var messages: [MessageThreadResult] = []
     private var ivFacility: UIButton!
     private lazy var readMessages: [MessageThreadRead] = []
+    private var refreshControl = UIRefreshControl(frame: .zero)
+    private var emptyList: Bool = false
 
     public var resident: Resident?
     public var messageThreadUrl: String?
-    //public var allResidentId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MessageThreadCell", bundle: nil), forCellReuseIdentifier: "cell")
-
+        refreshControl.addTarget(self, action: #selector(setup), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
         if let resident = self.resident {
             self.ivFacility = WindowManager.setup(vc: self, title: "\(resident.firstName) \(resident.lastName)", deviceStatus: resident.deviceStatus?.status)
             ImageManager.shared.downloadImage(url: resident.profilePicture, view: self.ivFacility)
@@ -68,10 +71,12 @@ class MessageThreadVC: UIViewController {
         }
     }
     
-    func setup() {
+    @objc func setup() {
         title = nil
         
         guard let url = messageThreadUrl else {
+            self.refreshControl.endRefreshing()
+            self.emptyList = self.messages.isEmpty
             self.tableView.reloadData()
             return
         }
@@ -124,7 +129,9 @@ class MessageThreadVC: UIViewController {
                     
                     self.messages = results
                 }
+                self.emptyList = self.messages.isEmpty
                 DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
                     self.tableView.reloadData()
                 }
             })
@@ -135,7 +142,7 @@ class MessageThreadVC: UIViewController {
 
 extension MessageThreadVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+        if emptyList {
             self.tableView.isHidden = self.messages.count == 0
             self.noMessageView.isHidden = !tableView.isHidden
         }

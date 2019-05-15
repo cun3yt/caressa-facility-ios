@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarVC: UIViewController {
+class CalendarVC: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -41,7 +41,14 @@ class CalendarVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(pushControl), name: NSNotification.Name(rawValue: "pushControl"), object: nil)
+        pushControl()
         cacheControl()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -66,7 +73,11 @@ class CalendarVC: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
-                self.todayAction()
+                if self.pushParameter != nil {
+                    self.pushControl()
+                } else {
+                    self.todayAction()
+                }
             }
         }
     }
@@ -84,7 +95,18 @@ class CalendarVC: UIViewController {
             self.refreshControl.endRefreshing()
         }
     }
-    
+
+    @objc func pushControl() {
+        if let param = self.pushParameter {
+            self.pushParameter = nil
+            if let date = DateManager("yyyy-MM-dd").date(string: param) {
+                let dateS = DateManager("EEEE, MMMM dd, yyyy", useUTC: true).string(date: date)
+                if let index = self.calendar.firstIndex(where: {$0.date == dateS}) {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: index), at: .top, animated: true)
+                }
+            }
+        }
+    }
 }
 
 extension CalendarVC: UITableViewDataSource {

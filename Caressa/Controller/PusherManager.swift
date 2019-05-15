@@ -16,10 +16,8 @@ protocol PusherManagerDelegate {
 
 class PusherManager: NSObject {
     
-    //static let shared = PusherManager()
-    
-    //private var pusher: Pusher = (UIApplication.shared.delegate as? AppDelegate)!.pusher
-    private var channel: PusherChannel!
+    private var deviceStatusChannel: PusherChannel!
+    private var checkinChannel: PusherChannel!
     
     public var delegate: PusherManagerDelegate? {
         didSet {
@@ -29,27 +27,31 @@ class PusherManager: NSObject {
     
     override init() {
         super.init()
-        channel = (UIApplication.shared.delegate as? AppDelegate)!.pusherChannel
+        checkinChannel = (UIApplication.shared.delegate as? AppDelegate)!.checkinChannel
+        deviceStatusChannel = (UIApplication.shared.delegate as? AppDelegate)!.deviceStatusChannel
     }
     
     func bind() {
-        let _ = channel.bind(eventName: "DeviceStatusEvent", callback: { (dic: Any?) -> Void in
-            if let dic = dic as? [String : AnyObject],
-                let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
-                let deviceStatus = try? JSONManager().decoder.decode(DeviceStatusEvent.self, from: data) {
-                
-                self.delegate?.subscribed(deviceStatus: deviceStatus)
-            }
-        })
+        if let event = SessionManager.shared.facility?.realTimeCommunicationChannels.deviceStatus.event {
+            let _ = deviceStatusChannel.bind(eventName: event, callback: { (dic: Any?) -> Void in
+                if let dic = dic as? [String : AnyObject],
+                    let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
+                    let deviceStatus = try? JSONManager().decoder.decode(DeviceStatusEvent.self, from: data) {
+                    
+                    self.delegate?.subscribed(deviceStatus: deviceStatus)
+                }
+            })
+        }
         
-        
-        let _ = channel.bind(eventName: "CheckInEvent", callback: { (dic: Any?) -> Void in
-            if let dic = dic as? [String : AnyObject],
-                let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
-                let checkin = try? JSONManager().decoder.decode(CheckInEvent.self, from: data) {
-                
-                self.delegate?.subscribed(checkIn: checkin)
-            }
-        })
+        if let event = SessionManager.shared.facility?.realTimeCommunicationChannels.checkIn.event {
+            let _ = checkinChannel.bind(eventName: event, callback: { (dic: Any?) -> Void in
+                if let dic = dic as? [String : AnyObject],
+                    let data = try? JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted),
+                    let checkin = try? JSONManager().decoder.decode(CheckInEvent.self, from: data) {
+                    
+                    self.delegate?.subscribed(checkIn: checkin)
+                }
+            })
+        }
     }
 }
