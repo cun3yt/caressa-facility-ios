@@ -16,6 +16,11 @@ class PhotoCell: UICollectionViewCell {
         ImageManager.shared.downloadImage(suffix: url, view: ivImage)
     }
     
+    override func prepareForReuse() {
+        //super.prepareForReuse()
+        ivImage.image = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

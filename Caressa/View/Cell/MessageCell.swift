@@ -41,7 +41,7 @@ class MessageCell: UITableViewCell {
                     let isOnline = devStat.status.isOnline {
                     deviceStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
                 } else {
-                    deviceStatus.backgroundColor = .gray
+                    deviceStatus.backgroundColor = .lightGray
                     ivImage.alpha = 0.5
                 }
             }

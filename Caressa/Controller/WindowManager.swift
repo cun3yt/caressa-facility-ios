@@ -184,7 +184,7 @@ class WindowManager: NSObject {
             if let isOnline = stat.isOnline {
                 status.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
             } else {
-                status.backgroundColor = .gray
+                status.backgroundColor = .lightGray
             }
             status.tag = 999
             titleView.addSubview(status)
@@ -201,7 +201,7 @@ class WindowManager: NSObject {
                 if let isOnline = stat.isOnline {
                     vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
                 } else {
-                    vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = .gray
+                    vc.navigationItem.titleView?.viewWithTag(999)?.backgroundColor = .lightGray
                 }
             }
             

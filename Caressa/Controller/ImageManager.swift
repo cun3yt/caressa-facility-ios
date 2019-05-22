@@ -22,35 +22,38 @@ class ImageManager: NSObject {
     let mediaURL = "" //APIConst.WebBase + "/public/images/proclamation/"
     let imageCache = NSCache<NSString, UIImage>()
     
+    // MARK: UIImageView
     func downloadImage(suffix: String?, view: UIImageView, width: CGFloat? = nil, height: CGFloat? = nil, completion: (() -> Void)? = nil) {
         
-        if view.viewWithTag(997) == nil {
-            let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-            indicator.color = #colorLiteral(red: 0.3343098164, green: 0.5628555417, blue: 0.8677328229, alpha: 1)
-            indicator.tag = 997
-            indicator.frame.origin = CGPoint(x: view.frame.midX-30, y: view.frame.midY-30)
-            view.addSubview(indicator)
-            indicator.bringSubviewToFront(view)
-            indicator.startAnimating()
-        }
-        view.image = UIImage(named: "emptyPhoto")
+        view.image = nil //UIImage(named: "emptyPhoto")
         
         if let suffix = suffix {
             
+            if view.viewWithTag(997) == nil {
+                let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+                indicator.color = #colorLiteral(red: 0.3343098164, green: 0.5628555417, blue: 0.8677328229, alpha: 1)
+                indicator.tag = 997
+                indicator.frame.origin = CGPoint(x: view.frame.midX-30, y: view.frame.midY-30)
+                view.addSubview(indicator)
+                indicator.bringSubviewToFront(view)
+                indicator.startAnimating()
+            }
+            
             if let url = URL(string: "\(mediaURL)\(suffix)") {
                 if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-                    
+
                     DispatchQueue.main.async {
                         view.image = cachedImage
                         view.viewWithTag(997)?.removeFromSuperview()
                         completion?()
                     }
-                    
+
                 } else {
                     
                     URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
                         guard error == nil else { return }
                         guard data != nil else { return }
+                        
                         guard let image = UIImage(data: data!) else {
                             DispatchQueue.main.async {
                                 view.image = #imageLiteral(resourceName: "default_profile.jpg")

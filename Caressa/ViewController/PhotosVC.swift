@@ -17,8 +17,11 @@ class PhotosVC: BaseViewController {
     private var pageCount: Int = 1
     private var nextPage: String?
     private var ivFacility: UIButton!
-    private var photoDays: [PhotoGalleryDay] = []
-    private var photos: [[Photo]] = []
+    //private var photoDays: [PhotoGalleryDay] = []
+    //private var photos: [[Photo]] = []
+    
+    private var photos = myPhotoGallery(dates: [])
+    
     private var refreshControl = UIRefreshControl(frame: .zero)
     
     private var moreSections: [Int] = []
@@ -74,50 +77,84 @@ class PhotosVC: BaseViewController {
         guard let url = url_ else { return }
         
         if cache {
-            self.photoDays.removeAll()
-            self.photos.removeAll()
+            //self.photoDays.removeAll()
+            //self.photos.removeAll()
+            self.photos.dates = []
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
         
+        let queue = DispatchGroup()
+        queue.enter()
         WebAPI.shared.get(url) { (result: PhotoGallery) in
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-            }
-            let startPoint = self.photoDays.count
-            if self.nextPage != nil {
-                self.photoDays = self.photoDays + result.results
-            } else {
-                self.photoDays = result.results
-            }
+            
             self.pageCount = result.count / result.results.count
             self.nextPage = result.next
             
-            //self.photoDays.insert(PhotoGalleryDay(day: Day(date: "2019-04-10", url: "https://caressa.herokuapp.com/api/photo-galleries/1/days/2019-04-10/")), at: 0)
+            self.photos.dates = result.results.map({myPhotos(date: $0.day.date, urls: [])})
             
-            //for i in self.photoDays {
-            for i in startPoint..<self.photoDays.count {
-                let p = self.photoDays[i]
-                
-                WebAPI.shared.get(String(format: APIConst.photoGalleryDates, p.day.date), completion: { (result2: PhotoDay) in
+            for p in result.results {
+                queue.enter()
+                WebAPI.shared.get(p.day.url, completion: { (day: PhotoDay) in
                     
-                    self.photos.append(result2.results)
-                    
-                    if self.photoDays.count == self.photos.count {
-                        DispatchQueue.main.async {
-                            self.collectionView.reloadData()
-                        }
+                    if let dateIndex = self.photos.dates.firstIndex(where: {$0.date == p.day.date}) {
+                        self.photos.dates[dateIndex].urls = day.results.map({$0.url})
                     }
+                    
+                    //self.photos.dates.append(myPhotos(date: p.day.date, urls: day.results.map({$0.url})))
+                    
+                    queue.leave()
                 })
+                
             }
+            queue.leave()
         }
+        
+        queue.notify(queue: .main) {
+            //DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.refreshControl.endRefreshing()
+            //}
+        }
+        
+//        WebAPI.shared.get(url) { (result: PhotoGallery) in
+//            DispatchQueue.main.async {
+//                self.refreshControl.endRefreshing()
+//            }
+//            let startPoint = self.photoDays.count
+//            if self.nextPage != nil {
+//                self.photoDays = self.photoDays + result.results
+//            } else {
+//                self.photoDays = result.results
+//            }
+//            self.pageCount = result.count / result.results.count
+//            self.nextPage = result.next
+//
+//            //self.photoDays.insert(PhotoGalleryDay(day: Day(date: "2019-04-10", url: "https://caressa.herokuapp.com/api/photo-galleries/1/days/2019-04-10/")), at: 0)
+//
+//            //for i in self.photoDays {
+//            for i in startPoint..<self.photoDays.count {
+//                let p = self.photoDays[i]
+//
+//                WebAPI.shared.get(String(format: APIConst.photoGalleryDates, p.day.date), completion: { (result2: PhotoDay) in
+//
+//                    self.photos.append(result2.results)
+//
+//                    if self.photoDays.count == self.photos.count {
+//                        DispatchQueue.main.async {
+//                            self.collectionView.reloadData()
+//                        }
+//                    }
+//                })
+//            }
+//        }
     }
     
     @objc func pushControl() {
         if let param = self.pushParameter {
             self.pushParameter = nil
-            if let index = self.photoDays.firstIndex(where: {$0.day.date == param}) {
+            if let index = self.photos.dates.firstIndex(where: {$0.date == param}) {
                 self.collectionView.scrollToItem(at: IndexPath(row: 0, section: index), at: .top, animated: true)
             }
         }
@@ -185,35 +222,38 @@ class PhotosVC: BaseViewController {
 
 extension PhotosVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return photoDays.count
+        return photos.dates.count //photoDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let spc = photos[section].count
+        let spc = photos.dates[section].urls.count //photos[section].count
         return (moreSections.contains(section) ? spc : (spc > showPhotoCount ? showPhotoCount : spc))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        cell.setup(url:  photos[indexPath.section][indexPath.row].url)
+        //cell.setup(url: photos[indexPath.section][indexPath.row].url)
+        cell.setup(url: photos.dates[indexPath.section].urls[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! PhotoHeaderView
-            let date = DateManager("yyyy-MM-dd").date(string: photoDays[indexPath.section].day.date)!
+            //let date = DateManager("yyyy-MM-dd").date(string: photoDays[indexPath.section].day.date)!
+            let date = DateManager("yyyy-MM-dd").date(string: photos.dates[indexPath.section].date)!
             header.lblTitle.text = DateManager("MMMM dd, yyyy").string(date: date)
             return header
         } else
             if kind == UICollectionView.elementKindSectionFooter {
                 let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath) as! PhotoFooterView
-                let more = photos[indexPath.section].count - showPhotoCount
+                //let more = photos[indexPath.section].count - showPhotoCount
+                let more = photos.dates[indexPath.section].urls.count - showPhotoCount
                 footer.btnMore.setTitle("\(more) more...", for: .normal)
                 footer.btnMore.tag = indexPath.section
                 footer.btnMore.addTarget(self, action: #selector(btnMore(_:)), for: .touchUpInside)
                 
-                if indexPath.section == photoDays.count - 1 {
+                if indexPath.section == photos.dates.count - 1 {
                     footer.tag = 998
                 }
                 
@@ -244,7 +284,8 @@ extension PhotosVC: UICollectionViewDataSource {
 
 extension PhotosVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let images = photos[indexPath.section].map({$0.url})
+        //let images = photos[indexPath.section].map({$0.url})
+        let images = photos.dates[indexPath.section].urls
         let imageSlider = ZoomableImageSlider(images: images, currentIndex: indexPath.row, placeHolderImage: nil)
         present(imageSlider, animated: true)
     }
@@ -258,7 +299,8 @@ extension PhotosVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let width = collectionView.bounds.width
-        return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos[section].count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
+        //return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos[section].count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
+        return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos.dates[section].urls.count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
     }
 }
 

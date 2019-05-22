@@ -57,15 +57,15 @@ class MorningStatusVC: UIViewController {
 
 extension MorningStatusVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return morningChecks == nil ? 0 : 3
+        return morningChecks == nil ? 0 : 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return morningChecks.notified.residents.count
         case 1: return morningChecks.pending.residents.count
-        case 2: return morningChecks.selfChecked.residents.count + morningChecks.staffChecked.residents.count
-        //case 3: return morningChecks.staffChecked.residents.count
+        case 2: return morningChecks.selfChecked.residents.count
+        case 3: return morningChecks.staffChecked.residents.count
         default: return 0
         }
     }
@@ -76,13 +76,8 @@ extension MorningStatusVC: UITableViewDataSource {
         switch indexPath.section {
         case 0: resident = morningChecks.notified.residents[indexPath.row]
         case 1: resident = morningChecks.pending.residents[indexPath.row]
-        case 2:
-            if morningChecks.selfChecked.residents.count <= indexPath.row {
-                resident = morningChecks.staffChecked.residents[indexPath.row]
-            } else {
-                resident = morningChecks.selfChecked.residents[indexPath.row]
-            }
-        //case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
+        case 2: resident = morningChecks.selfChecked.residents[indexPath.row]
+        case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
         default: break
         }
         cell.setup(resident: resident)
@@ -144,17 +139,15 @@ extension MorningStatusVC: UITableViewDelegate {
         switch indexPath.section {
         case 0: resident = morningChecks.notified.residents[indexPath.row]
         case 1: resident = morningChecks.pending.residents[indexPath.row]
-        case 2:
-            if morningChecks.selfChecked.residents.count <= indexPath.row {
-                resident = morningChecks.staffChecked.residents[indexPath.row]
-            } else {
-                resident = morningChecks.selfChecked.residents[indexPath.row]
-            }
-            //resident = morningChecks.selfChecked.residents[indexPath.row]
-        //case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
+        case 2: resident = morningChecks.selfChecked.residents[indexPath.row]
+        case 3: resident = morningChecks.staffChecked.residents[indexPath.row]
         default: break
         }
         WindowManager.pushToProfileVC(navController: self.navigationController!, resident: resident)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 3 ? 0 : 28
     }
     
     func changedStatus(checked: Bool, resident: Resident) {
@@ -172,7 +165,7 @@ extension MorningStatusVC: UITableViewDelegate {
                 morningChecks.staffChecked.residents.append(removed)
             }
         }
-        self.tableView.reloadSections(IndexSet(arrayLiteral: 1,2), with: .automatic)
+        self.tableView.reloadSections(IndexSet(arrayLiteral: 1,3), with: .automatic)
     }
 }
 

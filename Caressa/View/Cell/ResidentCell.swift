@@ -31,14 +31,23 @@ class ResidentCell: UITableViewCell  {
         self.resident = resident
         
         vStatus.backgroundColor = .clear
-        self.contentView.alpha = 1.0
+        //self.contentView.alpha = 1.0
+        ivThumb.alpha = 1.0
+        lblName.alpha = 1.0
+        lblRoom.alpha = 1.0
+        btnMessage.alpha = 1.0
+        lblDetail.alpha = 1.0
+        
         if let devStat = resident.deviceStatus {
             if devStat.isThereDevice,
                 let isOnline = devStat.status.isOnline {
                 vStatus.backgroundColor = isOnline ? #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) : #colorLiteral(red: 1, green: 0.1564272642, blue: 0.18738392, alpha: 1)
             } else {
-                vStatus.backgroundColor = .gray
-                self.contentView.alpha = 0.5
+                vStatus.backgroundColor = .lightGray
+                ivThumb.alpha = 0.5
+                lblName.alpha = ivThumb.alpha
+                lblRoom.alpha = ivThumb.alpha
+                lblDetail.alpha = ivThumb.alpha
             }
         }
         

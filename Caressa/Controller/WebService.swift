@@ -41,7 +41,7 @@ final public class WebAPI: NSObject {
         }
         guard let url = urlOpt else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: type == "PUT" ? 60 : 10)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: type == "PUT" ? 60 : 20)
         urlRequest.httpMethod = type
         
         if let data = parameter {
@@ -126,7 +126,7 @@ final public class WebAPI: NSObject {
         
         //guard let url = URL(string: "\(APIConst.baseURL)\(method)") else { return }
         
-        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
+        var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20)
         urlRequest.httpMethod = type
         
         let token = SessionManager.shared.token ?? ""

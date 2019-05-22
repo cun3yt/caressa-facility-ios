@@ -206,10 +206,10 @@
 			children = (
 				BD553110224660810062F894 /* ResidentCell.xib */,
 				BD55310F224660810062F894 /* ResidentCell.swift */,
-				BD55311A2247911D0062F894 /* MessageCell.swift */,
 				BD55311B2247911D0062F894 /* MessageCell.xib */,
-				BD14E661224F6984001B12BE /* MessageThreadCell.swift */,
+				BD55311A2247911D0062F894 /* MessageCell.swift */,
 				BD14E662224F6984001B12BE /* MessageThreadCell.xib */,
+				BD14E661224F6984001B12BE /* MessageThreadCell.swift */,
 				BD145CA82258B19A0040BAAC /* CalendarCell.swift */,
 				BD145CA92258B19A0040BAAC /* CalendarCell.xib */,
 				BD145CAE2258C61C0040BAAC /* PhotoCell.swift */,

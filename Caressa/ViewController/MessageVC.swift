@@ -135,6 +135,7 @@ class MessageVC: BaseViewController {
     
     @objc func pushControl() {
         if let param = pushParameter {
+            pushParameter = nil
             if let res = SessionManager.shared.residentsCache.first(where: {String($0.id) == param }) {
                 WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: res)
             }

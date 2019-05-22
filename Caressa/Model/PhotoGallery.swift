@@ -34,3 +34,13 @@ struct PhotoDay: Codable {
 struct Photo: Codable {
     let url: String
 }
+
+// Customized
+struct myPhotoGallery {
+    var dates: [myPhotos]
+}
+
+struct myPhotos {
+    var date: String
+    var urls: [String]
+}
