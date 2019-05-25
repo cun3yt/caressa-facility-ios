@@ -32,6 +32,7 @@ struct PhotoDay: Codable {
 }
 
 struct Photo: Codable {
+    let id: Int
     let url: String
 }
 
@@ -42,5 +43,5 @@ struct myPhotoGallery {
 
 struct myPhotos {
     var date: String
-    var urls: [String]
+    var urls: [Photo]
 }

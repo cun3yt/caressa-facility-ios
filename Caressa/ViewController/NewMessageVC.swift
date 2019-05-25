@@ -35,6 +35,7 @@ class NewMessageVC: UIViewController {
     private let textViewPlaceholder = "Message..."
     
     public var to: Resident?
+    public var fromMessageThread = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,18 +157,39 @@ class NewMessageVC: UIViewController {
         
         var message = Message(format: .text, content: text)
         if let key = url {
-           message = Message(format: .audio, content: key)
+            message = Message(format: .audio, content: key)
         }
         
         let param = SendMessageRequest(to: receiver, messageType: messageType, message: message, requestReply: btnRequest.isSelected)
         
+        let oldTo = self.to
         WebAPI.shared.post(APIConst.message, parameter: param) { (response: SendMessageResponse) in
-            
             if let detail = response.detail {
                 WindowManager.showMessage(type: .error, message: detail)
             } else {
-                WindowManager.showMessage(type: .success, message: "Message Sent!")
                 DispatchQueue.main.async {
+                    if oldTo?.messageThreadURL.url != nil {
+                        if self.fromMessageThread {
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: oldTo)
+                        }
+                    } else {
+                        WebAPI.shared.get(APIConst.residents) { (response: [Resident]) in
+                            SessionManager.shared.residentsCache = response
+                            if let newTo = response.first(where: {$0.id==oldTo?.id}),
+                                let _ = newTo.messageThreadURL.url {
+                                DispatchQueue.main.async {
+                                    if self.fromMessageThread {
+                                        self.navigationController?.popViewController(animated: true)
+                                    } else {
+                                        WindowManager.pushToMessageThreadVC(navController: self.navigationController, resident: newTo)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     self.to = nil
                     self.ivProfile.image = nil
                     self.lblName.text = nil
@@ -182,7 +204,7 @@ class NewMessageVC: UIViewController {
                     self.endEditing()
                 }
             }
-            
+            WindowManager.showMessage(type: .success, message: "Message Sent!")
         }
     }
     

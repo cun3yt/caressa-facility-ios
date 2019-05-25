@@ -38,22 +38,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        //Defaults
+        if (UserSettings.shared.API_BASE ?? "").isEmpty             { UserSettings.shared.API_BASE = "https://caressa.herokuapp.com" }
+        if (UserSettings.shared.PUSHER_INSTANCE_ID ?? "").isEmpty   { UserSettings.shared.PUSHER_INSTANCE_ID = "e3b941ef-5a8f-4faa-ad87-baea465c28b6" }
+        if (UserSettings.shared.PUSHER_KEY ?? "").isEmpty           { UserSettings.shared.PUSHER_KEY = "c984c4342b09e06c02a0" }
+        if (UserSettings.shared.PUSHER_INTEREST_NAME ?? "").isEmpty { UserSettings.shared.PUSHER_INTEREST_NAME = "debug-facility" }
+        if (UserSettings.shared.PUSHER_CLUSTER ?? "").isEmpty       { UserSettings.shared.PUSHER_CLUSTER = "us2" }
+        
+        
         // Notification
-        self.beamsClient.start(instanceId: "e3b941ef-5a8f-4faa-ad87-baea465c28b6")
+        self.beamsClient.start(instanceId: UserSettings.shared.PUSHER_INSTANCE_ID!)
         self.beamsClient.registerForRemoteNotifications()
-        try? self.beamsClient.addDeviceInterest(interest: "debug-facility")
+        try? self.beamsClient.addDeviceInterest(interest: UserSettings.shared.PUSHER_INTEREST_NAME!)
         UNUserNotificationCenter.current().delegate = self
 
         //Real Time Channels
-        let options = PusherClientOptions(host: .cluster("us2"))
-        pusher = Pusher(key: "c984c4342b09e06c02a0", options: options)
+        let options = PusherClientOptions(host: .cluster(UserSettings.shared.PUSHER_CLUSTER!))
+        pusher = Pusher(key: UserSettings.shared.PUSHER_KEY!, options: options)
         pusher.connect()
-        //pusherChannel = pusher.subscribe("my-channel")
         
         getServerDateTime()
         Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (_) in
             self.getServerDateTime()
         }
+        
+        application.applicationIconBadgeNumber = 0
         
         return true
     }
@@ -97,7 +106,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
-        //print(userInfo)
         
         if let aps = userInfo["aps"] as? [String: Any],
             let payload = aps["payload"] as? [String: Any],
@@ -116,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             case "morning_status": pushTo(tab: 0, parameter: "morning_status")
             default: break
             }
-            
         }
         completionHandler()
     }
@@ -174,20 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // MARK: PUSH TO ...
     func pushTo(tab index: Int, parameter: String?) {
-//        if UIApplication.shared.applicationState == .inactive || UIApplication.shared.applicationState == .background {
-            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-//                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                let proclamationDetailVC = mainStoryboard.instantiateViewController(withIdentifier: "MessagesVC") as! MessageVC
-//                let tabBarC = mainStoryboard.instantiateViewController(withIdentifier: "TabBarVC") as! UITabBarController
-//                self.window = UIWindow(frame: UIScreen.main.bounds)
-//
-//                self.window?.rootViewController = tabBarC
-//                tabBarC.selectedIndex = 1
-//                (tabBarC.selectedViewController as? UINavigationController)?.pushViewController(proclamationDetailVC, animated: false)
-//                self.window?.makeKeyAndVisible()
-//            }
-//        } else {
-//            //WindowManager.pushToTabBarVC()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             if let tabBarC = self.window?.rootViewController as? UITabBarController {
                 tabBarC.selectedIndex = index
                 if let baseNC = tabBarC.selectedViewController as? UINavigationController,

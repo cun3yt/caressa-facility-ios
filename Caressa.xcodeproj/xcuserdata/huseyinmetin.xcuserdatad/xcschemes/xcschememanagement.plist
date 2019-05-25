@@ -4,15 +4,58 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Caressa copy.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
 		<key>Caressa.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
+		<key>CaressaDev.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>PusherExtension copy.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 		<key>PusherExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>17</integer>
+		</dict>
+		<key>PusherExtensionDev.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>BD948180225FDB9B004345AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD999F19224570DE00F7D1AB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDEC7B692299D4C7001BBBCD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDEC7BB92299D4CF001BBBCD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

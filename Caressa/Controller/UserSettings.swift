@@ -37,4 +37,28 @@ class UserSettings: NSObject {
         set { userDefaults.set(newValue, forKey: "password") }
     }
    
+    var API_BASE: String? {
+        get { return userDefaults.object(forKey: "API_BASE") as? String }
+        set { userDefaults.set(newValue, forKey: "API_BASE") }
+    }
+    
+    var PUSHER_INSTANCE_ID: String? {
+        get { return userDefaults.object(forKey: "PUSHER_INSTANCE_ID") as? String }
+        set { userDefaults.set(newValue, forKey: "PUSHER_INSTANCE_ID") }
+    }
+    
+    var PUSHER_KEY: String? {
+        get { return userDefaults.object(forKey: "PUSHER_KEY") as? String }
+        set { userDefaults.set(newValue, forKey: "PUSHER_KEY") }
+    }
+    
+    var PUSHER_INTEREST_NAME: String? {
+        get { return userDefaults.object(forKey: "PUSHER_INTEREST_NAME") as? String }
+        set { userDefaults.set(newValue, forKey: "PUSHER_INTEREST_NAME") }
+    }
+    
+    var PUSHER_CLUSTER: String? {
+        get { return userDefaults.object(forKey: "PUSHER_CLUSTER") as? String }
+        set { userDefaults.set(newValue, forKey: "PUSHER_CLUSTER") }
+    }
 }

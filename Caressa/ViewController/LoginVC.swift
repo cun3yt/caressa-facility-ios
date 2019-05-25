@@ -18,10 +18,22 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #if !DEV
+        navigationItem.rightBarButtonItems?.removeAll()
+        #endif
+        
         lblErrorMessage.isHidden = true
+        
+        prepareDynamics()
         
         if !(UserSettings.shared.accessToken ?? "").isEmpty {
             WindowManager.pushToTabBarVC()
+        }
+    }
+    
+    func prepareDynamics() {
+        if let api = UserSettings.shared.API_BASE {
+            APIConst.baseURL = api
         }
     }
 

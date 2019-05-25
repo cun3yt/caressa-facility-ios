@@ -58,29 +58,31 @@ class ResidentVC: BaseViewController {
     func setup() {
         buttonMorningStatus.isEnabled = false
         buttonMorningStatus.tintColor = .clear
-        WebAPI.shared.get(APIConst.facility) { (response: FacilityResponse) in
-            SessionManager.shared.facility = response
-
-            DispatchQueue.main.async {
-                self.appDelegate.checkinChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.checkIn.channel)
-                self.appDelegate.deviceStatusChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.deviceStatus.channel)
-                
-                PusherManager().delegate = self
-                
-                self.buttonMorningStatus.isEnabled = response.featureFlags.morningCheckIn
-                self.buttonMorningStatus.tintColor = self.buttonMorningStatus.isEnabled ? .white : .clear
-                
-                ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
-
-                let cnt = DBManager.shared.getUnreadMessageCount()
-                self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
-            }
-        }
         
         WebAPI.shared.get(APIConst.userMe) { (response: UserMe) in
             SessionManager.shared.activeUser = response
+            SessionManager.shared.facilityId = response.seniorLivingFacility
+            
+            
+            WebAPI.shared.get(APIConst.facility) { (response: FacilityResponse) in
+                SessionManager.shared.facility = response
+                
+                DispatchQueue.main.async {
+                    self.appDelegate.checkinChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.checkIn.channel)
+                    self.appDelegate.deviceStatusChannel = self.appDelegate.pusher.subscribe(response.realTimeCommunicationChannels.deviceStatus.channel)
+                    
+                    PusherManager().delegate = self
+                    
+                    self.buttonMorningStatus.isEnabled = response.featureFlags.morningCheckIn
+                    self.buttonMorningStatus.tintColor = self.buttonMorningStatus.isEnabled ? .white : .clear
+                    
+                    ImageManager.shared.downloadImage(url: response.profilePicture, view: self.ivFacility)
+                    
+                    let cnt = DBManager.shared.getUnreadMessageCount()
+                    self.tabBarController?.viewControllers?[1].tabBarItem.badgeValue = cnt > 0 ? "\(cnt)" : nil
+                }
+            }
         }
-        
         refreshResidentList()
     }
     

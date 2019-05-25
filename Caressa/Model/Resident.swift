@@ -14,7 +14,7 @@ class Resident: Codable {
     let lastName: String
     let roomNo: String
     var deviceStatus: DeviceStat?
-    let messageThreadURL: MessageThreadURL //MessageUnion?
+    var messageThreadURL: MessageThreadURL //MessageUnion?
     let profilePicture: String?
     var checkIn: CheckInURL?
     
@@ -65,7 +65,7 @@ struct CheckInInfo: Codable {
 }
 
 struct MessageThreadURL: Codable {
-    let url: String?
+    var url: String?
 }
 
 struct CheckInURL: Codable {

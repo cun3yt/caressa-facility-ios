@@ -11,6 +11,7 @@ import UIKit
 class PhotoCell: UICollectionViewCell {
 
     @IBOutlet weak var ivImage: UIImageView!
+    @IBOutlet weak var ivSelected: UIImageView!
     
     func setup(url: String) {
         ImageManager.shared.downloadImage(suffix: url, view: ivImage)
@@ -19,11 +20,21 @@ class PhotoCell: UICollectionViewCell {
     override func prepareForReuse() {
         //super.prepareForReuse()
         ivImage.image = nil
+        ivSelected.image = nil
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override var isSelected: Bool {
+        didSet {
+            if let cv = self.superview as? UICollectionView,
+                cv.allowsMultipleSelection {
+                if isSelected {
+                    ivSelected.image = #imageLiteral(resourceName: "checked")
+                } else {
+                    ivSelected.image = nil
+                }
+            }
+            
+        }
     }
 
 }

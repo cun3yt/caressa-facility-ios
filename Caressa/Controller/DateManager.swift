@@ -43,7 +43,7 @@ public class DateManager: NSObject {
     }
     
     func now() -> Date {
-        return appDel.serverTimeState!.currentTime
+        return appDel.serverTimeState?.currentTime ?? Date()
     }
     
     func string(date: Date) -> String {

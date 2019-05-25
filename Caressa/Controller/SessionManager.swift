@@ -22,6 +22,7 @@ class SessionManager: NSObject {
         set { UserSettings.shared.refreshToken = newValue }
     }
     
+    public var facilityId: Int = 1
     public var facility: FacilityResponse?
     public var activeUser: UserMe?
     

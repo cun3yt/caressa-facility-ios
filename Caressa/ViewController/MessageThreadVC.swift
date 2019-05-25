@@ -39,6 +39,18 @@ class MessageThreadVC: UIViewController {
         
         PusherManager().delegate = self
         
+        //setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if messageThreadUrl == nil {
+            if let new = SessionManager.shared.residentsCache.first(where: {$0.id==resident?.id})?.messageThreadURL.url {
+                messageThreadUrl = new
+            }
+        }
+        
         setup()
     }
     
@@ -67,6 +79,7 @@ class MessageThreadVC: UIViewController {
         if segue.identifier == "newChat" {
             if let newVc = segue.destination as? NewMessageVC {
                 newVc.to = resident
+                newVc.fromMessageThread = true
             }
         }
     }

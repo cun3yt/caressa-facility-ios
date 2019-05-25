@@ -13,19 +13,18 @@ class PhotosVC: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    private lazy var btnDelete = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(btnDelete(_:)))
+    
     private var page: Int = 1
     private var pageCount: Int = 1
     private var nextPage: String?
     private var ivFacility: UIButton!
-    //private var photoDays: [PhotoGalleryDay] = []
-    //private var photos: [[Photo]] = []
-    
     private var photos = myPhotoGallery(dates: [])
-    
     private var refreshControl = UIRefreshControl(frame: .zero)
-    
     private var moreSections: [Int] = []
     private let showPhotoCount = 4
+    private var willDeletePhotos: [IndexPath] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +34,9 @@ class PhotosVC: BaseViewController {
         
         ivFacility = WindowManager.setup(vc: self, title: "Photos")
         ImageManager.shared.downloadImage(url: SessionManager.shared.facility?.profilePicture, view: ivFacility)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler(_:)))
+        collectionView.addGestureRecognizer(longPress)
         
         setup(clear: false)
     }
@@ -72,14 +74,33 @@ class PhotosVC: BaseViewController {
         }
     }
     
+    @IBAction func btnDelete(_ sender: UIBarButtonItem) {
+        photoDelete()
+    }
+    
+    @objc func longPressHandler(_ sender: UILongPressGestureRecognizer) {
+        guard !collectionView.allowsMultipleSelection else { return }
+        
+        if sender.state == .began {
+            collectionView.indexPathsForSelectedItems?.forEach { self.collectionView.deselectItem(at: $0, animated: false) }
+            collectionView.allowsMultipleSelection = true
+            
+            let point = sender.location(in: collectionView)
+            
+            if let indexPath = collectionView.indexPathForItem(at: point) {
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .init())
+                collectionView(collectionView, didSelectItemAt: indexPath)
+            }
+        }
+    }
+    
     func setup(clear cache: Bool) {
         let url_ = nextPage != nil ? nextPage : APIConst.photoGallery
         guard let url = url_ else { return }
         
         if cache {
-            //self.photoDays.removeAll()
-            //self.photos.removeAll()
             self.photos.dates = []
+            self.clearMultiMode()
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -99,56 +120,18 @@ class PhotosVC: BaseViewController {
                 WebAPI.shared.get(p.day.url, completion: { (day: PhotoDay) in
                     
                     if let dateIndex = self.photos.dates.firstIndex(where: {$0.date == p.day.date}) {
-                        self.photos.dates[dateIndex].urls = day.results.map({$0.url})
+                        self.photos.dates[dateIndex].urls = day.results.map({$0})
                     }
-                    
-                    //self.photos.dates.append(myPhotos(date: p.day.date, urls: day.results.map({$0.url})))
-                    
                     queue.leave()
                 })
-                
             }
             queue.leave()
         }
         
         queue.notify(queue: .main) {
-            //DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.refreshControl.endRefreshing()
-            //}
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
         }
-        
-//        WebAPI.shared.get(url) { (result: PhotoGallery) in
-//            DispatchQueue.main.async {
-//                self.refreshControl.endRefreshing()
-//            }
-//            let startPoint = self.photoDays.count
-//            if self.nextPage != nil {
-//                self.photoDays = self.photoDays + result.results
-//            } else {
-//                self.photoDays = result.results
-//            }
-//            self.pageCount = result.count / result.results.count
-//            self.nextPage = result.next
-//
-//            //self.photoDays.insert(PhotoGalleryDay(day: Day(date: "2019-04-10", url: "https://caressa.herokuapp.com/api/photo-galleries/1/days/2019-04-10/")), at: 0)
-//
-//            //for i in self.photoDays {
-//            for i in startPoint..<self.photoDays.count {
-//                let p = self.photoDays[i]
-//
-//                WebAPI.shared.get(String(format: APIConst.photoGalleryDates, p.day.date), completion: { (result2: PhotoDay) in
-//
-//                    self.photos.append(result2.results)
-//
-//                    if self.photoDays.count == self.photos.count {
-//                        DispatchQueue.main.async {
-//                            self.collectionView.reloadData()
-//                        }
-//                    }
-//                })
-//            }
-//        }
     }
     
     @objc func pushControl() {
@@ -174,8 +157,6 @@ class PhotosVC: BaseViewController {
     func upload(images: [UIImage]?) {
         guard let images = images, !images.isEmpty else { return }
 
-        //ActivityManager.shared.startActivity()
-        
         var param: [PresignedRequest] = []
         var imageDatas: [Data] = []
         let queue = DispatchGroup()
@@ -201,9 +182,6 @@ class PhotosVC: BaseViewController {
                                        parameter: keyList,
                                        completion: { (responsePhoto: [NewPhotoResponse]) in
                                         queue.leave()
-//                                        DispatchQueue.main.async {
-//                                            self.collectionView.reloadData()
-//                                        }
                     })
                 })
             }
@@ -218,11 +196,31 @@ class PhotosVC: BaseViewController {
     @objc func pull2Refresh() {
         setup(clear: true)
     }
+    
+    func photoDelete() {
+        WindowManager.showConfirmation(message: "Selected photos will be deleted. Do you want to continue?") {
+            for indexPath in self.willDeletePhotos {
+                let id = self.photos.dates[indexPath.section].urls[indexPath.row].id
+                WebAPI.shared.delete(String(format: APIConst.photoDelete, id)) { (success) in
+                    print("deleted")
+                }
+                self.photos.dates[indexPath.section].urls.removeAll(where: {$0.id == id})
+            }
+            self.collectionView.deleteItems(at: self.willDeletePhotos)
+            self.clearMultiMode()
+        }
+    }
+    
+    func clearMultiMode() {
+        self.collectionView.allowsMultipleSelection = false
+        self.navigationItem.rightBarButtonItems?.removeAll(where: {$0 == self.btnDelete})
+        self.willDeletePhotos.removeAll()
+    }
 }
 
 extension PhotosVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return photos.dates.count //photoDays.count
+        return photos.dates.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -232,22 +230,20 @@ extension PhotosVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCell
-        //cell.setup(url: photos[indexPath.section][indexPath.row].url)
-        cell.setup(url: photos.dates[indexPath.section].urls[indexPath.row])
+        cell.setup(url: photos.dates[indexPath.section].urls[indexPath.row].url)
+        cell.isSelected = willDeletePhotos.contains(indexPath)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! PhotoHeaderView
-            //let date = DateManager("yyyy-MM-dd").date(string: photoDays[indexPath.section].day.date)!
             let date = DateManager("yyyy-MM-dd").date(string: photos.dates[indexPath.section].date)!
             header.lblTitle.text = DateManager("MMMM dd, yyyy").string(date: date)
             return header
         } else
             if kind == UICollectionView.elementKindSectionFooter {
                 let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath) as! PhotoFooterView
-                //let more = photos[indexPath.section].count - showPhotoCount
                 let more = photos.dates[indexPath.section].urls.count - showPhotoCount
                 footer.btnMore.setTitle("\(more) more...", for: .normal)
                 footer.btnMore.tag = indexPath.section
@@ -256,7 +252,6 @@ extension PhotosVC: UICollectionViewDataSource {
                 if indexPath.section == photos.dates.count - 1 {
                     footer.tag = 998
                 }
-                
                 return footer
         }
         return UICollectionReusableView()
@@ -284,10 +279,25 @@ extension PhotosVC: UICollectionViewDataSource {
 
 extension PhotosVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //let images = photos[indexPath.section].map({$0.url})
-        let images = photos.dates[indexPath.section].urls
-        let imageSlider = ZoomableImageSlider(images: images, currentIndex: indexPath.row, placeHolderImage: nil)
-        present(imageSlider, animated: true)
+        if collectionView.allowsMultipleSelection {
+            willDeletePhotos.append(indexPath)
+            if willDeletePhotos.count == 1 {
+                navigationItem.rightBarButtonItems?.append(btnDelete)
+            }
+        } else {
+            let images = photos.dates[indexPath.section].urls.map({$0.url})
+            let imageSlider = ZoomableImageSlider(images: images, currentIndex: indexPath.row, placeHolderImage: nil)
+            present(imageSlider, animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if collectionView.allowsMultipleSelection {
+            willDeletePhotos.removeAll(where: {$0 == indexPath})
+            if willDeletePhotos.isEmpty {
+                self.clearMultiMode()
+            }
+        }
     }
 }
 
@@ -299,8 +309,11 @@ extension PhotosVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let width = collectionView.bounds.width
-        //return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos[section].count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
-        return moreSections.contains(section) ? CGSize(width: width, height: 0.01) : (photos.dates[section].urls.count > showPhotoCount ? CGSize(width: width, height: 40) : CGSize(width: width, height: 0.01))
+        return moreSections.contains(section) ?
+            CGSize(width: width, height: 0.01) :
+            (photos.dates[section].urls.count > showPhotoCount ?
+                CGSize(width: width, height: 40) :
+                CGSize(width: width, height: 0.01))
     }
 }
 

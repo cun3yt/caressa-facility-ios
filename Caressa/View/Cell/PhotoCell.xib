@@ -22,18 +22,28 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZEy-yc-twv">
                         <rect key="frame" x="0.0" y="0.0" width="175" height="161"/>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Be9-Lu-01c">
+                        <rect key="frame" x="143" y="129" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="17s-vL-qIx"/>
+                            <constraint firstAttribute="height" constant="24" id="oau-F3-gsd"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="ZEy-yc-twv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0Re-UX-hte"/>
                 <constraint firstAttribute="bottom" secondItem="ZEy-yc-twv" secondAttribute="bottom" id="507-by-Crc"/>
+                <constraint firstAttribute="bottom" secondItem="Be9-Lu-01c" secondAttribute="bottom" constant="8" id="FWl-yl-9iZ"/>
                 <constraint firstAttribute="trailing" secondItem="ZEy-yc-twv" secondAttribute="trailing" id="Y8k-Oz-0Y9"/>
                 <constraint firstItem="ZEy-yc-twv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hRX-w0-Lja"/>
+                <constraint firstAttribute="trailing" secondItem="Be9-Lu-01c" secondAttribute="trailing" constant="8" id="xWI-wC-JpP"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="175" height="161"/>
             <connections>
                 <outlet property="ivImage" destination="ZEy-yc-twv" id="d73-ez-Rhx"/>
+                <outlet property="ivSelected" destination="Be9-Lu-01c" id="pG1-Rb-KuL"/>
             </connections>
             <point key="canvasLocation" x="228.2608695652174" y="189.84375"/>
         </collectionViewCell>

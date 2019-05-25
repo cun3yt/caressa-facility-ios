@@ -10,8 +10,8 @@ import Foundation
 
 public class APIConst {
     
-    public static let baseURL                  = "https://caressa.herokuapp.com"
-    public static let facilityId               = "1"
+    public static var baseURL                  = "https://caressa.herokuapp.com"
+    public static let facilityId               = SessionManager.shared.facilityId
     
     // MARK: Login
     public static let token                    = "/o/token/"
@@ -49,6 +49,7 @@ public class APIConst {
     //public static let photos                   = "/api/photo-galleries/\(facilityId)/photos/"
     public static let photoGalleryDates         = "/api/photo-galleries/\(facilityId)/days/%@/"
     public static let photoGalleryPhotos        = "/api/photo-galleries/\(facilityId)/photos/"
+    public static let photoDelete               = "/api/photos/%d/"
     
     // MARK: Calendar
     public static let calendar                  = "/api/calendars/\(facilityId)/?start=%@"
