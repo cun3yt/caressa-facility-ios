@@ -12,6 +12,7 @@ import CoreData
 import PushNotifications
 import UserNotifications
 import PusherSwift
+import Sentry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -45,6 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (UserSettings.shared.PUSHER_INTEREST_NAME ?? "").isEmpty { UserSettings.shared.PUSHER_INTEREST_NAME = "debug-facility" }
         if (UserSettings.shared.PUSHER_CLUSTER ?? "").isEmpty       { UserSettings.shared.PUSHER_CLUSTER = "us2" }
         
+        do {
+            Client.shared = try Client(dsn: "https://<key>@sentry.io/<project>")
+            try Client.shared?.startCrashHandler()
+        } catch let error {
+            print("\(error)")
+        }
         
         // Notification
         self.beamsClient.start(instanceId: UserSettings.shared.PUSHER_INSTANCE_ID!)

@@ -14,7 +14,7 @@ class ImageManager: NSObject {
     
     static let shared: ImageManager = ImageManager()
     
-    private lazy var multiImagePicker = DKImagePickerController()
+    //private lazy var multiImagePicker = DKImagePickerController()
     private lazy var imagePicker = UIImagePickerController()
     private var onImagesSelect: (([UIImage]) -> Void)?
     private var onImageSelect: ((UIImage) -> Void)?
@@ -215,29 +215,32 @@ class ImageManager: NSObject {
     }
     
     func takePhotos(from: DKImagePickerControllerSourceType, view: UIViewController, completion: (([UIImage]) -> Void)? = nil) {
-        multiImagePicker.delegate = self
-        multiImagePicker.allowMultipleTypes = true
-        multiImagePicker.sourceType = from
-        
-        multiImagePicker.didSelectAssets = { [unowned self] (assets) in
-            var images: [UIImage] = []
-            let queue = DispatchGroup()
-            for asset in assets {
-                queue.enter()
-                asset.fetchOriginalImage(completeBlock: { (image, _) in
-                    if let image = image {
-                        images.append(image)
-                    }
-                    queue.leave()
+        DispatchQueue.main.async {
+            let multiImagePicker = DKImagePickerController()
+            multiImagePicker.delegate = self
+            multiImagePicker.allowMultipleTypes = true
+            multiImagePicker.sourceType = from
+            
+            multiImagePicker.didSelectAssets = { [unowned self] (assets) in
+                var images: [UIImage] = []
+                let queue = DispatchGroup()
+                for asset in assets {
+                    queue.enter()
+                    asset.fetchOriginalImage(completeBlock: { (image, _) in
+                        if let image = image {
+                            images.append(image)
+                        }
+                        queue.leave()
+                    })
+                }
+                queue.notify(queue: .main, execute: {
+                    self.onImagesSelect?(images)
                 })
             }
-            queue.notify(queue: .main, execute: {
-                self.onImagesSelect?(images)
-            })
+            
+            view.present(multiImagePicker, animated: true)
+            self.onImagesSelect = completion
         }
-        
-        view.present(multiImagePicker, animated: true)
-        onImagesSelect = completion
     }
     
     

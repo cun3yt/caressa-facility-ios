@@ -131,9 +131,9 @@ class WindowManager: NSObject {
                 let yes = UIAlertAction(title: "Yes", style: .default) { (_) in
                     yesHandler?()
                 }
-                let no = UIAlertAction(title: "No", style: .default, handler: nil)
-                alert.addAction(yes)
+                let no = UIAlertAction(title: "No", style: .cancel, handler: nil)
                 alert.addAction(no)
+                alert.addAction(yes)
                 topView.present(alert, animated: true)
             }
         }

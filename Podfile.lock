@@ -57,6 +57,9 @@ PODS:
   - SDWebImage/GIF (4.4.6):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
+  - Sentry (4.3.1):
+    - Sentry/Core (= 4.3.1)
+  - Sentry/Core (4.3.1)
   - Starscream (3.0.6)
   - TaskQueue (1.1.1)
 
@@ -65,6 +68,7 @@ DEPENDENCIES:
   - DKImagePickerController
   - PusherSwift
   - PushNotifications
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `4.3.1`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -81,6 +85,16 @@ SPEC REPOS:
     - Starscream
     - TaskQueue
 
+EXTERNAL SOURCES:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 4.3.1
+
+CHECKOUT OPTIONS:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 4.3.1
+
 SPEC CHECKSUMS:
   CropViewController: a090820b15fc3da68e694d7c192a4708c576828b
   CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
@@ -92,9 +106,10 @@ SPEC CHECKSUMS:
   PushNotifications: 88b6aedf3433d97ebeefa7336a5a797729c887a7
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  Sentry: 5267d493a398663538317e4dcc438c12c66202ed
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
 
-PODFILE CHECKSUM: de3f89db58cc05c02b572d1967ed3854a0c754f8
+PODFILE CHECKSUM: 722a455b599902977ae1508a7323e5b5ec5eb5fe
 
 COCOAPODS: 1.5.3

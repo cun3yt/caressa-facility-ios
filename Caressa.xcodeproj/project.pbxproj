@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C6C66220FACEC2CD6C48952 /* Pods_CaressaDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A4FCE3752514F3FA7A7B13 /* Pods_CaressaDev.framework */; };
+		3EAE4B8BAFE0E70D4690622F /* Pods_Caressa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */; };
 		9DAFAB8A9A087D3D29DE7514 /* Pods_Caressa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */; };
 		BD12354922528A4F00FF1638 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12354822528A4F00FF1638 /* User.swift */; };
 		BD12354B225296C700FF1638 /* AmazonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD12354A225296C700FF1638 /* AmazonModel.swift */; };
@@ -124,7 +126,6 @@
 		BDEC7BA32299D4C7001BBBCD /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD159BC6225685A100701370 /* SearchVC.swift */; };
 		BDEC7BA42299D4C7001BBBCD /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD55311A2247911D0062F894 /* MessageCell.swift */; };
 		BDEC7BA52299D4C7001BBBCD /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB2B025225F5B80003D9FB5 /* DBManager.swift */; };
-		BDEC7BA72299D4C7001BBBCD /* Pods_Caressa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */; };
 		BDEC7BA92299D4C7001BBBCD /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD145CAF2258C61C0040BAAC /* PhotoCell.xib */; };
 		BDEC7BAA2299D4C7001BBBCD /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD55311B2247911D0062F894 /* MessageCell.xib */; };
 		BDEC7BAB2299D4C7001BBBCD /* MessageThreadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD14E662224F6984001B12BE /* MessageThreadCell.xib */; };
@@ -186,8 +187,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15A4FCE3752514F3FA7A7B13 /* Pods_CaressaDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CaressaDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B29B2F75C4EA49405F539DD /* Pods-Caressa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.release.xcconfig"; sourceTree = "<group>"; };
+		8AC1B260876486EDA9A55D2D /* Pods-CaressaDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaressaDev.release.xcconfig"; path = "Pods/Target Support Files/Pods-CaressaDev/Pods-CaressaDev.release.xcconfig"; sourceTree = "<group>"; };
 		8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caressa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.release.xcconfig"; sourceTree = "<group>"; };
+		94575CB644BB5489D2DE89CF /* Pods-CaressaDev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CaressaDev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CaressaDev/Pods-CaressaDev.debug.xcconfig"; sourceTree = "<group>"; };
 		BD12354822528A4F00FF1638 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD12354A225296C700FF1638 /* AmazonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonModel.swift; sourceTree = "<group>"; };
 		BD145CA62257D1A40040BAAC /* SendMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessage.swift; sourceTree = "<group>"; };
@@ -262,7 +266,7 @@
 		BDF52C4B226270590016E69C /* MorningCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningCheckIn.swift; sourceTree = "<group>"; };
 		BDF7E7242286C7770058B072 /* NotificationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataModel.swift; sourceTree = "<group>"; };
 		BDF7E7262286D0E10058B072 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.debug.xcconfig"; sourceTree = "<group>"; };
+		EAA9C06018ADA967373EEFB3 /* Pods-Caressa.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caressa.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caressa/Pods-Caressa.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DAFAB8A9A087D3D29DE7514 /* Pods_Caressa.framework in Frameworks */,
+				3EAE4B8BAFE0E70D4690622F /* Pods_Caressa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +290,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDEC7BA72299D4C7001BBBCD /* Pods_Caressa.framework in Frameworks */,
+				3C6C66220FACEC2CD6C48952 /* Pods_CaressaDev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				8C42BDB2AFF7A7A34E2041F0 /* Pods_Caressa.framework */,
+				15A4FCE3752514F3FA7A7B13 /* Pods_CaressaDev.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -456,8 +462,10 @@
 		E1E06B96341BF3632605B386 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */,
-				AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */,
+				EAA9C06018ADA967373EEFB3 /* Pods-Caressa.debug.xcconfig */,
+				4B29B2F75C4EA49405F539DD /* Pods-Caressa.release.xcconfig */,
+				94575CB644BB5489D2DE89CF /* Pods-CaressaDev.debug.xcconfig */,
+				8AC1B260876486EDA9A55D2D /* Pods-CaressaDev.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -507,12 +515,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDEC7BB42299D4C7001BBBCD /* Build configuration list for PBXNativeTarget "CaressaDev" */;
 			buildPhases = (
-				BDEC7B6C2299D4C7001BBBCD /* [CP] Check Pods Manifest.lock */,
+				BF54CA6321271B0229BEF39B /* [CP] Check Pods Manifest.lock */,
 				BDEC7B6D2299D4C7001BBBCD /* Sources */,
 				BDEC7BA62299D4C7001BBBCD /* Frameworks */,
 				BDEC7BA82299D4C7001BBBCD /* Resources */,
-				BDEC7BB12299D4C7001BBBCD /* [CP] Embed Pods Frameworks */,
 				BDEC7BB22299D4C7001BBBCD /* Embed App Extensions */,
+				A9CF1F0CDE3337CE356AFDD3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -636,6 +644,52 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A9CF1F0CDE3337CE356AFDD3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CaressaDev/Pods-CaressaDev-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/DKCamera/DKCamera.framework",
+				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
+				"${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
+				"${BUILT_PRODUCTS_DIR}/PushNotifications/PushNotifications.framework",
+				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKCamera.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKPhotoGallery.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PushNotifications.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CaressaDev/Pods-CaressaDev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BB2FDAC3250FDBB856E2FDCB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -658,7 +712,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BDEC7B6C2299D4C7001BBBCD /* [CP] Check Pods Manifest.lock */ = {
+		BF54CA6321271B0229BEF39B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -673,55 +727,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Caressa-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-CaressaDev-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BDEC7BB12299D4C7001BBBCD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/DKCamera/DKCamera.framework",
-				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
-				"${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework",
-				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
-				"${BUILT_PRODUCTS_DIR}/PushNotifications/PushNotifications.framework",
-				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKCamera.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKPhotoGallery.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PushNotifications.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caressa/Pods-Caressa-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C31EC498AC8DBB8D5AD783D6 /* [CP] Embed Pods Frameworks */ = {
@@ -743,6 +753,7 @@
 				"${BUILT_PRODUCTS_DIR}/PusherSwift/PusherSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/TaskQueue/TaskQueue.framework",
 			);
@@ -760,6 +771,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PusherSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TaskQueue.framework",
 			);
@@ -1106,7 +1118,7 @@
 		};
 		BD999F2D224570DF00F7D1AB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */;
+			baseConfigurationReference = EAA9C06018ADA967373EEFB3 /* Pods-Caressa.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1128,7 +1140,7 @@
 		};
 		BD999F2E224570DF00F7D1AB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */;
+			baseConfigurationReference = 4B29B2F75C4EA49405F539DD /* Pods-Caressa.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1150,7 +1162,7 @@
 		};
 		BDEC7BB52299D4C7001BBBCD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C94E6D0D2F2268D608986E87 /* Pods-Caressa.debug.xcconfig */;
+			baseConfigurationReference = 94575CB644BB5489D2DE89CF /* Pods-CaressaDev.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1173,7 +1185,7 @@
 		};
 		BDEC7BB62299D4C7001BBBCD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB9087BDDB00E17FE2795247 /* Pods-Caressa.release.xcconfig */;
+			baseConfigurationReference = 8AC1B260876486EDA9A55D2D /* Pods-CaressaDev.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

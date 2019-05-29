@@ -199,15 +199,18 @@ class PhotosVC: BaseViewController {
     
     func photoDelete() {
         WindowManager.showConfirmation(message: "Selected photos will be deleted. Do you want to continue?") {
-            for indexPath in self.willDeletePhotos {
+            
+            let sorted = self.willDeletePhotos.sorted(by: {$1.compare($0) == .orderedAscending})
+            for indexPath in sorted {
                 let id = self.photos.dates[indexPath.section].urls[indexPath.row].id
                 WebAPI.shared.delete(String(format: APIConst.photoDelete, id)) { (success) in
                     print("deleted")
                 }
                 self.photos.dates[indexPath.section].urls.removeAll(where: {$0.id == id})
             }
-            self.collectionView.deleteItems(at: self.willDeletePhotos)
+            //self.collectionView.deleteItems(at: self.willDeletePhotos)
             self.clearMultiMode()
+            self.collectionView.reloadData()
         }
     }
     
