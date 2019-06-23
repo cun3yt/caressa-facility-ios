@@ -16,6 +16,7 @@ class SystemParametersVC: UIViewController {
     @IBOutlet weak var txtPusherKey: UITextField!
     @IBOutlet weak var txtPusherInterestName: UITextField!
     @IBOutlet weak var txtPusherCluster: UITextField!
+    @IBOutlet weak var txtSentryDSN: UITextField!
     
     private weak var activeField: UITextField?
     
@@ -30,6 +31,7 @@ class SystemParametersVC: UIViewController {
         txtPusherKey.text = UserSettings.shared.PUSHER_KEY
         txtPusherInterestName.text = UserSettings.shared.PUSHER_INTEREST_NAME
         txtPusherCluster.text = UserSettings.shared.PUSHER_CLUSTER
+        txtSentryDSN.text = UserSettings.shared.PUSHER_CLUSTER
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -42,6 +44,7 @@ class SystemParametersVC: UIViewController {
         UserSettings.shared.PUSHER_KEY = txtPusherKey.text
         UserSettings.shared.PUSHER_INTEREST_NAME = txtPusherInterestName.text
         UserSettings.shared.PUSHER_CLUSTER = txtPusherCluster.text
+        UserSettings.shared.SENTRY_DSN = txtSentryDSN.text
         WindowManager.showMessage(type: .success, message: "Saved. Please restart application.")
     }
 }
@@ -66,7 +69,9 @@ extension SystemParametersVC: UITextFieldDelegate {
         } else if textField == txtPusherInterestName {
             txtPusherCluster.becomeFirstResponder()
         } else if textField == txtPusherCluster {
-            txtPusherCluster.resignFirstResponder()
+            txtSentryDSN.becomeFirstResponder()
+        } else if textField == txtSentryDSN {
+            txtSentryDSN.resignFirstResponder()
         }
         return true
     }

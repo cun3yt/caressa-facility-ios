@@ -863,10 +863,10 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e1F-9M-i8e">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="483"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="587.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ehi-f1-zuv">
-                                                <rect key="frame" x="20" y="30" width="335" height="433"/>
+                                                <rect key="frame" x="20" y="30" width="335" height="537.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API_BASE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exd-BK-3Ip">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="21"/>
@@ -961,8 +961,26 @@ If you think you need a direct access, please out to support@caressa.ai</string>
                                                             <outlet property="delegate" destination="dM1-GL-JCo" id="Wfn-Mf-pSw"/>
                                                         </connections>
                                                     </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SENTRY_DSN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bko-gr-bwz">
+                                                        <rect key="frame" x="0.0" y="395" width="335" height="46.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://69eae423c9754258bd30d4a7fcd097b0@sentry.io/1471072" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vqb-iy-21G">
+                                                        <rect key="frame" x="0.0" y="451.5" width="335" height="38"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="38" id="H8u-2Z-HXg"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="dM1-GL-JCo" id="a7i-do-qlK"/>
+                                                        </connections>
+                                                    </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jv-fs-UK5">
-                                                        <rect key="frame" x="0.0" y="395" width="335" height="38"/>
+                                                        <rect key="frame" x="0.0" y="499.5" width="335" height="38"/>
                                                         <color key="backgroundColor" red="0.27058823529999998" green="0.47843137250000001" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="38" id="q1K-pW-3tA"/>

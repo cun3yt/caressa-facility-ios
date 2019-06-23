@@ -61,4 +61,9 @@ class UserSettings: NSObject {
         get { return userDefaults.object(forKey: "PUSHER_CLUSTER") as? String }
         set { userDefaults.set(newValue, forKey: "PUSHER_CLUSTER") }
     }
+    
+    var SENTRY_DSN: String? {
+        get { return userDefaults.object(forKey: "SENTRY_DSN") as? String }
+        set { userDefaults.set(newValue, forKey: "SENTRY_DSN") }
+    }
 }

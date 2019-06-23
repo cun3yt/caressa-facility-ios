@@ -45,9 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if (UserSettings.shared.PUSHER_KEY ?? "").isEmpty           { UserSettings.shared.PUSHER_KEY = "c984c4342b09e06c02a0" }
         if (UserSettings.shared.PUSHER_INTEREST_NAME ?? "").isEmpty { UserSettings.shared.PUSHER_INTEREST_NAME = "debug-facility" }
         if (UserSettings.shared.PUSHER_CLUSTER ?? "").isEmpty       { UserSettings.shared.PUSHER_CLUSTER = "us2" }
+        if (UserSettings.shared.SENTRY_DSN ?? "").isEmpty       { UserSettings.shared.SENTRY_DSN = "https://69eae423c9754258bd30d4a7fcd097b0@sentry.io/1471072" }
         
         do {
-            Client.shared = try Client(dsn: "https://<key>@sentry.io/<project>")
+            #if DEV
+            Client.shared = try Client(dsn: UserSettings.shared.SENTRY_DSN!)
+            #else
+            Client.shared = try Client(dsn: "https://f9864d01e0b1434280a130db7fbb4a5a@sentry.io/1470922")
+            #endif
             try Client.shared?.startCrashHandler()
         } catch let error {
             print("\(error)")
